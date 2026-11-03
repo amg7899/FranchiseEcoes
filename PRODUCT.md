@@ -43,7 +43,7 @@ The site presents ECOES Franchise, the turnkey platform of ECOES JV for mobile E
 - The ECOES JV logo exactly as on ecoes.eu (`assets/img/logo.svg`); nothing else of the ecoes.eu look is binding (client: "only the logo is the same").
 - Client's brief (2026-11-03): professional, modern, futuristic but true to the subject, clean, trustworthy, must not look AI-made; transparent containers with visible motifs; the strongest points and reasons on Home as linked containers, each with a "get offer" link. The client's visualisation colours (#C8161D red, #1D2227 dark, #F3F5F7 light grey) may be used; the design choice was delegated.
 - Client's feedback on v1 (2026-11-03): rejected the red equipment-body design ("made in Paint", "all red strains the eye", "too obvious"); wants it nonchalant and mysterious while professional, modern, futuristic and clean; much more transparency: blurred glass containers with motifs visible behind them. References they like: an eco dashboard on a glass monitor with a glowing globe and leaves, a dark engineering site with a glowing wireframe building, a cinematic dark car page.
-- Slogan in English changed at the client's request (2026-11-03): "We do not compete with stationary charging stations. We replace them where they are absent." (was "…where they are not").
+- Slogan in English changed at the client's request (2026-11-03): "We do not compete with stationary charging stations. We replace them where they are absent." (was "…where they are not"). The Bulgarian slogan stays as it is: "Заместваме ги там, където ги няма." (client, 2026-11-03).
 - The client's texts are used verbatim; obvious typos are fixed and reported.
 
 ## Evidence on Hand
