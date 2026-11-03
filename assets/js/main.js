@@ -104,7 +104,14 @@
     rows[tr.getAttribute('data-load')] = tr;
   });
   var sep = plate.getAttribute('data-thousands') || ',';
-  function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, sep); }
+  var dec = plate.getAttribute('data-decimal') || '.';
+  // whole numbers as 24,600; values with cents (the Box: 86.40 a day) with two decimals
+  function fmt(n) {
+    var cents = Math.round(n * 100);
+    var whole = String(Math.floor(cents / 100)).replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+    var rest = cents % 100;
+    return rest ? whole + dec + (rest < 10 ? '0' : '') + rest : whole;
+  }
   function out(key, value) {
     var el = readout.querySelector('[data-out="' + key + '"]');
     if (el) el.textContent = fmt(value);
