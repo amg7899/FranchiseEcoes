@@ -8,3 +8,4 @@ Use both for all UI work:
 - `.claude/skills/ui-ux-pro-max` (MIT): UX rules and searchable design data. Run from the repo root, e.g.
   `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "focus visible keyboard" --domain ux`
   (the `${CLAUDE_PLUGIN_ROOT}` paths in its SKILL.md don't apply to this project install).
+- `.claude/skills/playwright-cli` (Microsoft, `@playwright/cli`, installed with `playwright-cli install --skills`): drives a browser from the shell (open, click, fill, snapshot, screenshot) to check pages and take the screenshots sent to the client. The cloud container is fresh each session, so install the CLI first: `npm install -g @playwright/cli@0.1.23`. It uses the pre-installed Chromium; do not run `playwright install`. Its output folder `.playwright-cli/` is git-ignored.
