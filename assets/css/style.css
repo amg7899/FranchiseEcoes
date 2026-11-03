@@ -1,6 +1,6 @@
 /* ECOES Franchise – franchise.ecoes.eu – design v2 "night glass"
-   A calm night ground; frosted glass panes over the client's own scene and product renders, so
-   the motifs stay visible through the glass; light display type (Unbounded) and a quiet text face
+   A calm night ground; frosted glass panes over the client's own scene and product renders where
+   they mean something (hero, offers), otherwise over designed light; light display type (Unbounded) and a quiet text face
    (Wix Madefor Text); glowing line drawings of the product and the logo's globe in the colour of
    the charger's ring light; red only where the product itself is. */
 
@@ -359,6 +359,8 @@ p { margin: 0 0 1em; }
 .intro { position: relative; padding: var(--section) 0 clamp(56px, 6vw, 96px); overflow: hidden; }
 .intro-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: center; }
 .intro .globe { width: min(78vw, 420px); margin: 0 auto; opacity: .95; }
+.js-draw { display: none; }
+.js .js-draw { display: block; }
 @media (min-width: 1000px) {
   .intro-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(40px, 5vw, 80px); }
   .intro .globe { width: 100%; max-width: 560px; order: 2; }
@@ -384,12 +386,19 @@ p { margin: 0 0 1em; }
 .offer-card p { margin: 0; color: var(--text); font-size: 16px; }
 
 /* ---------- why: panes sliding over the product world ---------- */
-.why { position: relative; padding: var(--section) 0; }
-.why-backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.why {
+  position: relative; padding: var(--section) 0;
+  --wire-w: min(94vw, 148vh, 1480px);
+  --wire-h: calc(var(--wire-w) * .5625);
+  --wire-top: 57vh;
+}
+/* the stage stops at the last row of panes, so the drawing never stands alone below them */
+.why-backdrop { position: absolute; inset: 0 0 var(--section) 0; z-index: 0; pointer-events: none; }
 .why-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-.why-stage .wire { position: absolute; left: 50%; top: 52%; width: min(130vw, 1760px); max-width: none; height: auto; transform: translate(-50%, -50%); }
+/* the MultiCharger as a hologram: whole and centred, first on its own under the title, then behind the panes */
+.why-stage .wire { position: absolute; left: 50%; top: var(--wire-top); width: var(--wire-w); max-width: none; height: auto; transform: translate(-50%, -50%); }
 .why-stage .halo {
-  position: absolute; left: 50%; top: 50%; width: 90vw; height: 70vh; transform: translate(-50%, -50%);
+  position: absolute; left: 50%; top: var(--wire-top); width: 90vw; height: 70vh; transform: translate(-50%, -50%);
   background: radial-gradient(closest-side, rgba(63, 184, 255, .16), rgba(63, 184, 255, 0));
 }
 .why-stage::after {
@@ -397,6 +406,13 @@ p { margin: 0 0 1em; }
   background: radial-gradient(120% 90% at 50% 50%, rgba(6, 9, 12, 0) 40%, rgba(6, 9, 12, .75) 100%), linear-gradient(180deg, var(--night-0), rgba(6, 9, 12, 0) 16%, rgba(6, 9, 12, 0) 84%, var(--night-0));
 }
 .why-content { position: relative; z-index: 1; }
+/* phones: the hologram stands only under the title; the single column of panes follows without it */
+@media (max-width: 759px) {
+  .why { --wire-top: 42vh; }
+  .why-stage { position: relative; }
+}
+/* the panes start below the hologram, so the visitor first sees the whole drawing (title + about 100 px) */
+.why .tiles { margin-top: max(0px, calc(var(--wire-top) + var(--wire-h) / 2 + 32px - var(--section) - 110px)); }
 .tiles { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
 .tile { display: flex; flex-direction: column; min-height: 280px; padding: 26px 26px 16px; border-radius: var(--r-m); --blur: 24px; }
 .tile h3 { margin: 0 0 12px; font: 400 clamp(18px, 1.35vw, 21px)/1.25 var(--font-display); letter-spacing: -.01em; text-wrap: balance; }
@@ -429,8 +445,8 @@ p { margin: 0 0 1em; }
 .chart-bars b { margin-bottom: 8px; font: 400 13.5px/1 var(--font-display); color: var(--text-hi); }
 .chart-bars i { margin-top: 10px; font-size: 13px; color: var(--text-mute); }
 
-/* ---------- split sections with a motif behind the glass ---------- */
-/* motifs may stand out of their pane; clip (not hidden) keeps sticky columns working */
+/* ---------- split sections: glass panes standing in light ---------- */
+/* the light may reach beyond the pane; clip (not hidden) keeps sticky columns working */
 .split, .announce, .contact-section, .intro, .why, .offer { overflow-x: clip; }
 .split { position: relative; padding: var(--section) 0; }
 .split-grid { display: grid; gap: 44px; grid-template-columns: minmax(0, 1fr); }
@@ -440,11 +456,16 @@ p { margin: 0 0 1em; }
 }
 .split-intro p { max-width: 46ch; }
 .split-body { position: relative; }
-.motif { position: absolute; z-index: 0; pointer-events: none; filter: brightness(.9); }
+/* soft light behind the pane (the charger's blue and the sea), so the glass reads as glass */
+.split-body::before {
+  content: ""; position: absolute; z-index: 0; inset: -16% -12%; pointer-events: none;
+  background:
+    radial-gradient(40% 44% at var(--l1, 74% 22%), rgba(76, 195, 255, .2), rgba(76, 195, 255, 0) 72%),
+    radial-gradient(44% 48% at var(--l2, 20% 82%), rgba(46, 110, 128, .26), rgba(46, 110, 128, 0) 72%);
+}
 .split-body > .glass { z-index: 1; }
 
 /* ---------- profit at load ---------- */
-.profit .motif { right: -28px; top: -128px; width: min(20vw, 230px); }
 .meter-pane { padding: clamp(24px, 3vw, 40px); }
 .meter { margin: 0 0 6px; padding: 0; border: 0; min-width: 0; }
 .meter[hidden], .meter-readout[hidden] { display: none; }
@@ -493,7 +514,7 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- certification ---------- */
-.cert .motif { left: -12%; top: 8%; width: min(22vw, 260px); }
+.cert .split-body { --l1: 22% 18%; --l2: 82% 84%; }
 .cert-pane { padding: clamp(14px, 2vw, 22px) clamp(24px, 3vw, 40px); }
 .pillars { list-style: none; margin: 0; padding: 0; counter-reset: pillar; }
 .pillars li { position: relative; padding: 22px 0 22px 52px; border-top: 1px solid var(--line); counter-increment: pillar; }
@@ -511,7 +532,7 @@ p { margin: 0 0 1em; }
 
 /* ---------- announcements and the pre-order form ---------- */
 .announce { position: relative; padding: var(--section) 0; }
-.announce .motif { right: -10%; top: 46%; width: min(64vw, 900px); opacity: .85; }
+.announce .split-body { --l1: 84% 12%; --l2: 12% 92%; }
 .notices { position: relative; z-index: 1; max-width: 62ch; margin: 0 0 36px; padding-left: 1.4em; font-size: clamp(16.5px, 1.25vw, 19px); color: var(--text); }
 .notices li::marker { color: var(--signal); font-weight: 600; }
 .notices:last-child { margin: 36px 0 0; }
@@ -609,7 +630,6 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .line-label { color: var(--text-mute); }
 .office-address { margin: 0; line-height: 1.6; }
 .contact-section { position: relative; padding: clamp(40px, 5vw, 80px) 0 var(--section); }
-.contact-section .motif { left: 50%; top: -40px; width: min(60vw, 720px); transform: translateX(-10%); }
 .contact-pane { max-width: 1000px; margin: 0 auto; }
 
 /* ---------- footer ---------- */
@@ -637,5 +657,5 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 }
 @media (forced-colors: active) {
   .glass, .btn, .chip { border: 1px solid CanvasText; }
-  .why-stage, .motif, .hero::before { display: none; }
+  .why-stage, .split-body::before, .hero::before { display: none; }
 }

@@ -4,3 +4,4 @@ exclude:
   - PRODUCT.md
   - DESIGN.md
   - skills-lock.json
+  - tools

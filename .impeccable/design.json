@@ -138,14 +138,14 @@
     "overview": "Frosted panes in front of the client's own scene and renders; the MultiCharger and the logo's globe as glowing line drawings in the colour of the charger's ring light; light display type; red only in the product.",
     "keyCharacteristics": [
       "Night ground with faint sea and ember light",
-      "Frosted glass with real motifs behind it",
-      "Wireframe MultiCharger and globe drawn by tools/wireframes.py",
+      "Frosted glass over the hero scene and the products; other panes in designed light",
+      "Wireframe MultiCharger (shown whole first) and globe drawn by tools/wireframes.py",
       "Unbounded light + Wix Madefor Text"
     ],
     "rules": [
       {
-        "name": "Glass needs something behind it",
-        "body": "Every pane stands in front of a real motif.",
+        "name": "A motif only where it means something",
+        "body": "Behind glass: the hero scene, the offer products, the hologram, the globe; never a random object peeking out from behind a pane. Other panes stand in light.",
         "section": "elevation"
       },
       {
@@ -155,13 +155,14 @@
       }
     ],
     "dos": [
-      "Put every pane in front of a real motif",
+      "Give every image behind glass a reason; otherwise let the pane stand in light",
       "Keep one idea per viewport"
     ],
     "donts": [
       "No drop shadows on panes",
       "No text directly on photos",
-      "No scroll animations beyond the line drawings"
+      "No scroll animations beyond the line drawings",
+      "No fragments of drawings or products (half a sign, bare wheels)"
     ]
   }
 }

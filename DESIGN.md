@@ -92,8 +92,8 @@ components:
 v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in Paint", "all red strains the eye", "too obvious"; they asked for something nonchalant and mysterious, professional, modern, futuristic and clean, with far more transparency – real blurred glass containers with motifs behind them – and sent three references they like (an eco dashboard on a glass monitor with a glowing globe, a dark engineering site with a glowing wireframe building, a cinematic dark car page). v2 answers that:
 
 - A calm night ground (#06090c with faint sea and ember light far away).
-- Frosted glass panes (`.glass`) in front of the client's own imagery, so the motif stays visible through the glass: the beach scene behind the hero pane, the red MultiCharger renders behind the offer panes, the Box louvres behind the profit pane, the road sign behind the certification pane, the LPG container behind the pre-order form.
-- Glowing line drawings in the colour of the charger's ring light (#4cc3ff): the MultiCharger on its trailer as a see-through wireframe behind the "Why" panes, and the globe of the ECOES JV logo with London and Sofia next to the intro statement. Both are drawn by `tools/wireframes.py`.
+- Frosted glass panes (`.glass`) in front of the client's own imagery where it means something: the beach scene behind the hero pane, the red MultiCharger renders behind the offer panes. The profit, certification, pre-order and contact panes stand in designed light (the charger's blue and the sea); the cut-outs that once peeked out behind them were removed at the client's request ("I don't see the logic").
+- Glowing line drawings in the colour of the charger's ring light (#4cc3ff): the MultiCharger on its trailer as a see-through wireframe, first whole under the "Why" title, then behind the panes, and the globe of the ECOES JV logo with London and Sofia next to the intro statement. Both are drawn by `tools/wireframes.py`.
 - Red only where the product is (photos, renders, logo). UI accents are the signal blue.
 
 ## Colors
@@ -105,7 +105,7 @@ v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in
 - **Glass tint** `rgba(14,21,28,.42)` with a 160° white sheen and a light gradient edge; blur 28px, saturate 1.6.
 
 ### Named Rules
-- **Glass needs something behind it.** Every pane stands in front of a real motif (photo, render or line drawing); a pane on empty night is a card, not glass.
+- **A motif only where it means something.** Behind glass: the hero scene, the product in its offer card, the hologram, the globe – never a random object peeking out from behind a pane. Other panes stand in light, so the glass still reads as glass.
 - **Red belongs to the product.** No red UI.
 
 ## Typography
@@ -114,7 +114,7 @@ Unbounded (NaN; OFL) light for display – wide, calm, futuristic; Wix Madefor T
 
 ## Layout
 
-Max 1360px (hero 1480px), gutters `clamp(16px, 4.2vw, 64px)`, sections `clamp(96px, 11vw, 176px)`. Hero: full-bleed photo, pane bottom left (max 680px), the four key-figure chips bottom right (2 × 2, a row of 4 from 1720px). Intro: statement + globe. Offers: three panes with the product standing behind each. Why: nine panes (6+6 / 3+3 / 4+4+4 / 5+7 from 1100px) sliding over the sticky wireframe stage. Profit and certification: sticky intro left, pane right. Sections with motifs clip horizontal overflow (`overflow-x: clip`, which keeps sticky columns working).
+Max 1360px (hero 1480px), gutters `clamp(16px, 4.2vw, 64px)`, sections `clamp(96px, 11vw, 176px)`. Hero: full-bleed photo, pane bottom left (max 680px), the four key-figure chips bottom right (2 × 2, a row of 4 from 1720px). Intro: statement + globe. Offers: three panes with the product standing behind each. Why: the whole hologram under the title (it fits the viewport), then nine panes (6+6 / 3+3 / 4+4+4 / 5+7 from 1100px) sliding over the sticky wireframe stage, which ends at the last row; on phones the hologram stands only under the title. Profit and certification: sticky intro left, pane right. Sections with motifs clip horizontal overflow (`overflow-x: clip`, which keeps sticky columns working).
 
 ## Elevation & Depth
 
@@ -138,10 +138,11 @@ Fields 14px, chips 20px, panes 28px, buttons and choices are pills.
 ## Do's and Don'ts
 
 ### Do:
-- Put every pane in front of a real motif.
+- Give every image behind glass a reason; otherwise let the pane stand in light.
 - Keep the type light and the layout quiet: one idea per viewport.
 - Pair every "Learn more" with "Get an offer".
 
 ### Don't:
 - Don't use red for UI, don't add drop shadows to panes, don't put text directly on photos.
+- Don't let a drawing or product show only in fragments (half a sign, bare wheels) – show it whole or not at all.
 - Don't animate on scroll beyond the line drawings drawing themselves once; the only load moment is the hero glass frosting over.

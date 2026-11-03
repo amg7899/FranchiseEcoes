@@ -40,4 +40,6 @@ FORM: Brief-pinned direction (client, 2026-11-03), replacing candidate 6 of 7 (s
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
+Update (2026-11-03, afternoon): the client saw no logic in the cut-outs peeking out behind the profit, certification and pre-order panes, nor in the hologram's bare wheels; the cut-outs were removed (those panes stand in designed light) and the hologram is shown whole under the title before the panes slide over it, ending with the last row. The client regenerates the images with ChatGPT (tools/image-kit.md).
+
 Unresolved: About us, ECOES Franchise, ECOES MultiCharger, ECOES MultiCharger Box pages follow; domain franchise.ecoes.eu not set up; GitHub Pages to be enabled by the client; Bulgarian vs standard Cyrillic letterforms (asked).

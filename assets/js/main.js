@@ -1,6 +1,7 @@
 // ECOES Franchise – header, menu, language and the profit meter on Home.
 (function () {
   var root = document.documentElement;
+  root.classList.add('js');
 
   // ---- header shadow once the page scrolls under it ----
   function scrolled() { root.classList.toggle('is-scrolled', window.scrollY > 4); }
@@ -124,4 +125,20 @@
   meter.addEventListener('change', function (e) { if (e.target.name === 'load') show(e.target.value); });
   var checked = meter.querySelector('input:checked');
   show(checked ? checked.value : '50');
+})();
+
+// Line drawings (the globe, the MultiCharger hologram) draw themselves once when they load, so they
+// are loaded only when they come into view: the visitor sees them being drawn. Without JavaScript a
+// <noscript> copy shows them finished.
+(function () {
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('img.js-draw[data-src]'));
+  if (!imgs.length) return;
+  function load(img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
+  if (!('IntersectionObserver' in window)) { imgs.forEach(load); return; }
+  var seen = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { load(e.target); seen.unobserve(e.target); }
+    });
+  }, { threshold: 0.3 });
+  imgs.forEach(function (img) { seen.observe(img); });
 })();

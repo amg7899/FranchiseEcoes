@@ -41,7 +41,7 @@ def fmt(v): return f'{v:.1f}'.rstrip('0').rstrip('.')
 # ---------------------------------------------------------------- MultiCharger on its trailer
 S = 230.0                 # px per metre
 K, A = 0.42, math.radians(30)   # cabinet projection: depth drawn at 30 degrees, shortened
-OX, OY = 170.0, 760.0     # origin on the canvas (x = rear of the box, y = ground)
+OX, OY = 250.0, 760.0     # origin on the canvas (x = rear of the box, y = ground); centres the trailer
 
 def P(x, y, z):
     X = x + z * K * math.cos(A); Y = y + z * K * math.sin(A)

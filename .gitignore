@@ -4,3 +4,4 @@
 # design review captures (local)
 .impeccable/review/
 .playwright/
+__pycache__/
