@@ -1,0 +1,6 @@
+# GitHub Pages: publish the site files only, not the project notes.
+exclude:
+  - CLAUDE.md
+  - PRODUCT.md
+  - DESIGN.md
+  - skills-lock.json
