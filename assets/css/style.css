@@ -75,6 +75,10 @@ picture { display: block; }
 a { color: inherit; }
 h1, h2, h3 { color: var(--text-hi); font-weight: 300; }
 p { margin: 0 0 1em; }
+/* Bulgarian pages: the standard Cyrillic letterforms, not the fonts' Bulgarian (handwriting-like) set
+   (client left the choice to us, 2026-11-03). It must reach every element: the font shorthand in the
+   component rules resets font-feature-settings. */
+:lang(bg), :lang(bg) * { font-feature-settings: "locl" 0 !important; }
 ::selection { background: rgba(76, 195, 255, .45); color: #fff; }
 :focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; border-radius: 6px; }
 
@@ -631,6 +635,47 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .office-address { margin: 0; line-height: 1.6; }
 .contact-section { position: relative; padding: clamp(40px, 5vw, 80px) 0 var(--section); }
 .contact-pane { max-width: 1000px; margin: 0 auto; }
+
+/* ---------- document pages (ECOES Franchise, MultiCharger, Box) ---------- */
+/* page head: the page-head picture with a glass pane at the lower left, like the Home hero */
+.page-hero--lead { display: flex; align-items: flex-end; min-height: min(86svh, 860px); padding-top: calc(var(--header-h) + 40px); }
+.page-hero--lead .wrap { width: 100%; }
+.lead-pane { max-width: 720px; padding: clamp(26px, 3.4vw, 52px); }
+.page-nav { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.section-title--sub { font-size: clamp(22px, 2.1vw, 32px); line-height: 1.25; }
+.notice {
+  z-index: 1; display: block;
+  margin: 16px 0 0; padding: 16px 22px 16px 48px; border-radius: var(--r-m);
+  color: var(--text-hi); font-weight: 500; text-wrap: pretty;
+}
+/* the signal dot (::before is the glass edge) */
+.notice::after {
+  content: ""; position: absolute; left: 22px; top: 26px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft);
+}
+/* the client's numbers (2.1, 2.2 …) instead of a counter */
+.pillars--numbered li { padding-left: 64px; }
+.pillars--numbered li::before { content: attr(data-n); width: auto; min-width: 40px; height: 28px; padding: 0 9px; border-radius: 999px; }
+.pillars h4, .pillars h5 { margin: 0 0 6px; font: 400 18px/1.3 var(--font-display); color: var(--text-hi); }
+.pillars p + p { margin-top: 6px; }
+.pillars b, .read-pane b, .split-intro b, .closing b { color: var(--text-hi); font-weight: 600; }
+.cert-pane--more { margin-top: 16px; }
+.pane-title { margin: 0; padding: 18px 0 4px; font: 400 clamp(18px, 1.4vw, 21px)/1.3 var(--font-display); color: var(--text-hi); }
+/* "Why": a short table of contents beside the reading panes */
+.toc { list-style: none; margin: 0; padding: 0; }
+.toc li { border-top: 1px solid var(--line); }
+.toc li:last-child { border-bottom: 1px solid var(--line); }
+.toc .link { display: block; padding: 12px 0; text-decoration: none; color: var(--text); font-weight: 500; }
+.toc .link:hover { color: var(--text-hi); }
+.read-pane { position: relative; z-index: 1; padding: clamp(24px, 3vw, 40px); border-radius: var(--r-m); scroll-margin-top: calc(var(--header-h) + 24px); }
+.read-pane + .read-pane { margin-top: 16px; }
+.read-pane h3 { margin: 0 0 14px; font: 400 clamp(19px, 1.55vw, 23px)/1.25 var(--font-display); text-wrap: balance; }
+.read-pane p { max-width: 68ch; margin: 0 0 1em; color: var(--text); }
+.read-pane p:last-child { margin-bottom: 0; }
+/* closing: the client's last sentence as the statement, then the actions */
+.closing { padding: clamp(40px, 5vw, 80px) 0 var(--section); }
+.closing .lead { max-width: 62ch; margin: 0 0 22px; font-size: clamp(17px, 1.25vw, 19px); }
+.closing .statement { margin-bottom: 34px; }
 
 /* ---------- footer ---------- */
 .site-footer { position: relative; padding: 80px 0 36px; border-top: 1px solid var(--line); background: rgba(4, 6, 8, .72); color: var(--text-mute); font-size: 15px; }

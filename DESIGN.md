@@ -133,6 +133,7 @@ Fields 14px, chips 20px, panes 28px, buttons and choices are pills.
 - **Tile**: pane with title, one paragraph, "Learn more" + "Get an offer".
 - **Inputs**: translucent fields with a light edge; choices as pills; errors in soft red under the field.
 - **Navigation**: transparent over the hero, dark glass once scrolled; logo on a white capsule; the current page marked by a signal dot; below 1200px (or when the row does not fit) the menu opens as a full-screen dark glass.
+- **Document pages**: the page head is a picture with a `.lead-pane` glass at the lower left (h1 = category + product name with the signal dot, lead, "Get an offer", links to the sections); then `.split` sections with numbered glass lists (`.pillars--numbered`, the client's numbers 1.1, 2.1 … in pills), a `.notice` strip with the signal dot, a `.toc` beside `.read-pane` glass panes for long text, and a `.closing` with the client's last sentence as the statement.
 - **Load meter**: pill segments, a thin signal bar, the monthly gross profit in large light figures, and the client's table with the chosen row marked.
 
 ## Do's and Don'ts
