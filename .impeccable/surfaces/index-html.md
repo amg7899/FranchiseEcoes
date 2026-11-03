@@ -26,16 +26,18 @@ Candidate list (ordered by resonance):
 
 ## Direction contract
 
-THESIS: The site is the MultiCharger's own equipment body: a signal-red panel in a galvanised frame whose glazed compartments carry the arguments. It refuses the EV category's dark neon "future of mobility" page and the green eco-leaf page.
+(v2, 2026-11-03 – the client rejected v1, the red equipment body: "made in Paint", "all red strains the eye", "too obvious"; they pinned: nonchalant and mysterious, professional, modern, futuristic, clean; much more transparency – blurred glass containers with motifs; references: an eco dashboard on a glass monitor with a glowing globe, a dark engineering site with a glowing wireframe building, a cinematic dark car page. A pinned direction beats the roll.)
 
-OWN-WORLD: Daylight steel ground (#F3F5F7, #E6EAED) and white; the red body (#C8161D, edge #9E1117) as one dominant mass per viewport; graphite ink #1D2227; galvanised frames (#C9D0D6, 1px white highlight); two amber marker lights (#F2A100) at the body's top corners; compartments of smart glass, frosted white over the product's real renders, clearing on hover/focus; aluminium rating plates with four rivets for specifications; Sofia Sans Condensed as white vehicle lettering, Sofia Sans for text; radii 4–8px; soft offset shadow only under plates.
+THESIS: Night glass. Frosted panes stand in front of the client's own scene and product, so the motifs show through the glass; the product and the logo's globe appear as glowing line drawings. It refuses the red equipment body and the flat card grid.
 
-STORY: The visitor sees the red station at work where no charger exists, reads that it replaces stations where there are none, checks the specification plate and the numbers at a load they choose, and pre-orders for 2027 or asks for an offer.
+OWN-WORLD: Night ground #06090c with faint sea and ember light; panes of dark frosted glass (tint .42, blur 28px, light gradient edge, no drop shadow); line drawings in the charger's ring-light blue #4cc3ff; ice-white primary pills, glass pills; Unbounded light for display, Wix Madefor Text for text; red only in photos, renders and the logo.
 
-FIRST VIEWPORT: Header with logo, six links, BG, "Get an offer". Below, the red body fills the content width (about 1280 × 720 at 1440): top left the white lettering "Franchising mobile charging stations / ECOES MultiCharger" at about 88px; under it the statement and two plate buttons, "Pre-order" (primary, white plate) and "Get an offer"; the lower band is a wide clear-glass hatch with the beach charging photo (8/12) beside the riveted rating plate with 100 kW, 1–3, −35 … +45 °C, 230/400 V (4/12). A reflective contour line runs under the body; on load a single light sweep travels along it. Signature interaction: the load meter (10–100%) recomputes gross profit per day, month and year from the client's table. The compartments' glass is static (frosted panel overlapping a clear window); a hover effect on every compartment was dropped as generic.
+STORY: The visitor sees the red station at work by the sea through a pane of glass, reads that it replaces charging stations where they are absent, sees the network idea in the glowing globe, the products standing behind glass, the reasons sliding over the wireframe MultiCharger, the numbers at a load they choose, and pre-orders or asks for an offer.
 
-FORM: Candidate 6 of 7, special-equipment body. seed:6e1e3e127958d9f8
+FIRST VIEWPORT: Full-bleed beach photo, graded darker to the left; a frosted pane bottom left (max 680px) with "Franchising mobile charging stations" in Unbounded light (two lines at 1440), the product name with a signal dot, the statement, "Pre-order" (ice pill) and "Get an offer" (glass pill); the four key-figure chips bottom right; transparent header. On load the pane frosts over the scene (backdrop blur 0 → 28px) and the chips follow.
+
+FORM: Brief-pinned direction (client, 2026-11-03), replacing candidate 6 of 7 (special-equipment body). seed:6e1e3e127958d9f8
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-Unresolved: About us, ECOES Franchise, ECOES MultiCharger, ECOES MultiCharger Box pages follow in the next round; domain franchise.ecoes.eu not set up; GitHub Pages to be enabled by the client.
+Unresolved: About us, ECOES Franchise, ECOES MultiCharger, ECOES MultiCharger Box pages follow; domain franchise.ecoes.eu not set up; GitHub Pages to be enabled by the client; Bulgarian vs standard Cyrillic letterforms (asked).
