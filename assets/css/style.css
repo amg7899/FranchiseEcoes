@@ -677,18 +677,30 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
     linear-gradient(180deg, rgba(var(--ground-rgb), .6) 0%, rgba(var(--ground-rgb), 0) 22%, rgba(var(--ground-rgb), 0) 62%, var(--ground) 100%);
 }
 /* keep each page's product in view when the picture is cropped (phones show a narrow slice) */
-.page-hero--franchise .page-hero-media img { object-position: 70% 52%; }
 .page-hero--multicharger .page-hero-media img { object-position: 72% 58%; }
 .page-hero--box .page-hero-media img { object-position: 56% 60%; }
 /* wide screens: the scene starts beside the pane and fades into the night, so the product stands next to the glass */
 @media (min-width: 1000px) {
   .page-hero--lead .page-hero-media { left: auto; right: 0; width: 78%; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%); mask-image: linear-gradient(90deg, transparent 0, #000 22%); }
-  .page-hero--franchise .page-hero-media img { object-position: 78% 52%; }
   .page-hero--multicharger .page-hero-media img { object-position: 100% 58%; }
   .page-hero--box .page-hero-media img { object-position: 64% 60%; }
   .page-hero--lead::after { background: linear-gradient(90deg, rgba(var(--ground-rgb), .55) 0%, rgba(var(--ground-rgb), .2) 40%, rgba(var(--ground-rgb), 0) 62%), linear-gradient(180deg, rgba(var(--ground-rgb), .6) 0%, rgba(var(--ground-rgb), 0) 22%, rgba(var(--ground-rgb), 0) 62%, var(--ground) 100%); }
 }
 .lead-pane { max-width: 720px; padding: clamp(26px, 3.4vw, 52px); }
+/* ECOES Franchise: the globe as a built network instead of a photo (client, 2026-11-04): on phones above
+   the pane (its lower part behind the glass), on wide screens beside it on the right */
+.page-hero--network { flex-direction: column; justify-content: flex-end; align-items: stretch; }
+.page-hero--network::after { content: none; }
+.page-hero-globe { position: relative; z-index: -1; width: min(88vw, 470px); margin: 0 auto -12vw; pointer-events: none; }
+.page-hero-globe::before {
+  content: ""; position: absolute; inset: 8%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(76, 195, 255, .16), rgba(76, 195, 255, 0));
+}
+.page-hero-globe img { position: relative; width: 100%; height: auto; }
+@media (min-width: 1000px) {
+  .page-hero-globe { position: absolute; top: 50%; right: max(var(--gutter), calc((100vw - var(--max)) / 2)); width: min(52vw, 760px); margin: 0; transform: translateY(-46%); }
+  .page-hero--network .lead-pane { max-width: min(720px, 52vw); }
+}
 .lead-pane .hero-name { font-size: clamp(15px, 1.1vw, 16px); }   /* the product name in the page heads (the Home hero keeps its own) */
 .page-nav { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
 .section-title--sub { font-size: clamp(22px, 2.1vw, 32px); line-height: 1.25; }
