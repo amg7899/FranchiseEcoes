@@ -770,6 +770,11 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .doc .wrap > * { max-width: 920px; }
 .doc .wrap > .gallery, .doc .wrap > .shot--wide, .doc .wrap > .points, .doc .wrap > .panes,
 .doc .wrap > .compare, .doc .wrap > .figures-band, .doc .wrap > .meter-pane, .doc .wrap > .chart-pane { max-width: none; }
+.doc .wrap > .gallery--containers { max-width: 1120px; margin: clamp(36px, 4.5vw, 64px) 0 clamp(44px, 5vw, 72px); row-gap: 40px; }
+/* phones: one under the other, still at one scale (the 20 ft picture at 59% of the 40 ft one's width) */
+@media (max-width: 759px) {
+  .gallery--containers > .shot:first-child .shot-media { width: 59%; }
+}
 .doc::before {
   content: ""; position: absolute; z-index: -1; inset: 10% -20% auto auto; width: 60vw; height: 60vw; pointer-events: none;
   background: radial-gradient(closest-side, rgba(46, 110, 128, .14), rgba(46, 110, 128, 0));
@@ -816,7 +821,15 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 @media (min-width: 760px) {
   .gallery--2, .gallery--containers { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
   .gallery--sides { grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr); }
-  .gallery--containers { grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr); }
+  /* transport: the two containers at one scale (the door ends equally tall: 20 ft door = 87% of its
+     picture's height, 40 ft = 91%), standing on one floor line, the captions starting on one line */
+  .gallery--containers {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.69fr); grid-template-rows: auto auto;
+    column-gap: clamp(40px, 5.5vw, 96px); row-gap: 0; align-items: start;
+  }
+  .gallery--containers > .shot { display: grid; grid-row: span 2; grid-template-rows: subgrid; }
+  .gallery--containers .shot-media { align-self: end; }
+  .gallery--containers figcaption { margin-top: 22px; }
   .gallery--box { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); align-items: end; }
   .gallery--lpg { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); align-items: end; }
 }
