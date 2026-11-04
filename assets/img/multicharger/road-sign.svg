@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 412" width="300" height="412">
+  <!-- The road sign of the visualisation (MultiCharger page, p. 11), redrawn as a vector: the blue sign
+       for a charging station with the WC and café plates, on its post. -->
+  <defs>
+    <linearGradient id="post" x1="0" x2="1">
+      <stop offset="0" stop-color="#8d99a3"/><stop offset=".45" stop-color="#d5dce1"/><stop offset="1" stop-color="#7f8b95"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2463c2"/><stop offset="1" stop-color="#1a4fa3"/>
+    </linearGradient>
+  </defs>
+  <!-- post and base -->
+  <rect x="81" y="180" width="22" height="206" fill="url(#post)"/>
+  <path d="M62 412 L122 412 L114 384 L70 384 Z" fill="#4d5a66"/>
+  <!-- the charging-station sign -->
+  <rect x="0" y="0" width="184" height="184" rx="20" fill="#f4f7f9"/>
+  <rect x="6" y="6" width="172" height="172" rx="15" fill="url(#face)"/>
+  <rect x="13" y="13" width="158" height="158" rx="10" fill="none" stroke="#f4f7f9" stroke-width="2.5"/>
+  <g fill="#f4f7f9">
+    <rect x="46" y="40" width="62" height="106" rx="10"/>
+    <rect x="37" y="146" width="80" height="9" rx="2.5"/>
+    <rect x="124" y="62" width="20" height="24" rx="4"/>
+    <rect x="127.5" y="50" width="4" height="13" rx="1"/>
+    <rect x="136.5" y="50" width="4" height="13" rx="1"/>
+  </g>
+  <path d="M108 122 C 126 122, 134 114, 134 100 L 134 86" fill="none" stroke="#f4f7f9" stroke-width="7" stroke-linecap="round"/>
+  <rect x="56" y="51" width="42" height="19" rx="3" fill="#1f58b3"/>
+  <path d="M84 78 L66 110 L79 110 L71 137 L93 101 L80 101 L88 78 Z" fill="#1f58b3"/>
+  <!-- WC -->
+  <rect x="196" y="0" width="92" height="88" rx="11" fill="#f4f7f9"/>
+  <rect x="201" y="5" width="82" height="78" rx="8" fill="#1f58b3"/>
+  <rect x="207" y="11" width="70" height="66" rx="5" fill="#f4f7f9"/>
+  <text x="242" y="56" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="30" fill="#13213a" letter-spacing="-.5">WC</text>
+  <!-- café -->
+  <rect x="196" y="96" width="92" height="88" rx="11" fill="#f4f7f9"/>
+  <rect x="201" y="101" width="82" height="78" rx="8" fill="#1f58b3"/>
+  <rect x="207" y="107" width="70" height="66" rx="5" fill="#f4f7f9"/>
+  <g fill="#13213a">
+    <path d="M222 126 H254 V146 C254 154 248 159 240 159 H236 C228 159 222 154 222 146 Z"/>
+    <path d="M254 131 H258 C263 131 266 134 266 139 C266 144 263 147 258 147 H253 V142 H258 C260 142 261 141 261 139 C261 137 260 136 258 136 H254 Z"/>
+    <rect x="217" y="162" width="44" height="4" rx="2"/>
+  </g>
+</svg>
