@@ -496,6 +496,11 @@ p { margin: 0 0 1em; }
   background:
     radial-gradient(40% 44% at var(--l1, 74% 22%), rgba(76, 195, 255, .2), rgba(76, 195, 255, 0) 72%),
     radial-gradient(44% 48% at var(--l2, 20% 82%), rgba(46, 110, 128, .26), rgba(46, 110, 128, 0) 72%);
+  /* the light fades out before the edge of its box (tall panes such as the forms cut it off otherwise) */
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent), linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent), linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+  mask-composite: intersect;
 }
 .split-body > .glass { z-index: 1; }
 

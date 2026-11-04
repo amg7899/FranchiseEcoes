@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../assets/css/fonts.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/forms.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -73,6 +74,7 @@
         </h1>
         <p class="hero-statement">A complete turnkey platform for a mobile energy business: certified product, hardware, software, cloud billing and remote support – for a single station or a whole network.</p>
         <div class="hero-actions">
+          <a class="btn btn--ice" href="#pre-order">Pre-order</a>
           <a class="btn btn--glass btn--signal" href="../contact-us/?topic=franchise#contact-form">Get an offer</a>
         </div>
         <nav class="page-nav" aria-label="On this page">
@@ -178,9 +180,119 @@
       <p class="lead"><span translate="no">ECOES Franchise </span>does not offer you a business idea. It offers you a certified, working business with the hardware and software support without which a quick and smooth entry into this business is impossible.</p>
       <p class="statement">That is why <span translate="no">ECOES Franchise </span>is the door through which you can enter the energy business.</p>
       <div class="hero-actions">
-        <a class="btn btn--ice" href="../#pre-order">Pre-order</a>
+        <a class="btn btn--ice" href="#pre-order">Pre-order</a>
         <a class="btn btn--glass btn--signal" href="../contact-us/?topic=franchise#contact-form">Get an offer</a>
       </div>
+    </div>
+  </section>
+
+  <section class="announce" id="pre-order" aria-labelledby="announce-title">
+    <div class="wrap">
+      <h2 class="section-title" id="announce-title">Announcements</h2>
+      <ol class="notices">
+        <li>Sales of the <span translate="no">ECOES MultiCharger </span>will begin in 2027, following the completion of the certification process. Given the high level of interest – and to ensure accurate quantity planning – we are accepting pre-orders via the following form:</li>
+      </ol>
+      <div class="split-body">
+        <div class="glass form-pane">
+          <h3 class="pane-title" id="preorder-title">Pre-order form</h3>
+          <form class="js-form preorder-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="en" data-subject="ECOES Franchise website: pre-order" aria-labelledby="preorder-title">
+            <input type="hidden" name="_cc" value="bulfire@ecoes.eu">
+            <input type="hidden" name="_subject" value="ECOES Franchise website: pre-order">
+            <input type="hidden" name="_template" value="table">
+            <div class="hp" aria-hidden="true"><label for="p-hp">Leave this field empty</label><input id="p-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+            <div class="form-grid">
+              <div class="field field--wide">
+                <label for="p-name"><span class="field-no">1</span>Name of the applicant (individual or company) <span class="req" aria-hidden="true">*</span></label>
+                <input id="p-name" name="applicant" type="text" autocomplete="name" required aria-describedby="p-name-e">
+                <p class="field-error" id="p-name-e" hidden>Please enter the name of the applicant.</p>
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">2</span>Phone/WhatsApp, email, website (if applicable)</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="p-phone">Phone/WhatsApp</label>
+                    <input id="p-phone" name="phone" type="tel" autocomplete="tel">
+                  </div>
+                  <div class="field">
+                    <label for="p-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+                    <input id="p-email" name="email" type="email" autocomplete="email" required aria-describedby="p-email-e">
+                    <p class="field-error" id="p-email-e" hidden>Please enter a valid e-mail address.</p>
+                  </div>
+                  <div class="field">
+                    <label for="p-web">Website</label>
+                    <input id="p-web" name="website" type="text" inputmode="url" autocomplete="url">
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">3</span>Country and city with delivery postal code</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="p-country">Country <span class="req" aria-hidden="true">*</span></label>
+                    <input id="p-country" name="country" type="text" autocomplete="country-name" required aria-describedby="p-country-e">
+                    <p class="field-error" id="p-country-e" hidden>Please enter the country.</p>
+                  </div>
+                  <div class="field">
+                    <label for="p-city">City</label>
+                    <input id="p-city" name="city" type="text" autocomplete="address-level2">
+                  </div>
+                  <div class="field">
+                    <label for="p-zip">Postal code</label>
+                    <input id="p-zip" name="postal_code" type="text" autocomplete="postal-code">
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="field-group choice" aria-describedby="p-type-e">
+                <legend><span class="field-no">4</span>Type <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="type" value="ECOES MultiCharger" required><span translate="no">ECOES MultiCharger</span></label>
+                  <label class="choice-item"><input type="radio" name="type" value="ECOES MultiCharger Box"><span translate="no">ECOES MultiCharger Box</span></label>
+                </div>
+                <p class="field-error" id="p-type-e" hidden>Please choose the type.</p>
+              </fieldset>
+              <fieldset class="field-group choice">
+                <legend><span class="field-no">5</span>Fuel type</legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="fuel" value="Diesel"><span>Diesel</span></label>
+                  <label class="choice-item"><input type="radio" name="fuel" value="LPG"><span>LPG</span></label>
+                  <label class="choice-item"><input type="radio" name="fuel" value="PNG (methane)"><span>PNG (methane)</span></label>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="p-qty"><span class="field-no">6</span>Desired quantity – pcs.</label>
+                <input id="p-qty" name="quantity" type="number" min="1" step="1" inputmode="numeric">
+              </div>
+              <fieldset class="field-group choice">
+                <legend><span class="field-no">7</span>Desired emission level</legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="emission_level" value="EU Stage II/III"><span>EU Stage II/III</span></label>
+                  <label class="choice-item"><input type="radio" name="emission_level" value="EU Stage V"><span>EU Stage V</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="field-group choice field--wide">
+                <legend><span class="field-no">8</span>Type of mobility – trailer or truck for <span translate="no">ECOES MultiCharger</span></legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="mobility" value="Trailer"><span>Trailer</span></label>
+                  <label class="choice-item"><input type="radio" name="mobility" value="Truck"><span>Truck</span></label>
+                </div>
+              </fieldset>
+              <div class="field field--wide field--check">
+                <input id="p-consent" name="consent" type="checkbox" value="yes" required aria-describedby="p-consent-e">
+                <label for="p-consent">I agree that <span translate="no">ECOES JV </span>may use the data in this form to answer my inquiry.</label>
+                <p class="field-error" id="p-consent-e" hidden>Please confirm, so that we can answer you.</p>
+              </div>
+            </div>
+            <p class="form-note">Submitting a pre-order is for planning purposes only. It carries no obligation to purchase or make a payment.</p>
+            <div class="form-actions">
+              <button class="btn btn--ice" type="submit"><span class="btn-label">Submit pre-order</span></button>
+            </div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
+      <ol class="notices" start="2">
+        <li>Orders for delivery in 2027 will be exempt from the onboarding fee for the <span translate="no">ECOES Franchise </span>remote ecosystem.</li>
+      </ol>
     </div>
   </section>
 

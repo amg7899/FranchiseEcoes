@@ -53,11 +53,15 @@
   new MutationObserver(fit).observe(root, { attributes: true, attributeFilter: ['lang'] });
 })();
 
-// Language. The EN/BG switch links each page to the same page in the other language. When the
-// browser translates a page into a language the site has itself (it sets <html lang>, e.g. Chrome
-// translating English into Bulgarian), the visitor is taken to our own version of that page. A
-// language picked with the switch is kept for the session; its pages are then marked
-// translate="no", so the browser does not translate them again.
+// Language. The EN/BG switch links each page to the same page in the other language.
+// On the first arrival from outside the site (a link, a search, an address typed in), a visitor whose
+// browser asks for a language the site has gets that version, everybody else the English one (client,
+// 2026-11-04: foreigners should get English automatically); the browser itself then offers to translate
+// it into their own language. A language picked with the switch is remembered in this browser and always
+// wins; its pages are marked translate="no", so the browser does not translate them again. When the
+// browser translates a page into a language the site has (it sets <html lang>, e.g. Chrome translating
+// English into Bulgarian), the visitor is taken to our own version of that page. Search engines and
+// other robots are never redirected, so both languages stay findable.
 (function () {
   var root = document.documentElement;
   var box = document.querySelector('.lang-switch');
@@ -70,17 +74,42 @@
     versions[a.getAttribute('hreflang')] = a;
   });
   function chosen() {
-    try { return window.sessionStorage.getItem(KEY); } catch (e) { return null; }
+    try { return window.localStorage.getItem(KEY) || window.sessionStorage.getItem(KEY); } catch (e) { return null; }
+  }
+  function remember(lang) {
+    try { window.localStorage.setItem(KEY, lang); } catch (e) {
+      try { window.sessionStorage.setItem(KEY, lang); } catch (err) { /* storage blocked */ }
+    }
   }
   // switching keeps the query and the anchor (e.g. contact-us/?topic=multicharger#contact-form)
   function target(a) { return a.href.split(/[?#]/)[0] + window.location.search + window.location.hash; }
   box.addEventListener('click', function (e) {
     var a = e.target.closest('a[hreflang]');
     if (!a || a === current) return;
-    try { window.sessionStorage.setItem(KEY, a.getAttribute('hreflang')); } catch (err) { /* storage blocked */ }
+    remember(a.getAttribute('hreflang'));
     a.href = target(a);
   });
   if (chosen() === pageLang) root.setAttribute('translate', 'no');
+
+  // the first arrival: the visitor's language if the site has it, otherwise English
+  function fromOutside() {
+    if (!document.referrer) return true;
+    try { return new URL(document.referrer).host !== window.location.host; } catch (e) { return true; }
+  }
+  function wanted() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+    for (var i = 0; i < list.length; i++) {
+      var l = String(list[i]).toLowerCase().split('-')[0];
+      if (versions[l]) return l;
+    }
+    return 'en';
+  }
+  var robot = /bot|crawl|spider|slurp|preview|lighthouse|headless/i.test(navigator.userAgent || '');
+  if (!chosen() && !robot && fromOutside()) {
+    var want = wanted();
+    if (want !== pageLang && versions[want]) { window.location.replace(target(versions[want])); return; }
+  }
+
   function follow() {
     var to = (root.getAttribute('lang') || '').toLowerCase().split('-')[0];
     if (to === pageLang || !versions[to] || chosen() === pageLang) return;

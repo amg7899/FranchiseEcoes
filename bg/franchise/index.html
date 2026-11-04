@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../assets/css/fonts.css">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <script src="../../assets/js/main.js" defer></script>
+  <script src="../../assets/js/forms.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Към съдържанието</a>
@@ -73,6 +74,7 @@
         </h1>
         <p class="hero-statement">Цялостна платформа „до ключ“ за мобилен енергиен бизнес: сертифициран продукт, хардуер, софтуер, облачен билинг и дистанционна поддръжка – за една станция или цяла мрежа.</p>
         <div class="hero-actions">
+          <a class="btn btn--ice" href="#pre-order">Предварителна заявка</a>
           <a class="btn btn--glass btn--signal" href="../contact-us/?topic=franchise#contact-form">Вземете оферта</a>
         </div>
         <nav class="page-nav" aria-label="На тази страница">
@@ -178,9 +180,119 @@
       <p class="lead"><span translate="no">ECOES Franchise </span>не ви предлага идея за бизнес. Предлага ви сертифициран работещ бизнес с хардуерно и софтуерно осигуряване, без което бързото и безпроблемно влизане в този бизнес е невъзможно.</p>
       <p class="statement">Затова<span translate="no"> ECOES Franchise </span>е вратата, през която може да влезете в енергийния бизнес.</p>
       <div class="hero-actions">
-        <a class="btn btn--ice" href="../#pre-order">Предварителна заявка</a>
+        <a class="btn btn--ice" href="#pre-order">Предварителна заявка</a>
         <a class="btn btn--glass btn--signal" href="../contact-us/?topic=franchise#contact-form">Вземете оферта</a>
       </div>
+    </div>
+  </section>
+
+  <section class="announce" id="pre-order" aria-labelledby="announce-title">
+    <div class="wrap">
+      <h2 class="section-title" id="announce-title">Съобщения</h2>
+      <ol class="notices">
+        <li>Продажбите на<span translate="no"> ECOES MultiCharger </span>ще започнат през 2027 г. след приключване на процеса на сертификация. Предвид големия интерес и за да се осигури точно планиране на количествата, приемаме предварителни заявки чрез изпращане на следния формуляр:</li>
+      </ol>
+      <div class="split-body">
+        <div class="glass form-pane">
+          <h3 class="pane-title" id="preorder-title">Формуляр за предварителна заявка</h3>
+          <form class="js-form preorder-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="bg" data-subject="Сайт ECOES Franchise: предварителна заявка" aria-labelledby="preorder-title">
+            <input type="hidden" name="_cc" value="bulfire@ecoes.eu">
+            <input type="hidden" name="_subject" value="Сайт ECOES Franchise: предварителна заявка">
+            <input type="hidden" name="_template" value="table">
+            <div class="hp" aria-hidden="true"><label for="p-hp">Оставете това поле празно</label><input id="p-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+            <div class="form-grid">
+              <div class="field field--wide">
+                <label for="p-name"><span class="field-no">1</span>Име на заявителя (физическо лице или фирма) <span class="req" aria-hidden="true">*</span></label>
+                <input id="p-name" name="applicant" type="text" autocomplete="name" required aria-describedby="p-name-e">
+                <p class="field-error" id="p-name-e" hidden>Моля, въведете името на заявителя.</p>
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">2</span>Телефон/WhatsApp, имейл, уебсайт (ако има)</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="p-phone">Телефон/WhatsApp</label>
+                    <input id="p-phone" name="phone" type="tel" autocomplete="tel">
+                  </div>
+                  <div class="field">
+                    <label for="p-email">Имейл <span class="req" aria-hidden="true">*</span></label>
+                    <input id="p-email" name="email" type="email" autocomplete="email" required aria-describedby="p-email-e">
+                    <p class="field-error" id="p-email-e" hidden>Моля, въведете валиден имейл адрес.</p>
+                  </div>
+                  <div class="field">
+                    <label for="p-web">Уебсайт</label>
+                    <input id="p-web" name="website" type="text" inputmode="url" autocomplete="url">
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">3</span>Държава и град с пощенски код за доставка</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="p-country">Държава <span class="req" aria-hidden="true">*</span></label>
+                    <input id="p-country" name="country" type="text" autocomplete="country-name" required aria-describedby="p-country-e">
+                    <p class="field-error" id="p-country-e" hidden>Моля, въведете държавата.</p>
+                  </div>
+                  <div class="field">
+                    <label for="p-city">Град</label>
+                    <input id="p-city" name="city" type="text" autocomplete="address-level2">
+                  </div>
+                  <div class="field">
+                    <label for="p-zip">Пощенски код</label>
+                    <input id="p-zip" name="postal_code" type="text" autocomplete="postal-code">
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="field-group choice" aria-describedby="p-type-e">
+                <legend><span class="field-no">4</span>Тип <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="type" value="ECOES MultiCharger" required><span translate="no">ECOES MultiCharger</span></label>
+                  <label class="choice-item"><input type="radio" name="type" value="ECOES MultiCharger Box"><span translate="no">ECOES MultiCharger Box</span></label>
+                </div>
+                <p class="field-error" id="p-type-e" hidden>Моля, изберете тип.</p>
+              </fieldset>
+              <fieldset class="field-group choice">
+                <legend><span class="field-no">5</span>Вид гориво</legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="fuel" value="Дизел"><span>Дизел</span></label>
+                  <label class="choice-item"><input type="radio" name="fuel" value="LPG"><span>LPG</span></label>
+                  <label class="choice-item"><input type="radio" name="fuel" value="PNG (метан)"><span>PNG (метан)</span></label>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="p-qty"><span class="field-no">6</span>Желано количество – бр.</label>
+                <input id="p-qty" name="quantity" type="number" min="1" step="1" inputmode="numeric">
+              </div>
+              <fieldset class="field-group choice">
+                <legend><span class="field-no">7</span>Желана норма за емисии</legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="emission_level" value="EU Stage II/III"><span>EU Stage II/III</span></label>
+                  <label class="choice-item"><input type="radio" name="emission_level" value="EU Stage V"><span>EU Stage V</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="field-group choice field--wide">
+                <legend><span class="field-no">8</span>Вид мобилност – ремарке или камион за<span translate="no"> ECOES MultiCharger</span></legend>
+                <div class="choices">
+                  <label class="choice-item"><input type="radio" name="mobility" value="Ремарке"><span>Ремарке</span></label>
+                  <label class="choice-item"><input type="radio" name="mobility" value="Камион"><span>Камион</span></label>
+                </div>
+              </fieldset>
+              <div class="field field--wide field--check">
+                <input id="p-consent" name="consent" type="checkbox" value="yes" required aria-describedby="p-consent-e">
+                <label for="p-consent">Съгласявам се<span translate="no"> ECOES JV </span>да използва данните от тази форма, за да отговори на запитването ми.</label>
+                <p class="field-error" id="p-consent-e" hidden>Моля, потвърдете, за да можем да ви отговорим.</p>
+              </div>
+            </div>
+            <p class="form-note">Изпращането на предварителна заявка служи единствено за целите на планирането. То не създава задължение за покупка или извършване на плащане.</p>
+            <div class="form-actions">
+              <button class="btn btn--ice" type="submit"><span class="btn-label">Изпратете предварителна заявка</span></button>
+            </div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
+      <ol class="notices" start="2">
+        <li>Поръчките за доставка през 2027 г. ще бъдат освободени от таксата за включване в дистанционната екосистема на<span translate="no"> ECOES Franchise</span>.</li>
+      </ol>
     </div>
   </section>
 
