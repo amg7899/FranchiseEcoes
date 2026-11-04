@@ -10,7 +10,7 @@ colors:
   ice: "#f2f5f7"
   text-hi: "#edf2f4"
   text: "#c3ced5"
-  text-mute: "#a3b3bf"
+  text-mute: "#b0bfca"
   signal: "#4cc3ff"
   line-glow: "#7fd8ff"
   red: "#e3262d"
@@ -102,7 +102,7 @@ v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in
 ## Colors
 
 - **Ground** `#112031` / `#162a3f` (blue hour) – the page; **Night** `#06090c` – only the Home hero and the ink on light buttons.
-- **Text**: `#edf2f4` headings, `#c3ced5` body, `#a3b3bf` notes (lifted with the lighter ground: ≥ 4.5:1 even on the brightest pane; the hero keeps `#8f9ca6`). Glass tint `rgba(30, 50, 72, .36)`, a touch lighter than the ground (the hero pane keeps `rgba(14, 21, 28, .42)`).
+- **Text**: `#edf2f4` headings, `#c3ced5` body, `#b0bfca` notes (lifted twice, with the lighter ground and for easy reading: ≥ 5:1 even on the brightest pane; the hero keeps `#8f9ca6`). Glass tint `rgba(30, 50, 72, .36)`, a touch lighter than the ground (the hero pane keeps `rgba(14, 21, 28, .42)`).
 - **Ice** `#f2f5f7` – the primary button.
 - **Signal** `#4cc3ff` (lines `#7fd8ff`) – the charger's ring light: status dots on "Get an offer", the current page, the selected chart bar and load, radio/checkbox accents, the line drawings.
 - **Glass tint** `rgba(14,21,28,.42)` with a 160° white sheen and a light gradient edge; blur 28px, saturate 1.6.
@@ -114,6 +114,8 @@ v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in
 ## Typography
 
 Unbounded (NaN; OFL) light for display – wide, calm, futuristic; Wix Madefor Text (Wix/Dalton Maag; OFL) for text and UI. Both self-hosted, Latin + Cyrillic; with `lang="bg"` both use the Bulgarian Cyrillic forms.
+
+Size floor (client, 2026-11-04: "nobody should strain to read"): body 17px; texts in panes, tiles, forms, captions, notes, tables and the footer 16–16.5px; labels 15–15.5px; only chart axis labels and number badges at 13.5–15px. Figures never break inside a number (`overflow-wrap: normal` on the readouts and key figures; on narrow phones the chips get smaller padding instead).
 
 ## Layout
 
@@ -135,7 +137,7 @@ Fields 14px, chips 20px, panes 28px, buttons and choices are pills; paper (docum
 - **Offer card**: the product render (cut out, `object-fit: contain`) stands behind the pane, sharp above it, frosted where the glass covers it.
 - **Tile**: pane with title, one paragraph, "Learn more" + "Get an offer".
 - **Inputs**: translucent fields with a light edge; choices as pills; errors in soft red under the field.
-- **Navigation**: transparent over the hero, dark glass once scrolled; the logo in its night variant (ecoes.eu's own: globe lines #93a3b6, red #ff3340 with a dark outline), 54px straight on the header, no plate; the current page marked by a signal dot; below 1200px (or when the row does not fit) the menu opens as a full-screen dark glass.
+- **Navigation**: transparent over the hero, dark glass once scrolled; the logo in its night variant (ecoes.eu's own: globe lines #93a3b6, red #ff3340 with a dark outline), 62px (50px on phones) straight on the header, no plate; the current page marked by a signal dot; below 1200px (or when the row does not fit) the menu opens as a full-screen dark glass.
 - **Document pages**: the page head is a picture with a `.lead-pane` glass at the lower left (h1 = category + product name with the signal dot, lead, "Get an offer", links to the sections); then `.split` sections with numbered glass lists (`.pillars--numbered`, the client's numbers 1.1, 2.1 … in pills), a `.notice` strip with the signal dot, a `.toc` beside `.read-pane` glass panes for long text, and a `.closing` with the client's last sentence as the statement.
 - **Load meter**: pill segments, a thin signal bar, the monthly gross profit in large light figures, and the client's table with the chosen row marked.
 - **Product pages** (MultiCharger, Box): a key-figures band of chips under the head; `.doc` sections (reading column 920px, wide galleries, charts and panes), `.doc-sub` headings, `.callout` (signal dot), `.manifest` (a key paragraph in Unbounded light), `.points` (the 12 points, numbers in signal blue), `.panes`, `.bullets`, `.gallery` of framed photos and cut-outs, bar charts (`.hbars`, stacked `.vbars`), the full meter table, `.compare` (truck = MultiCharger + MultiCharger, taxi = Box).
