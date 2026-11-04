@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Payment by QR code: a hand holding a phone with a QR code on the screen (drawn for the site) -->
+  <rect x="44" y="8" width="52" height="92" rx="9" fill="#f2f5f7"/>
+  <rect x="49" y="18" width="42" height="68" rx="3" fill="#112031"/>
+  <rect x="62" y="12" width="16" height="2.6" rx="1.3" fill="#112031" opacity=".45"/>
+  <g fill="#4cc3ff">
+    <!-- the three corner squares -->
+    <path d="M53 29h12v12h-12z M56 32v6h6v-6z" fill-rule="evenodd"/>
+    <path d="M75 29h12v12h-12z M78 32v6h6v-6z" fill-rule="evenodd"/>
+    <path d="M53 51h12v12h-12z M56 54v6h6v-6z" fill-rule="evenodd"/>
+    <rect x="58" y="34" width="2" height="2"/><rect x="80" y="34" width="2" height="2"/><rect x="58" y="56" width="2" height="2"/>
+    <!-- the data -->
+    <rect x="68" y="29" width="4" height="4"/><rect x="68" y="36" width="4" height="4"/><rect x="72" y="44" width="4" height="4"/>
+    <rect x="53" y="44" width="4" height="4"/><rect x="61" y="44" width="4" height="4"/><rect x="68" y="51" width="4" height="4"/>
+    <rect x="76" y="51" width="4" height="4"/><rect x="83" y="44" width="4" height="4"/><rect x="83" y="55" width="4" height="4"/>
+    <rect x="72" y="58" width="4" height="4"/><rect x="79" y="62" width="4" height="4"/><rect x="68" y="62" width="4" height="4"/>
+  </g>
+  <!-- a scan line over the code -->
+  <rect x="50" y="70" width="40" height="2" rx="1" fill="#4cc3ff" opacity=".0"/>
+  <g fill="#f2f5f7">
+    <!-- fingers along the right edge of the phone -->
+    <path d="M94 54 c6 0 9 3 9 7 s-3 7 -9 7 z"/>
+    <path d="M94 66 c6 0 9.6 3 9.6 7 s-3.6 7 -9.6 7 z"/>
+    <path d="M94 78 c5.4 0 8.6 3 8.6 6.6 s-3.2 6.6 -8.6 6.6 z"/>
+    <!-- the hand under the phone, the thumb up its left edge -->
+    <path d="M40 96 C40 88 42 80 46 74 C48.4 70.6 52.8 71.4 53.2 75.6 L54.6 88 L94 88 C99 88 102 92 101 97 L98 108 C96.6 113 92 117 86.6 117 L58 117 C48 117 40 108 40 96 Z"/>
+    <rect x="52" y="113" width="32" height="15" rx="3"/>
+  </g>
+</svg>

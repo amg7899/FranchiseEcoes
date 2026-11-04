@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Payment by card: a hand holding a contactless card (drawn for the site, ECOES Franchise page) -->
+  <g fill="#f2f5f7">
+    <!-- the fingers holding the card from below -->
+    <path d="M62 74 c4 -6 13 -9 19 -7 c4 1.4 4.6 6 1.4 8.4 l-8 5.2 z"/>
+    <path d="M66 84 c5 -5 15 -7 20.5 -4.4 c3.6 1.8 3.6 6.4 0 8.4 l-10 5 z"/>
+  </g>
+  <g transform="rotate(-20 82 46)">
+    <rect x="47" y="25" width="70" height="44" rx="7" fill="#4cc3ff"/>
+    <rect x="47" y="34" width="70" height="7" fill="#2f8fc4" opacity=".55"/>
+    <g fill="none" stroke="#f2f5f7" stroke-width="3.6" stroke-linecap="round">
+      <path d="M93 41 a7 7 0 0 1 0 12"/>
+      <path d="M99 37 a12 12 0 0 1 0 20"/>
+      <path d="M105 33 a17 17 0 0 1 0 28"/>
+    </g>
+  </g>
+  <g fill="#f2f5f7">
+    <!-- palm and back of the hand -->
+    <path d="M23 103 L49 77 C53 73 58 71.5 63 72.4 L72 74 C76 74.8 78 78 77 82 L74 92 C72.6 97 69 101 64 103.4 L46 112 C42 114 37.5 113.2 34.6 110.2 Z"/>
+    <!-- the thumb pressing on the card -->
+    <path d="M52 77 C55 68 60 60 66 55.5 C69.6 52.8 74.4 54.6 74.6 59 C74.8 62.4 73 65.2 70.6 67.6 L61 77.6 Z"/>
+    <!-- the cuff -->
+    <rect x="6" y="104" width="30" height="15" rx="3" transform="rotate(-45 21 111.5)"/>
+  </g>
+</svg>
