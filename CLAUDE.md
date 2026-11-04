@@ -6,6 +6,7 @@ Static site (plain HTML + CSS + a little JS, no build step) for ECOES Franchise,
 - The client writes in Bulgarian (sometimes English); answer in the language of their message.
 - Use the client's text verbatim. Do not add copy, taglines or sections. Fix only obvious typos, and report every fix. When unsure, ask.
 - After every change: commit, push to `main`, and send the live link plus screenshots.
+- After every change to a CSS or JS file run `python3 tools/bust.py` before committing: every page links its CSS/JS with `?v=<hash>` (GitHub Pages lets browsers keep files for 10 minutes and a normal reload does not re-check them, so without it the client saw the old layout after a deploy, 2026-11-04). New pages need the same `?v=` links (the script adds them).
 - The client chose (2026-11-03): English + Bulgarian, static site like ecoes.eu (edits through Claude), the design left to us ("choose the best"). Brief: professional, modern, futuristic but true to the subject, clean, trustworthy, not looking AI-made; transparent containers with visible motifs; the strongest points on Home as linked containers, each with a "get offer" link to the contact form (as on ecoes.eu); only the logo is the same as ecoes.eu.
 
 ## Skills
