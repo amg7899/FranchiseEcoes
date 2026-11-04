@@ -11,7 +11,7 @@
   --ice: #f2f5f7;
   --text-hi: #edf2f4;
   --text: #c3ced5;
-  --text-mute: #8f9ca6;
+  --text-mute: #a3b3bf;   /* lifted with the lighter ground (2026-11-04), ≥ 4.5:1 on the brightest pane */
   --line: rgba(255, 255, 255, .1);
   --line-strong: rgba(255, 255, 255, .2);
   --red: #e3262d;
@@ -20,8 +20,13 @@
   --ok: #7fd6a4;
   --error: #ff8a8f;
 
-  --glass-tint: rgba(14, 21, 28, .42);
-  --glass-tint-strong: rgba(12, 18, 24, .58);
+  --glass-tint: rgba(30, 50, 72, .36);
+  --glass-tint-strong: rgba(20, 36, 54, .55);
+  /* the page ground (2026-11-04, client: "a bit lighter"): a deep blue hour, the sky of the hero photo after dusk;
+     the Home hero keeps its night (--night-0) */
+  --ground: #112031;
+  --ground-rgb: 17, 32, 49;
+  --ground-1: #162a3f;
   --blur: 28px;
 
   --font-display: "Unbounded", "Segoe UI", Arial, sans-serif;
@@ -44,7 +49,7 @@ html {
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-h) + 16px);
   color-scheme: dark;
-  scrollbar-color: #2a3640 var(--night-0);
+  scrollbar-color: #34495c var(--ground);
 }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
@@ -57,18 +62,18 @@ body {
   font-weight: 400;
   line-height: 1.65;
   color: var(--text);
-  background: var(--night-0);
+  background: var(--ground);
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
-/* the night around everything: faint sea and ember light, far away */
+/* the blue hour around everything: sea light from the upper right, a trace of the sunset on the left */
 body::before {
   content: ""; position: fixed; inset: 0; z-index: -10; pointer-events: none;
   background:
-    radial-gradient(60vw 40vw at 88% 4%, rgba(46, 110, 128, .16), transparent 70%),
-    radial-gradient(50vw 36vw at 6% 58%, rgba(170, 30, 36, .08), transparent 70%),
-    radial-gradient(70vw 50vw at 60% 110%, rgba(38, 72, 96, .14), transparent 70%),
-    var(--night-0);
+    radial-gradient(60vw 40vw at 88% 4%, rgba(70, 150, 190, .2), transparent 70%),
+    radial-gradient(50vw 36vw at 6% 58%, rgba(190, 70, 60, .07), transparent 70%),
+    radial-gradient(70vw 50vw at 60% 110%, rgba(56, 108, 150, .22), transparent 70%),
+    var(--ground);
 }
 img { display: block; max-width: 100%; height: auto; }
 picture { display: block; }
@@ -116,7 +121,7 @@ p { margin: 0 0 1em; }
 }
 .glass--strong { --glass-tint: var(--glass-tint-strong); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass { background: rgba(16, 24, 31, .94); }
+  .glass { background: rgba(26, 44, 64, .94); }
 }
 
 /* ---------- type ---------- */
@@ -196,7 +201,7 @@ p { margin: 0 0 1em; }
   transition: background-color .3s ease-out, border-color .3s ease-out;
 }
 .is-scrolled .site-header, .menu-open .site-header {
-  background: rgba(7, 11, 15, .62);
+  background: rgba(var(--ground-rgb), .66);
   -webkit-backdrop-filter: blur(22px) saturate(1.5);
   backdrop-filter: blur(22px) saturate(1.5);
   border-bottom-color: var(--line);
@@ -206,12 +211,12 @@ p { margin: 0 0 1em; }
   margin: 0 auto; padding: 0 var(--gutter);
   display: flex; align-items: center; gap: 28px;
 }
-.brand {
-  flex: none; display: block; padding: 6px 12px;
-  border-radius: 14px; background: rgba(255, 255, 255, .92);
-  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .8);
+/* the logo for dark grounds (ecoes.eu's own night variant), straight on the header, no plate */
+.brand { flex: none; display: block; padding: 4px 0; border-radius: 10px; }
+.brand img { width: auto; height: 54px; }
+@media (max-width: 479px) {
+  .brand img { height: 46px; }
 }
-.brand img { width: auto; height: 40px; }
 .main-nav { display: none; flex: 1 1 auto; min-width: 0; }
 .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 0 clamp(16px, 1.6vw, 30px); }
 .main-nav a {
@@ -268,7 +273,7 @@ p { margin: 0 0 1em; }
   position: fixed; inset: 0; z-index: 49;
   overflow-y: auto;
   padding: calc(var(--header-h) + 28px) var(--gutter) 48px;
-  background: rgba(6, 9, 12, .74);
+  background: rgba(var(--ground-rgb), .82);
   -webkit-backdrop-filter: blur(30px) saturate(1.4);
   backdrop-filter: blur(30px) saturate(1.4);
 }
@@ -284,7 +289,15 @@ p { margin: 0 0 1em; }
 .menu-open { overflow: hidden; }
 
 /* ---------- hero: the scene, and a pane of frosted glass in front of it ---------- */
+/* the Home hero keeps its night exactly as before (client, 2026-11-04: nothing in the hero changes) */
 .hero {
+  --glass-tint: rgba(14, 21, 28, .42);
+  --text-mute: #8f9ca6;
+  background:
+    radial-gradient(60vw 40vw at 88% 4%, rgba(46, 110, 128, .16), transparent 70%),
+    radial-gradient(50vw 36vw at 6% 58%, rgba(170, 30, 36, .08), transparent 70%),
+    radial-gradient(70vw 50vw at 60% 110%, rgba(38, 72, 96, .14), transparent 70%),
+    var(--night-0);
   position: relative; isolation: isolate; overflow: hidden;
   min-height: max(100svh, 680px);
   padding: calc(var(--header-h) + 24px) var(--gutter) clamp(28px, 4vw, 56px);
@@ -328,7 +341,7 @@ p { margin: 0 0 1em; }
 }
 .hero-statement { max-width: 40ch; margin: 0 0 30px; font-size: clamp(16.5px, 1.2vw, 18.5px); color: var(--text); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.chip { padding: 14px 18px 12px; border-radius: var(--r-m); --blur: 22px; --glass-tint: rgba(14, 21, 28, .3); }
+.chip { padding: 14px 18px 12px; border-radius: var(--r-m); --blur: 22px; --glass-tint: rgba(30, 50, 72, .3); }
 .chip dd { margin: 0; font: 300 clamp(18px, 1.5vw, 23px)/1.1 var(--font-display); letter-spacing: -.01em; color: var(--text-hi); white-space: nowrap; }
 .chip dt { margin-top: 4px; font-size: 13.5px; line-height: 1.35; color: var(--text); }
 .chip { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
@@ -367,7 +380,7 @@ p { margin: 0 0 1em; }
 @keyframes surface { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 /* ---------- intro statement and the three offers ---------- */
-.intro { position: relative; padding: var(--section) 0 clamp(56px, 6vw, 96px); overflow: hidden; }
+.intro { position: relative; padding: var(--section) 0 clamp(56px, 6vw, 96px); overflow: hidden; background: linear-gradient(180deg, var(--night-0) 0, rgba(6, 9, 12, 0) min(48vh, 420px)); }   /* from the night of the hero into the blue hour */
 .intro-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: center; }
 .intro .globe { width: min(78vw, 420px); margin: 0 auto; opacity: .95; }
 .js-draw { display: none; }
@@ -594,7 +607,7 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="number"]
 }
 textarea { min-height: 160px; resize: vertical; }
 select { appearance: none; padding-right: 46px; background: rgba(255, 255, 255, .04) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23edf2f4' stroke-width='1.6'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 16px center / 18px no-repeat; }
-select option { background: var(--night-1); color: var(--text-hi); }
+select option { background: var(--ground-1); color: var(--text-hi); }
 input:hover, select:hover, textarea:hover { border-color: rgba(255, 255, 255, .34); }
 input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outline-offset: 2px; border-color: var(--ice); background: rgba(255, 255, 255, .07); }
 [aria-invalid="true"] { border-color: var(--error) !important; }
@@ -635,7 +648,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .page-hero-media img { width: 100%; height: 100%; object-fit: cover; }
 .page-hero::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(6, 9, 12, .5), rgba(6, 9, 12, .15) 40%, var(--night-0) 100%);
+  background: linear-gradient(180deg, rgba(var(--ground-rgb), .5), rgba(var(--ground-rgb), .15) 40%, var(--ground) 100%);
 }
 .page-title { margin: 0 0 clamp(36px, 4vw, 56px); font: 300 clamp(40px, 6vw, 92px)/1 var(--font-display); letter-spacing: -.035em; }
 .offices { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
@@ -660,8 +673,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 /* the page-head scenes are sharp photos: darker towards the pane, like the Home hero */
 .page-hero--lead::after {
   background:
-    linear-gradient(90deg, rgba(6, 9, 12, .72) 0%, rgba(6, 9, 12, .38) 38%, rgba(6, 9, 12, 0) 68%),
-    linear-gradient(180deg, rgba(6, 9, 12, .6) 0%, rgba(6, 9, 12, 0) 22%, rgba(6, 9, 12, 0) 62%, var(--night-0) 100%);
+    linear-gradient(90deg, rgba(var(--ground-rgb), .72) 0%, rgba(var(--ground-rgb), .38) 38%, rgba(var(--ground-rgb), 0) 68%),
+    linear-gradient(180deg, rgba(var(--ground-rgb), .6) 0%, rgba(var(--ground-rgb), 0) 22%, rgba(var(--ground-rgb), 0) 62%, var(--ground) 100%);
 }
 /* keep each page's product in view when the picture is cropped (phones show a narrow slice) */
 .page-hero--franchise .page-hero-media img { object-position: 70% 52%; }
@@ -673,7 +686,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
   .page-hero--franchise .page-hero-media img { object-position: 78% 52%; }
   .page-hero--multicharger .page-hero-media img { object-position: 100% 58%; }
   .page-hero--box .page-hero-media img { object-position: 64% 60%; }
-  .page-hero--lead::after { background: linear-gradient(90deg, rgba(6, 9, 12, .55) 0%, rgba(6, 9, 12, .2) 40%, rgba(6, 9, 12, 0) 62%), linear-gradient(180deg, rgba(6, 9, 12, .6) 0%, rgba(6, 9, 12, 0) 22%, rgba(6, 9, 12, 0) 62%, var(--night-0) 100%); }
+  .page-hero--lead::after { background: linear-gradient(90deg, rgba(var(--ground-rgb), .55) 0%, rgba(var(--ground-rgb), .2) 40%, rgba(var(--ground-rgb), 0) 62%), linear-gradient(180deg, rgba(var(--ground-rgb), .6) 0%, rgba(var(--ground-rgb), 0) 22%, rgba(var(--ground-rgb), 0) 62%, var(--ground) 100%); }
 }
 .lead-pane { max-width: 720px; padding: clamp(26px, 3.4vw, 52px); }
 .page-nav { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -724,7 +737,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .figures-row .chip { padding: 18px 20px 16px; }
 .figures-row .chip dd { font-size: clamp(20px, 2vw, 30px); white-space: normal; }
 .figures-band--inner { margin: 8px 0 clamp(36px, 4vw, 56px); padding: 0; }
-.figures-band--inner .chip { --glass-tint: rgba(14, 21, 28, .5); }
+.figures-band--inner .chip { --glass-tint: rgba(30, 50, 72, .45); }
 /* a document section: wide reading column, wide figures */
 .doc { position: relative; padding: var(--section) 0 0; overflow-x: clip; }
 .doc .wrap > * { max-width: 920px; }
@@ -877,8 +890,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
   background: radial-gradient(closest-side, rgba(76, 195, 255, .1), rgba(76, 195, 255, 0));
 }
 .org-jv { --wire: rgba(76, 195, 255, .7); display: flex; flex-wrap: wrap; align-items: center; gap: 22px 32px; max-width: 960px; margin: 0 auto; padding: clamp(24px, 3vw, 36px); }
-.org-jv .logo-plate { padding: 12px 18px; }
-.org-jv .logo-plate img { height: clamp(64px, 7vw, 88px); }
+.org-logo { flex: none; width: auto; height: clamp(72px, 8vw, 104px); }
 .org-jv > div { flex: 1 1 300px; min-width: 0; }
 .org-jv h2 { margin: 0 0 8px; font: 400 clamp(22px, 2vw, 30px)/1.2 var(--font-display); letter-spacing: -.01em; }
 .org-jv p { margin: 0; font-size: clamp(16.5px, 1.2vw, 18.5px); color: var(--text); }
@@ -1041,12 +1053,12 @@ html.lightbox-open { overflow: hidden; }
 .lightbox-btn[hidden] { display: none; }
 
 /* ---------- footer ---------- */
-.site-footer { position: relative; padding: 80px 0 36px; border-top: 1px solid var(--line); background: rgba(4, 6, 8, .72); color: var(--text-mute); font-size: 15px; }
+.site-footer { position: relative; padding: 80px 0 36px; border-top: 1px solid var(--line); background: rgba(8, 15, 24, .45); color: var(--text-mute); font-size: 15px; }
 .site-footer a:not(.btn) { color: var(--text); }
 .site-footer a:not(.btn):hover { color: var(--text-hi); }
 .footer-top { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
-.footer-brand { display: block; padding: 6px 12px; border-radius: 14px; background: rgba(255, 255, 255, .92); }
-.footer-brand img { width: auto; height: 44px; }
+.footer-brand { display: block; border-radius: 10px; }
+.footer-brand img { width: auto; height: 60px; }
 .footer-company { flex: 1 1 260px; margin: 0; font: 400 13px/1.4 var(--font-display); letter-spacing: .06em; color: var(--text); }
 .footer-offices { display: grid; gap: 32px; padding: 40px 0; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 760px) {

@@ -5,15 +5,17 @@ colors:
   night-0: "#06090c"
   night-1: "#0a1015"
   night-2: "#10181f"
+  ground: "#112031"
+  ground-1: "#162a3f"
   ice: "#f2f5f7"
   text-hi: "#edf2f4"
   text: "#c3ced5"
-  text-mute: "#8f9ca6"
+  text-mute: "#a3b3bf"
   signal: "#4cc3ff"
   line-glow: "#7fd8ff"
   red: "#e3262d"
   error: "#ff8a8f"
-  glass-tint: "rgba(14, 21, 28, .42)"
+  glass-tint: "rgba(30, 50, 72, .36)"
   hairline: "rgba(255, 255, 255, .1)"
 typography:
   display:
@@ -92,15 +94,15 @@ components:
 
 v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in Paint", "all red strains the eye", "too obvious"; they asked for something nonchalant and mysterious, professional, modern, futuristic and clean, with far more transparency – real blurred glass containers with motifs behind them – and sent three references they like (an eco dashboard on a glass monitor with a glowing globe, a dark engineering site with a glowing wireframe building, a cinematic dark car page). v2 answers that:
 
-- A calm night ground (#06090c with faint sea and ember light far away).
+- A deep blue-hour ground (#112031, the sky of the hero photo after dusk, with sea light from the upper right and a trace of the sunset on the left); lighter than the first night ground at the client's request (2026-11-04). The Home hero keeps its night (#06090c) exactly as it was, and the section after it fades from that night into the blue.
 - Frosted glass panes (`.glass`) in front of the client's own imagery where it means something: the beach scene behind the hero pane, the red MultiCharger renders behind the offer panes. The profit, certification, pre-order and contact panes stand in designed light (the charger's blue and the sea); the cut-outs that once peeked out behind them were removed at the client's request ("I don't see the logic").
 - Glowing line drawings in the colour of the charger's ring light (#4cc3ff): the MultiCharger on its trailer as a see-through wireframe, first whole under the "Why" title, then behind the panes, and the globe of the ECOES JV logo with London and Sofia next to the intro statement. Both are drawn by `tools/wireframes.py`.
 - Red only where the product is (photos, renders, logo). UI accents are the signal blue.
 
 ## Colors
 
-- **Night** `#06090c` / `#0a1015` / `#10181f` – grounds.
-- **Text**: `#edf2f4` headings, `#c3ced5` body, `#8f9ca6` notes (≥ 6:1 on night; measured ≥ 6.8:1 on the hero glass and the header over the photo).
+- **Ground** `#112031` / `#162a3f` (blue hour) – the page; **Night** `#06090c` – only the Home hero and the ink on light buttons.
+- **Text**: `#edf2f4` headings, `#c3ced5` body, `#a3b3bf` notes (lifted with the lighter ground: ≥ 4.5:1 even on the brightest pane; the hero keeps `#8f9ca6`). Glass tint `rgba(30, 50, 72, .36)`, a touch lighter than the ground (the hero pane keeps `rgba(14, 21, 28, .42)`).
 - **Ice** `#f2f5f7` – the primary button.
 - **Signal** `#4cc3ff` (lines `#7fd8ff`) – the charger's ring light: status dots on "Get an offer", the current page, the selected chart bar and load, radio/checkbox accents, the line drawings.
 - **Glass tint** `rgba(14,21,28,.42)` with a 160° white sheen and a light gradient edge; blur 28px, saturate 1.6.
@@ -133,7 +135,7 @@ Fields 14px, chips 20px, panes 28px, buttons and choices are pills; paper (docum
 - **Offer card**: the product render (cut out, `object-fit: contain`) stands behind the pane, sharp above it, frosted where the glass covers it.
 - **Tile**: pane with title, one paragraph, "Learn more" + "Get an offer".
 - **Inputs**: translucent fields with a light edge; choices as pills; errors in soft red under the field.
-- **Navigation**: transparent over the hero, dark glass once scrolled; logo on a white capsule; the current page marked by a signal dot; below 1200px (or when the row does not fit) the menu opens as a full-screen dark glass.
+- **Navigation**: transparent over the hero, dark glass once scrolled; the logo in its night variant (ecoes.eu's own: globe lines #93a3b6, red #ff3340 with a dark outline), 54px straight on the header, no plate; the current page marked by a signal dot; below 1200px (or when the row does not fit) the menu opens as a full-screen dark glass.
 - **Document pages**: the page head is a picture with a `.lead-pane` glass at the lower left (h1 = category + product name with the signal dot, lead, "Get an offer", links to the sections); then `.split` sections with numbered glass lists (`.pillars--numbered`, the client's numbers 1.1, 2.1 … in pills), a `.notice` strip with the signal dot, a `.toc` beside `.read-pane` glass panes for long text, and a `.closing` with the client's last sentence as the statement.
 - **Load meter**: pill segments, a thin signal bar, the monthly gross profit in large light figures, and the client's table with the chosen row marked.
 - **Product pages** (MultiCharger, Box): a key-figures band of chips under the head; `.doc` sections (reading column 920px, wide galleries, charts and panes), `.doc-sub` headings, `.callout` (signal dot), `.manifest` (a key paragraph in Unbounded light), `.points` (the 12 points, numbers in signal blue), `.panes`, `.bullets`, `.gallery` of framed photos and cut-outs, bar charts (`.hbars`, stacked `.vbars`), the full meter table, `.compare` (truck = MultiCharger + MultiCharger, taxi = Box).
