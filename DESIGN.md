@@ -125,7 +125,7 @@ v1 (red equipment body) was rejected by the client on 2026-11-03: "looks made in
 
 Unbounded (NaN; OFL) light for display – wide, calm, futuristic; Wix Madefor Text (Wix/Dalton Maag; OFL) for text and UI. Both self-hosted, Latin + Cyrillic; with `lang="bg"` both use the Bulgarian Cyrillic forms.
 
-Size floor (client, 2026-11-04: "nobody should strain to read"): body 17px; texts in panes, tiles, forms, captions, notes, tables and the footer 16–16.5px; labels 15–15.5px; only chart axis labels and number badges at 13.5–15px. Figures never break inside a number (`overflow-wrap: normal` on the readouts and key figures; on narrow phones the chips get smaller padding instead).
+Size floor (client, 2026-11-04: "nobody should strain to read"; a notch larger since 2026-11-05): body 17px; texts in panes, tiles, forms, captions, notes, tables and the footer 17px; labels 16–16.5px (the smallest in weight 500); only chart axis labels, number badges and phone tables at 14–16px. Figures never break inside a number (`overflow-wrap: normal` on the readouts and key figures; on narrow phones the chips get smaller padding instead).
 
 ## Layout
 
