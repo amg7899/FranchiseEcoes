@@ -5,3 +5,4 @@
 .impeccable/review/
 .playwright/
 __pycache__/
+tools/presentation/*.html
