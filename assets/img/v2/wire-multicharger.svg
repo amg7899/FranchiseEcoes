@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
   <style>
-    .w { fill: none; stroke: #7fd8ff; stroke-linecap: round; stroke-linejoin: round; }
-    .glow { fill: none; stroke: #3fb8ff; stroke-linecap: round; filter: url(#blur); opacity: .55; }
+    .w { fill: none; stroke: #a6f4d2; stroke-linecap: round; stroke-linejoin: round; }
+    .glow { fill: none; stroke: #2fd896; stroke-linecap: round; filter: url(#blur); opacity: .55; }
     .back { opacity: .32; }
     .faint { opacity: .18; }
-    .t { fill: #7fd8ff; font: 400 30px 'Unbounded', 'Segoe UI', Arial, sans-serif; letter-spacing: .5px; }
-    .node { fill: #eaf8ff; }
+    .t { fill: #a6f4d2; font: 400 30px 'Unbounded', 'Segoe UI', Arial, sans-serif; letter-spacing: .5px; }
+    .node { fill: #f0fff8; }
     .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.2s cubic-bezier(.4,.1,.2,1) forwards; }
     .fade { opacity: 0; animation: fade 1.2s ease-out 1.6s forwards; }
     .d1 { animation-delay: .1s; } .d2 { animation-delay: .5s; } .d3 { animation-delay: .9s; } .d4 { animation-delay: 1.3s; }

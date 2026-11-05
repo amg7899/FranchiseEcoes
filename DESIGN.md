@@ -17,6 +17,14 @@ colors:
   error: "#ff8a8f"
   glass-tint: "rgba(30, 50, 72, .36)"
   hairline: "rgba(255, 255, 255, .1)"
+  v3-haze: "#f2f6f3"
+  v3-ink: "#0b1d19"
+  v3-text: "#2b3a36"
+  v3-mute: "#4c5d57"
+  v3-pine: "#0d4a44"
+  v3-pine-deep: "#062925"
+  v3-leaf: "#1fa36c"
+  v3-mint: "#a6f4d2"
 typography:
   display:
     fontFamily: "Unbounded, Segoe UI, Arial, sans-serif"
@@ -89,6 +97,8 @@ components:
 ---
 
 # Design System: ECOES Franchise (v2, "night glass")
+
+> **v3 trial "daylight and forest screens" (2026-11-05, awaiting the client's verdict)** – `assets/css/eco.css` over this system. A bright page (haze `#f2f6f3`, ink `#0b1d19` type in Unbounded 500, white frosted glass standing in soft leaf and sky light, pine `#0d4a44` pill buttons – the product's own green) with deep green screens where the line drawings glow in mint `#a6f4d2`: the "Why" section as a rounded screen with the hologram, round lenses behind the globes, the Franchise closing band with a one-line leaf, the footer. Shapes: the key figures as a honeycomb, round lenses, pills. The night stays only in the Home hero (unchanged) and the document viewer. The product is teal-green in every picture. Everything below describes v2, which is still the base layer and the revert target (branch `v2-night-glass`); see CLAUDE.md for revert and mix steps.
 
 ## Overview
 

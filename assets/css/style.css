@@ -214,6 +214,7 @@ p { margin: 0 0 1em; }
 /* the logo for dark grounds (ecoes.eu's own night variant), straight on the header, no plate */
 .brand { flex: none; display: block; padding: 4px 0; border-radius: 10px; }
 .brand img { width: auto; height: 62px; }
+.brand .brand-day { display: none; }   /* the logo for light grounds, used by the v3 trial (eco.css) */
 @media (max-width: 479px) {
   .brand img { height: 50px; }
 }

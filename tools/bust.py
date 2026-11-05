@@ -8,7 +8,7 @@ file, before committing (standard-library Python, idempotent):
 import glob, hashlib, os, re
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-ASSETS = ['assets/css/style.css', 'assets/css/fonts.css', 'assets/js/main.js', 'assets/js/forms.js', 'assets/js/gallery.js']
+ASSETS = ['assets/css/style.css', 'assets/css/eco.css', 'assets/css/fonts.css', 'assets/js/main.js', 'assets/js/forms.js', 'assets/js/gallery.js']
 
 def version(path):
     with open(os.path.join(ROOT, path), 'rb') as fh:

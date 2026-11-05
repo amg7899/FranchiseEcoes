@@ -18,8 +18,10 @@ import math, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'assets', 'img', 'v2')
-LINE = '#7fd8ff'      # the colour of the charger's ring light
-GLOW = '#3fb8ff'
+# colours: v3 "mint" (the lines glow on the deep green screens of the light theme, 2026-11-05) or v2 "blue"
+# (the charger's ring light on the night ground); WIRE_THEME=blue python3 tools/wireframes.py for the v2 set
+PALETTES = {'mint': ('#a6f4d2', '#2fd896', '#f0fff8'), 'blue': ('#7fd8ff', '#3fb8ff', '#eaf8ff')}
+LINE, GLOW, NODE = PALETTES[os.environ.get('WIRE_THEME', 'mint')]
 
 STYLE = f"""
   <style>
@@ -28,7 +30,7 @@ STYLE = f"""
     .back {{ opacity: .32; }}
     .faint {{ opacity: .18; }}
     .t {{ fill: {LINE}; font: 400 30px 'Unbounded', 'Segoe UI', Arial, sans-serif; letter-spacing: .5px; }}
-    .node {{ fill: #eaf8ff; }}
+    .node {{ fill: {NODE}; }}
     .draw {{ stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.2s cubic-bezier(.4,.1,.2,1) forwards; }}
     .fade {{ opacity: 0; animation: fade 1.2s ease-out 1.6s forwards; }}
     .d1 {{ animation-delay: .1s; }} .d2 {{ animation-delay: .5s; }} .d3 {{ animation-delay: .9s; }} .d4 {{ animation-delay: 1.3s; }}

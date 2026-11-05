@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" width="240" height="300">
+  <!-- one leaf in a single line, as on the client's mockup (ECOES = economy & ecology); drawn for the site -->
+  <g fill="none" stroke="#a6f4d2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 280 C190 250 235 120 205 20 C110 40 30 150 60 280 Z"/>
+    <path d="M38 298 C48 292 55 286 60 280 C110 190 160 100 205 20" stroke-opacity=".9"/>
+    <g stroke-opacity=".55">
+      <path d="M105 199 Q128 216 153 228"/>
+      <path d="M134 146 Q160 160 189 165"/>
+      <path d="M163 95 Q186 101 208 102"/>
+      <path d="M105 199 Q82 186 64 166"/>
+      <path d="M134 146 Q108 128 90 104"/>
+      <path d="M163 95 Q142 78 127 59"/>
+    </g>
+  </g>
+</svg>

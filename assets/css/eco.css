@@ -1,0 +1,359 @@
+/* ECOES Franchise – design v3 trial "daylight and forest screens" (client, 2026-11-05: lighter and cool,
+   a modern green–black–white tone, like the glass monitor with the green eco site and their own
+   green-white mockup; keep the globes, tables, meter and glass).
+   A layer over style.css (v2 "night glass"): it re-points the v2 tokens to a bright page and restores
+   the v2 values where the night stays (the Home hero, unchanged) or where the deep green screens are
+   (Why, the closing band, the footer, the globes' lenses). Remove the <link> to this file and the
+   site is v2 again (the product pictures and line drawings are separate: see CLAUDE.md).
+
+   Page: cool white haze, black type, white frosted glass standing in soft leaf and sky light.
+   Screens: the product's own deep green (#0d4a44), where the line drawings glow in mint.
+   Shapes: the key figures as a honeycomb, round lenses, pills. */
+
+:root {
+  color-scheme: light;
+  --haze: #f2f6f3;
+  --ink: #0b1d19;
+  --pine: #0d4a44;          /* the body of the MultiCharger: buttons, numbers, the selected load */
+  --pine-hi: #12615a;
+  --pine-deep: #062925;     /* the screens */
+  --leaf: #1fa36c;          /* dots, bars and fills on the light page (not for text) */
+  --mint: #a6f4d2;          /* lines and dots on the screens */
+
+  /* the v2 tokens, re-pointed to the light page */
+  --ice: var(--pine);
+  --text-hi: var(--ink);
+  --text: #2b3a36;
+  --text-mute: #4c5d57;
+  --line: rgba(11, 29, 25, .12);
+  --line-strong: rgba(11, 29, 25, .22);
+  --signal: var(--leaf);
+  --signal-soft: rgba(31, 163, 108, .2);
+  --error: #b42318;
+  --glass-tint: rgba(255, 255, 255, .58);
+  --glass-tint-strong: rgba(255, 255, 255, .8);
+  --ground: var(--haze);
+  --ground-rgb: 242, 246, 243;
+  --ground-1: #fff;
+}
+
+/* ---------- the page ---------- */
+html { scrollbar-color: #b4c5bd var(--haze); }
+body { background: var(--haze); }
+/* daylight: leaf light from the upper right, sky on the left, a spring green below */
+body::before {
+  background:
+    radial-gradient(56vw 40vw at 94% 0%, rgba(166, 244, 210, .42), transparent 70%),
+    radial-gradient(44vw 36vw at 0% 46%, rgba(194, 226, 238, .5), transparent 70%),
+    radial-gradient(60vw 44vw at 72% 106%, rgba(214, 240, 196, .45), transparent 70%),
+    var(--haze);
+}
+::selection { background: rgba(31, 163, 108, .28); color: var(--ink); }
+.skip-link { color: #fff; }
+
+/* black type with weight (the mockup's confident headings); the Home hero keeps its own */
+.section-title { font-weight: 500; letter-spacing: -.035em; }
+.statement { font-weight: 400; letter-spacing: -.03em; }
+.page-title { font-weight: 500; letter-spacing: -.045em; }
+.lead-pane .hero-kind { font-weight: 500; letter-spacing: -.035em; }
+.doc-sub, .org-jv h2, .form-pane .pane-title, .figures-title, .punchline, .cta-link-text { font-weight: 500; }
+.offer-card h3, .tile h3, .read-pane h3, .office h2, .org-card h3, .award .doc-title,
+.pillars h3, .pillars h4, .pillars h5, .pane-title, .doc-subsub, .pane b:first-child, .footer-office h2 { font-weight: 450; }
+/* the heavier weight is wider: on small phones the long Bulgarian words ("инфраструктура", "сертификационни",
+   "франчайзополучателят?") still fit their line instead of breaking inside the word */
+.section-title { font-size: clamp(min(28px, 7.6vw), 3.1vw, 46px); }
+.lead-pane .hero-kind { font-size: clamp(min(30px, 6.9vw), 3.4vw, 54px); }
+.read-pane h3 { font-size: clamp(min(19px, 5vw), 1.55vw, 23px); }
+.pillars h3, .pillars h4, .pillars h5 { font-size: min(18px, 5.2vw); }
+
+/* ---------- glass: white frost on the light ---------- */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .26) 52%), var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.35);
+  backdrop-filter: blur(var(--blur)) saturate(1.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), 0 24px 48px -34px rgba(6, 41, 37, .34);
+}
+.glass::before {
+  background: linear-gradient(140deg, #fff, rgba(13, 74, 68, .16) 30%, rgba(13, 74, 68, .22) 66%, rgba(255, 255, 255, .9));
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(255, 255, 255, .94); }
+}
+
+/* ---------- links and buttons ---------- */
+.link { text-decoration-color: rgba(11, 29, 25, .32); }
+.link--offer { text-decoration-color: rgba(31, 163, 108, .6); }
+.btn--ice { background: var(--pine); color: #fff; box-shadow: 0 14px 30px -18px rgba(6, 41, 37, .8); }
+.btn--ice:hover { background: var(--pine-hi); }
+.btn--glass { color: var(--ink); background: rgba(255, 255, 255, .66); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .32); }
+.btn--glass:hover { background: #fff; box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .6); }
+
+/* ---------- header: a white frosted bar with the light-ground logo ---------- */
+.is-scrolled .site-header, .menu-open .site-header {
+  background: rgba(255, 255, 255, .8);
+  border-bottom-color: rgba(11, 29, 25, .08);
+}
+.brand .brand-night { display: none; }
+.brand .brand-day { display: block; }
+.lang-switch a, .menu-button { background: rgba(255, 255, 255, .62); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .28); color: var(--ink); }
+.lang-switch a:hover, .menu-button:hover { background: #fff; }
+.header-cta { background: var(--pine); color: #fff; box-shadow: none; }
+.header-cta:hover { background: var(--pine-hi); box-shadow: none; }
+.header-cta::before { background: var(--mint); box-shadow: 0 0 0 3px rgba(166, 244, 210, .25); }
+.menu-panel { background: rgba(var(--ground-rgb), .94); }
+.menu-panel nav a[aria-current="page"] { color: var(--pine); }
+
+/* ---------- Home ---------- */
+.intro { background: none; }
+.offer-card .product img { filter: drop-shadow(0 22px 22px rgba(6, 41, 37, .26)); }
+.punchline a:hover { text-decoration-color: rgba(31, 163, 108, .7); }
+
+/* the globes in a round deep green lens, glowing as on the client's glass monitor */
+.globe {
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #12594f 0%, #0a3d37 58%, #062925 100%);
+  box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .2), 0 44px 80px -46px rgba(6, 41, 37, .7);
+}
+.page-hero-globe::before {
+  inset: 2.5%;
+  background: radial-gradient(closest-side, #12594f 0%, #0a3d37 58%, #062925 100%);
+  box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .2), 0 50px 90px -50px rgba(6, 41, 37, .75);
+}
+
+/* the key figures as a honeycomb (the glass monitor's hexagons): the first, the headline figure, in deep green */
+.figures-row .chip dd { color: var(--pine); }
+.figures-row .chip.glass { --glass-tint: rgba(255, 255, 255, .7); }
+@media (min-width: 640px) {
+  .figures-row {
+    --g: 10px;
+    --hw: min(250px, calc((100vw - 2 * var(--gutter) - 1.5 * var(--g)) / 2.5));
+    --hh: calc(var(--hw) / .866);
+    display: grid; gap: 0 var(--g);
+    grid-template-columns: repeat(5, calc((var(--hw) - var(--g)) / 2));
+    grid-template-rows: calc(var(--hh) * .75 + var(--g) * .87) var(--hh);
+  }
+  .figures-row .chip.glass {
+    position: relative; isolation: isolate;
+    width: var(--hw); height: var(--hh); padding: 0 clamp(18px, 2vw, 26px);
+    justify-content: center; align-items: center; text-align: center;
+    border-radius: 0; background: rgba(13, 74, 68, .3); box-shadow: none;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .figures-row .chip.glass::before { display: none; }
+  .figures-row .chip.glass::after {
+    content: ""; position: absolute; z-index: -1; inset: 1.5px;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    background: linear-gradient(180deg, #fff, #e8f6ee);
+  }
+  .figures-row .chip:nth-child(1) { grid-column: 1 / 3; }
+  .figures-row .chip:nth-child(2) { grid-column: 3 / 5; }
+  .figures-row .chip:nth-child(3) { grid-column: 2 / 4; grid-row: 2; }
+  .figures-row .chip:nth-child(4) { grid-column: 4 / 6; grid-row: 2; }
+  .figures-row .chip.glass:first-child { background: var(--pine-deep); }
+  .figures-row .chip.glass:first-child::after { background: radial-gradient(90% 70% at 50% 20%, #13665b, #0a3d37 70%); }
+  .figures-row .chip:first-child dd { color: var(--mint); }
+  .figures-row .chip:first-child dt { color: #d5e8e0; }
+  .figures-row .chip dd { font-size: clamp(20px, 1.8vw, 26px); font-weight: 500; }
+  .figures-row .chip dt { font-size: 15px; line-height: 1.4; }
+}
+@media (min-width: 1100px) {
+  .figures-row {
+    --hw: min(290px, calc((min(100vw, var(--max)) - 2 * var(--gutter) - 3 * var(--g)) / 4));
+    grid-template-columns: repeat(4, var(--hw)); grid-template-rows: var(--hh);
+  }
+  .figures-row .chip:nth-child(n) { grid-column: auto; grid-row: 1; }
+}
+
+/* ---------- Why: the screen. The hologram glows in mint, the panes are dark green glass ---------- */
+.why {
+  margin: 0 clamp(8px, 1.4vw, 22px);
+  border-radius: clamp(28px, 3.2vw, 48px);
+  overflow: clip;
+  background:
+    radial-gradient(70% 46% at 50% 40%, rgba(31, 163, 108, .2), transparent 72%),
+    radial-gradient(50% 40% at 100% 100%, rgba(18, 97, 90, .4), transparent 70%),
+    linear-gradient(180deg, #08302b, var(--pine-deep) 40%, #052320);
+  box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .14);
+}
+.why-stage .halo { background: radial-gradient(closest-side, rgba(47, 216, 150, .16), rgba(47, 216, 150, 0)); }
+
+/* ---------- split sections: the panes stand in leaf and sky light ---------- */
+.split-body::before {
+  background:
+    radial-gradient(40% 44% at var(--l1, 74% 22%), rgba(166, 244, 210, .6), rgba(166, 244, 210, 0) 72%),
+    radial-gradient(44% 48% at var(--l2, 20% 82%), rgba(188, 222, 238, .62), rgba(188, 222, 238, 0) 72%);
+}
+.pay-icon { background: #0b3d38; box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .3), 0 16px 30px -20px rgba(6, 41, 37, .7); }
+
+/* ---------- the load meter: the selected load in deep green, the figures in it ---------- */
+.meter-steps span { background: rgba(255, 255, 255, .72); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .26); color: var(--ink); }
+.meter-steps input:hover + span { background: #fff; }
+.meter-steps input:checked + span { background: var(--pine); color: #fff; box-shadow: 0 10px 22px -14px rgba(6, 41, 37, .8); }
+.meter-bar { background: rgba(11, 29, 25, .08); }
+.meter-bar span { background: linear-gradient(90deg, var(--leaf), var(--pine)); }
+.readout-main { color: var(--pine); }
+.profit-table tr.is-on th, .profit-table tr.is-on td { background: rgba(31, 163, 108, .1); }
+
+/* numbered pillars and form fields: the numbers in deep green discs */
+.pillars li::before, .field-no { background: var(--pine); color: #fff; box-shadow: none; }
+
+/* ---------- forms ---------- */
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
+  border-color: rgba(11, 29, 25, .26); background-color: rgba(255, 255, 255, .86); color: var(--ink); caret-color: var(--pine);
+}
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b1d19' stroke-width='1.6'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); }
+select option { background: #fff; color: var(--ink); }
+input:hover, select:hover, textarea:hover { border-color: rgba(11, 29, 25, .44); }
+input:focus, select:focus, textarea:focus { border-color: var(--pine); background-color: #fff; }
+.choice-item { background: rgba(255, 255, 255, .76); box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .22); color: var(--ink); }
+.choice-item:hover { background: #fff; }
+.choice-item:has(input:checked) { background: rgba(31, 163, 108, .12); box-shadow: inset 0 0 0 1.5px var(--pine); }
+.choice-item input, .field--check input { accent-color: var(--pine); }
+.req { color: var(--pine); }
+.form-status { color: var(--ink); background: rgba(31, 163, 108, .12); box-shadow: inset 0 0 0 1px rgba(31, 163, 108, .45); }
+.form-status.is-error { background: rgba(180, 35, 24, .07); box-shadow: inset 0 0 0 1px rgba(180, 35, 24, .4); }
+.notices li::marker { color: var(--pine); }
+
+/* ---------- page heads ---------- */
+.page-hero::after { content: none; }
+/* Contact: the blurred dusk gives way to the daylight */
+.page-hero:not(.page-hero--lead):not(.page-hero--about) .page-hero-media { display: none; }
+/* MultiCharger and Box: the dusk photo in a rounded window, the pane frosting its edge */
+.page-hero--lead { --win-top: calc(var(--header-h) + 8px); }
+.page-hero--lead .page-hero-media {
+  overflow: hidden; border-radius: clamp(20px, 2.4vw, 32px);
+  box-shadow: 0 36px 70px -48px rgba(6, 41, 37, .8);
+}
+@media (max-width: 999px) {
+  .page-hero--lead:not(.page-hero--network) {
+    --win-h: min(66vw, 500px);
+    display: block; min-height: 0;
+    padding-top: calc(var(--win-top) + var(--win-h) - 56px);
+  }
+  .page-hero--lead .page-hero-media { inset: var(--win-top) var(--gutter) auto; height: var(--win-h); }
+}
+@media (min-width: 1000px) {
+  .page-hero--lead .page-hero-media {
+    top: var(--win-top); bottom: 0; left: auto; right: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    width: min(64%, 1120px);
+    -webkit-mask-image: none; mask-image: none;
+  }
+}
+
+/* ---------- document pages ---------- */
+.doc::before { background: radial-gradient(closest-side, rgba(166, 244, 210, .3), rgba(166, 244, 210, 0)); }
+.doc:nth-of-type(even)::before { background: radial-gradient(closest-side, rgba(188, 222, 238, .4), rgba(188, 222, 238, 0)); }
+.point-no { color: var(--pine); }
+.shot--photo .shot-media, .shot--photo .shot-media::after { box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .1); }
+.shot--cut .shot-media img, .compare-side img { filter: drop-shadow(0 22px 22px rgba(6, 41, 37, .24)); }
+.hbar-track { background: rgba(11, 29, 25, .07); }
+.hbar-fill { background: linear-gradient(90deg, rgba(13, 74, 68, .26), rgba(13, 74, 68, .5)); }
+.hbar.is-on .hbar-fill { background: linear-gradient(90deg, var(--leaf), var(--pine)); }
+.vkey::before, .vseg { background: linear-gradient(180deg, #1e9466, var(--pine)); }
+.vkey--1::before, .vseg--1 { background: #a3dcc2; }
+.compare-card--ours { box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1.5px rgba(31, 163, 108, .65), 0 24px 48px -34px rgba(6, 41, 37, .34); }
+.compare-card--ours b { color: var(--pine); }
+.road-scene-row::after { background: linear-gradient(90deg, rgba(11, 29, 25, 0), rgba(11, 29, 25, .3) 10%, rgba(11, 29, 25, .3) 90%, rgba(11, 29, 25, 0)); }
+.road-dim { color: rgba(11, 29, 25, .62); }
+
+/* the closing: the client's last sentence on a deep green band with a leaf (as on their mockup) */
+.closing .wrap {
+  position: relative; isolation: isolate; overflow: hidden;
+  width: min(100% - 2 * var(--gutter), var(--max) - 2 * var(--gutter));
+  padding: clamp(36px, 5vw, 76px) clamp(24px, 4.6vw, 76px);
+  border-radius: clamp(24px, 3vw, 40px);
+  background:
+    radial-gradient(60% 90% at 100% 0%, rgba(31, 163, 108, .3), transparent 70%),
+    linear-gradient(160deg, #0c4039, var(--pine-deep) 70%);
+  box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .14), 0 44px 80px -56px rgba(6, 41, 37, .8);
+}
+.closing .wrap::after {
+  content: ""; position: absolute; z-index: -1; right: clamp(-30px, 1vw, 40px); bottom: -10%;
+  width: clamp(190px, 22vw, 330px); aspect-ratio: 240 / 300; pointer-events: none;
+  background: url("../img/v3/leaf-line.svg") center / contain no-repeat;
+}
+@media (min-width: 900px) {
+  .closing .lead, .closing .statement { max-width: min(1040px, 74%); }
+}
+@media (max-width: 899px) {
+  .closing .wrap::after { width: 150px; right: -40px; top: -36px; bottom: auto; opacity: .45; }
+}
+
+/* ---------- About us ---------- */
+.logo-plate { background: #fff; box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .1); }
+.flag { box-shadow: 0 0 0 1px rgba(11, 29, 25, .16); }
+.about-org::before { background: radial-gradient(closest-side, rgba(166, 244, 210, .32), rgba(166, 244, 210, 0)); }
+.org-jv, .org-members { --wire: rgba(31, 163, 108, .85); }
+.bio-photo::after { box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .12); }
+.partner-url, .bulfire-url { text-decoration-color: rgba(11, 29, 25, .32); }
+.about-history::before { background: radial-gradient(closest-side, rgba(166, 244, 210, .3), rgba(166, 244, 210, 0)); }
+.doc-link { background: #fff; box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .14), 0 14px 28px -22px rgba(6, 41, 37, .45); }
+.doc-link:hover { background: #fff; }
+.go-chip { background: var(--pine); color: #fff; }
+.bulfire-link:hover .go-chip, .cta-link:hover .go-chip { background: var(--pine-hi); }
+
+/* ---------- footer: the deep green ground with the night logo ---------- */
+.site-footer {
+  border-top: 0; border-radius: clamp(28px, 3.2vw, 48px) clamp(28px, 3.2vw, 48px) 0 0;
+  background:
+    radial-gradient(50% 80% at 100% 0%, rgba(31, 163, 108, .16), transparent 70%),
+    linear-gradient(180deg, #08302b, #052320);
+}
+
+/* ================= where the night stays: the Home hero (unchanged, client 2026-11-04), the header over it,
+   the document viewer; and the deep green screens. The v2 values, with zero specificity, so the hero's own
+   tokens in style.css still win ================= */
+:where(.hero, .why, .site-footer, .closing, .lightbox,
+       html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) {
+  color-scheme: dark;
+  --ice: #f2f5f7; --text-hi: #edf2f4; --text: #c3ced5; --text-mute: #b0bfca;
+  --line: rgba(255, 255, 255, .1); --line-strong: rgba(255, 255, 255, .2);
+  --signal: #4cc3ff; --signal-soft: rgba(76, 195, 255, .22); --error: #ff8a8f;
+  --glass-tint: rgba(30, 50, 72, .36); --glass-tint-strong: rgba(20, 36, 54, .55);
+  --ground: #112031; --ground-rgb: 17, 32, 49; --ground-1: #162a3f;
+}
+:where(.hero, .why, .site-footer, .closing, .lightbox,
+       html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.glass) {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .085), rgba(255, 255, 255, .015) 46%), var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.6);
+  backdrop-filter: blur(var(--blur)) saturate(1.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+:where(.hero, .why, .site-footer, .closing, .lightbox) :is(.glass)::before {
+  background: linear-gradient(140deg, rgba(255, 255, 255, .42), rgba(255, 255, 255, .08) 32%, rgba(255, 255, 255, .03) 60%, rgba(255, 255, 255, .2));
+}
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link) { text-decoration-color: rgba(255, 255, 255, .35); }
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link--offer) { text-decoration-color: rgba(76, 195, 255, .5); }
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice) { background: var(--ice); color: var(--night-0); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .7); }
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice):hover { background: #fff; }
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta) {
+  color: var(--text-hi); background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta):hover { background: rgba(255, 255, 255, .13); }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.header-cta)::before { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-soft); }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.lang-switch a, .menu-button) {
+  background: rgba(255, 255, 255, .05); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); color: var(--text-hi);
+}
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.menu-button) { background: rgba(255, 255, 255, .07); }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.lang-switch a):hover { background: rgba(255, 255, 255, .12); }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.menu-button):hover { background: rgba(255, 255, 255, .07); }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) .brand :is(.brand-night) { display: block; }
+:where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) .brand :is(.brand-day) { display: none; }
+
+/* the screens: deep green instead of the night blue, mint instead of the charger's blue */
+.why, .site-footer, .closing {
+  --text-hi: #f2f8f5; --text: #cfe2da; --text-mute: #a9c6bb;
+  --signal: var(--mint); --signal-soft: rgba(166, 244, 210, .22);
+  --glass-tint: rgba(9, 60, 54, .4); --glass-tint-strong: rgba(6, 45, 40, .62);
+  --ground: var(--pine-deep); --ground-rgb: 6, 41, 37; --ground-1: #0a3a35;
+  --ice: #f4fbf7;
+}
+:where(.why, .site-footer, .closing) :is(.btn--ice) { color: var(--pine-deep); }
+:where(.why, .site-footer, .closing) :is(.link--offer) { text-decoration-color: rgba(166, 244, 210, .55); }
+.why .chart-bars .is-on .bar { background: linear-gradient(180deg, rgba(166, 244, 210, .95), rgba(166, 244, 210, .25)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }
+
+@media (forced-colors: active) {
+  .globe, .page-hero-globe::before { forced-color-adjust: none; }
+  .closing .wrap::after { display: none; }
+}

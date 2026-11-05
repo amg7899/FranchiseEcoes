@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <!-- Payment by QR code: a hand holding a phone with a QR code on the screen (drawn for the site) -->
   <rect x="44" y="8" width="52" height="92" rx="9" fill="#f2f5f7"/>
-  <rect x="49" y="18" width="42" height="68" rx="3" fill="#112031"/>
-  <rect x="62" y="12" width="16" height="2.6" rx="1.3" fill="#112031" opacity=".45"/>
-  <g fill="#4cc3ff">
+  <rect x="49" y="18" width="42" height="68" rx="3" fill="#0b3d38"/>
+  <rect x="62" y="12" width="16" height="2.6" rx="1.3" fill="#0b3d38" opacity=".45"/>
+  <g fill="#74e6b6">
     <!-- the three corner squares -->
     <path d="M53 29h12v12h-12z M56 32v6h6v-6z" fill-rule="evenodd"/>
     <path d="M75 29h12v12h-12z M78 32v6h6v-6z" fill-rule="evenodd"/>
@@ -16,7 +16,7 @@
     <rect x="72" y="58" width="4" height="4"/><rect x="79" y="62" width="4" height="4"/><rect x="68" y="62" width="4" height="4"/>
   </g>
   <!-- a scan line over the code -->
-  <rect x="50" y="70" width="40" height="2" rx="1" fill="#4cc3ff" opacity=".0"/>
+  <rect x="50" y="70" width="40" height="2" rx="1" fill="#74e6b6" opacity=".0"/>
   <g fill="#f2f5f7">
     <!-- fingers along the right edge of the phone -->
     <path d="M94 54 c6 0 9 3 9 7 s-3 7 -9 7 z"/>

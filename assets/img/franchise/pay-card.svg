@@ -6,8 +6,8 @@
     <path d="M66 84 c5 -5 15 -7 20.5 -4.4 c3.6 1.8 3.6 6.4 0 8.4 l-10 5 z"/>
   </g>
   <g transform="rotate(-20 82 46)">
-    <rect x="47" y="25" width="70" height="44" rx="7" fill="#4cc3ff"/>
-    <rect x="47" y="34" width="70" height="7" fill="#2f8fc4" opacity=".55"/>
+    <rect x="47" y="25" width="70" height="44" rx="7" fill="#74e6b6"/>
+    <rect x="47" y="34" width="70" height="7" fill="#2aa877" opacity=".55"/>
     <g fill="none" stroke="#f2f5f7" stroke-width="3.6" stroke-linecap="round">
       <path d="M93 41 a7 7 0 0 1 0 12"/>
       <path d="M99 37 a12 12 0 0 1 0 20"/>
