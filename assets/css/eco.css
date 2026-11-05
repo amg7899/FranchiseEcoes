@@ -224,26 +224,46 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
 .page-hero::after { content: none; }
 /* Contact: the blurred dusk gives way to the daylight */
 .page-hero:not(.page-hero--lead):not(.page-hero--about) .page-hero-media { display: none; }
-/* MultiCharger and Box: the dusk photo in a rounded window, the pane frosting its edge */
+/* MultiCharger and Box: the dusk photo in a rounded window and the pane beside or under it, never over the
+   product (client, 2026-11-05: the pickup towing the MultiCharger and the truck carrying the Box must show);
+   the links to the sections as a strip under both */
 .page-hero--lead { --win-top: calc(var(--header-h) + 8px); }
 .page-hero--lead .page-hero-media {
   overflow: hidden; border-radius: clamp(20px, 2.4vw, 32px);
   box-shadow: 0 36px 70px -48px rgba(6, 41, 37, .8);
+  -webkit-mask-image: none; mask-image: none;
 }
-@media (max-width: 999px) {
+.page-nav--strip { margin-top: 18px; padding: 8px 0 10px; gap: 2px 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+/* below 1200px: the photo on top, the pane under it (overlapping only the ground at its bottom edge) */
+@media (max-width: 1199px) {
   .page-hero--lead:not(.page-hero--network) {
-    --win-h: min(66vw, 500px);
+    --win-h: min(66vw, 520px);
     display: block; min-height: 0;
-    padding-top: calc(var(--win-top) + var(--win-h) - 56px);
+    padding-top: calc(var(--win-top) + var(--win-h) - 48px);
   }
-  .page-hero--lead .page-hero-media { inset: var(--win-top) var(--gutter) auto; height: var(--win-h); }
+  .page-hero--lead:not(.page-hero--network) .page-hero-media { inset: var(--win-top) var(--gutter) auto; width: auto; height: var(--win-h); }
+  .page-hero--multicharger .page-hero-media img { object-position: 64% 56%; }
+  .page-hero--multicharger-box .page-hero-media img { object-position: 64% 82%; }
 }
-@media (min-width: 1000px) {
-  .page-hero--lead .page-hero-media {
-    top: var(--win-top); bottom: 0; left: auto; right: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
-    width: min(64%, 1120px);
-    -webkit-mask-image: none; mask-image: none;
+/* from 1200px: side by side; the photo keeps a 1.42 : 1 window, wide enough for the whole scene
+   (pickup + trailer, truck + box), and the pane stands centred beside it */
+@media (min-width: 1200px) {
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) {
+    --gap: clamp(28px, 2.6vw, 44px);
+    display: grid; align-items: center; min-height: 0;
+    grid-template-columns: minmax(var(--gutter), 1fr) calc((min(100%, var(--max)) - 2 * var(--gutter)) * .44) var(--gap) calc((min(100%, var(--max)) - 2 * var(--gutter)) * .56 - var(--gap)) minmax(var(--gutter), 1fr);
+    grid-template-rows: auto auto;
+    padding: calc(var(--header-h) + 20px) 0 clamp(20px, 2.4vw, 36px);
   }
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) .wrap { display: contents; }
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) .lead-pane { grid-column: 2; grid-row: 1; max-width: none; padding: clamp(28px, 2.8vw, 44px); }
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) .page-hero-media {
+    position: relative; inset: auto; z-index: 0; grid-column: 4; grid-row: 1; width: 100%; height: auto; aspect-ratio: 1.42;
+  }
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) .page-nav--strip { grid-column: 2 / 5; grid-row: 2; margin-top: clamp(20px, 2.2vw, 32px); }
+  .page-hero--lead:is(.page-hero--multicharger, .page-hero--multicharger-box) .hero-kind { font-size: clamp(32px, 3vw, 48px); }
+  .page-hero--multicharger .page-hero-media img { object-position: 88% 52%; }
+  .page-hero--multicharger-box .page-hero-media img { object-position: 100% 70%; }
 }
 
 /* ---------- document pages ---------- */
