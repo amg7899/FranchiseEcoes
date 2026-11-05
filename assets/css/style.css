@@ -758,6 +758,26 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .read-pane h3 { margin: 0 0 14px; font: 400 clamp(19px, 1.55vw, 23px)/1.25 var(--font-display); text-wrap: balance; }
 .read-pane p { max-width: 68ch; margin: 0 0 1em; color: var(--text); }
 .read-pane p:last-child { margin-bottom: 0; }
+/* who the franchise is for (client, 2026-11-05): the client's two kinds of franchisee, numbered as they wrote them */
+.audience { margin-top: clamp(48px, 5.5vw, 88px); }
+.audience .section-title--sub { max-width: 32ch; margin-bottom: clamp(22px, 2.6vw, 34px); }
+.audience-list { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  .audience-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+.audience-list::before {
+  content: ""; position: absolute; z-index: 0; inset: -20% -10%; pointer-events: none;
+  background:
+    radial-gradient(40% 60% at 22% 40%, rgba(76, 195, 255, .16), rgba(76, 195, 255, 0) 72%),
+    radial-gradient(40% 60% at 80% 70%, rgba(46, 110, 128, .24), rgba(46, 110, 128, 0) 72%);
+}
+.audience-card { z-index: 1; display: grid; gap: 18px; align-content: start; padding: clamp(24px, 3vw, 40px); border-radius: var(--r-l); }
+.audience-card::after {
+  content: attr(data-n); order: -1; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  font: 400 17px/1 var(--font-display); color: var(--text-hi); box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.audience-card p { margin: 0; max-width: 60ch; font-size: clamp(16.5px, 1.25vw, 18.5px); line-height: 1.6; color: var(--text); }
+.audience-card b { color: var(--text-hi); font-weight: 600; }
 /* closing: the client's last sentence as the statement, then the actions */
 .closing { padding: clamp(40px, 5vw, 80px) 0 var(--section); }
 .closing .lead { max-width: 62ch; margin: 0 0 22px; font-size: clamp(17px, 1.25vw, 19px); }
