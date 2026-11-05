@@ -1,5 +1,5 @@
 {
-  "prompt": "Sourced, not generated: client's material (ECOES JV), visualisation PDF 'ECOES Franchise – визуализация на сайта' v5, p.10, MultiCharger mounted on a truck; resized, WebP + JPEG. Product body recoloured from red to the client's teal-green (tools/recolor.py, v3 trial, client's request 2026-11-05).",
+  "prompt": "Sourced, not generated: client's material (ECOES JV), visualisation PDF 'ECOES Franchise – визуализация на сайта' v5, p.10, MultiCharger mounted on a truck; resized, WebP + JPEG. Product body painted a touch deeper and calmer red, with thin vertical panel ribs (in perspective on photos) and, on the drawings, light from above and the lettering set again in Inter Bold (tools/redpaint.py, client's request 2026-11-05).",
   "createdAt": "2026-11-03T14:29:08.424Z",
-  "updatedAt": "2026-11-05T12:00:00.000Z"
+  "updatedAt": "2026-11-05T14:00:00.000Z"
 }

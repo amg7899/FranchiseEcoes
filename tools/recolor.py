@@ -53,10 +53,19 @@ def lch(rgb):
     return lab[0], float(np.hypot(lab[1], lab[2])), float(np.degrees(np.arctan2(lab[2], lab[1])) % 360)
 
 
-def recolor(rgb, region=None):
-    """rgb: HxWx3 floats 0..1; region: HxW weights 0..1 (None = the whole picture is product)"""
+def body_weight(rgb, region=None):
+    """how much each pixel is the red body (0..1): the red hue window, enough chroma, inside the region"""
+    lab = rgb_to_lab(rgb)
+    C = np.hypot(lab[..., 1], lab[..., 2]); H = np.degrees(np.arctan2(lab[..., 2], lab[..., 1])) % 360
+    w = smooth(2, 12, H) * (1 - smooth(48, 60, H)) * smooth(10, 26, C)
+    return w * region if region is not None else w
+
+
+def recolor(rgb, region=None, target=None):
+    """rgb: HxWx3 floats 0..1; region: HxW weights 0..1 (None = the whole picture is product);
+    target: the body colour aimed at (default TARGET_RGB)"""
     Lb, Cb, Hb = lch(BODY_RGB)
-    Lt, Ct, Ht = lch(TARGET_RGB)
+    Lt, Ct, Ht = lch(target or TARGET_RGB)
     lab = rgb_to_lab(rgb)
     L, a, b = lab[..., 0], lab[..., 1], lab[..., 2]
     C = np.hypot(a, b); H = np.degrees(np.arctan2(b, a)) % 360
@@ -89,12 +98,12 @@ def parse(spec):
     return [[tuple(float(v) for v in pt.split(',')) for pt in poly.split()] for poly in spec.split(';') if poly.strip()]
 
 
-def process(src, dst=None, polys=None, exclude=None):
+def process(src, dst=None, polys=None, exclude=None, target=None):
     im = src if isinstance(src, Image.Image) else Image.open(src)
     alpha = im.getchannel('A') if im.mode in ('RGBA', 'LA') else None
     rgb = np.asarray(im.convert('RGB'), dtype=np.float64) / 255
     reg = region_mask(im.size, polys, feather=max(1.5, im.size[0] / 900), exclude=exclude) if polys else None
-    out = Image.fromarray((recolor(rgb, reg) * 255 + .5).astype(np.uint8))
+    out = Image.fromarray((recolor(rgb, reg, target) * 255 + .5).astype(np.uint8))
     if alpha is not None:
         out.putalpha(alpha)
     return out

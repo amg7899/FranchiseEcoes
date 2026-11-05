@@ -7,14 +7,14 @@
    site is v2 again (the product pictures and line drawings are separate: see CLAUDE.md).
 
    Page: cool white haze, black type, white frosted glass standing in soft leaf and sky light.
-   Screens: the product's own deep green (#0d4a44), where the line drawings glow in mint.
+   Screens: the client's deep teal-green (#0d4a44), where the line drawings glow in mint.
    Shapes: the key figures as a honeycomb, round lenses, pills. */
 
 :root {
   color-scheme: light;
   --haze: #f2f6f3;
   --ink: #0b1d19;
-  --pine: #0d4a44;          /* the body of the MultiCharger: buttons, numbers, the selected load */
+  --pine: #0d4a44;          /* the client's teal-green: buttons, numbers, the selected load */
   --pine-hi: #12615a;
   --pine-deep: #062925;     /* the screens */
   --leaf: #1fa36c;          /* dots, bars and fills on the light page (not for text) */
