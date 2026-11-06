@@ -29,13 +29,13 @@
     <p>This page does not exist, or it has moved.</p>
     <p lang="bg">Тази страница не съществува или е преместена.</p>
     <div class="links">
-      <a href="/FranchiseEcoes/" data-to="">Home</a>
-      <a href="/FranchiseEcoes/bg/" data-to="bg/" lang="bg">Начало</a>
-      <a href="/FranchiseEcoes/contact-us/" data-to="contact-us/">Contact us</a>
+      <a href="/" data-to="">Home</a>
+      <a href="/bg/" data-to="bg/" lang="bg">Начало</a>
+      <a href="/contact-us/" data-to="contact-us/">Contact us</a>
     </div>
   </main>
   <script>
-    // the site lives at /FranchiseEcoes/ on github.io and at / on its own domain
+    // the site lives at / on franchise.ecoes.eu (since 2026-11-06); /FranchiseEcoes/ on github.io only redirects there
     (function () {
       var base = /^\/FranchiseEcoes\//i.test(location.pathname) ? '/FranchiseEcoes/' : '/';
       Array.prototype.forEach.call(document.querySelectorAll('a[data-to]'), function (a) { a.href = base + a.getAttribute('data-to'); });

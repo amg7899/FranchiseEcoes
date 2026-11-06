@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://franchise.ecoes.eu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/franchise/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/franchise/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/franchise/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/franchise/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/franchise/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/franchise/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/franchise/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/franchise/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/multicharger/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/multicharger/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/multicharger/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/multicharger/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/multicharger/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/multicharger/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/multicharger/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/multicharger/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/multicharger-box/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/multicharger-box/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/multicharger-box/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/multicharger-box/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/multicharger-box/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/multicharger-box/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/multicharger-box/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/multicharger-box/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/about-us/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/about-us/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/about-us/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/about-us/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/about-us/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/about-us/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/about-us/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/about-us/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/contact-us/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/contact-us/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/contact-us/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/contact-us/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/contact-us/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/contact-us/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/contact-us/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/contact-us/"/>
+  </url>
+</urlset>
