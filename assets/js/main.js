@@ -177,4 +177,19 @@
     });
   }, { threshold: 0.3 });
   imgs.forEach(function (img) { seen.observe(img); });
+  // Once the page has loaded, fetch the drawings and their glow (style.css) ahead into the browser's cache,
+  // not as images, so each still starts drawing only when it is seen, but at once: on a slow connection the
+  // lens stood empty for a moment before.
+  window.addEventListener('load', function () {
+    if (!window.fetch) return;
+    (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(function () {
+      imgs.forEach(function (img) {
+        var src = img.getAttribute('data-src');
+        if (!src) return;
+        [src, src.replace(/\.svg$/, '-glow.webp')].forEach(function (u) {
+          try { fetch(u, { priority: 'low' }).catch(function () {}); } catch (e) {}
+        });
+      });
+    });
+  });
 })();

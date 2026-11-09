@@ -11,10 +11,15 @@
 
 Proportions follow the client's renders (box about 3.2 x 1.6 x 1.7 m on a tandem-axle trailer).
 The lines draw themselves once when the image loads (images are lazy, so: when it comes into
-view); prefers-reduced-motion shows them finished. Edit the numbers below and rerun:
-  python3 tools/wireframes.py
+view); prefers-reduced-motion shows them finished. Their glow (a blurred copy of the lines that does not
+move) is not in that SVG: a blur filter inside an animated SVG is redrawn in every frame of the drawing
+and made the pages stutter (2026-11-09). It is written to tools/glow/*-glow.svg and turned into a still
+picture, assets/img/v2/*-glow.webp, by tools/wireglow.js (Chromium, so it looks exactly as the filter
+did); style.css shows it as the background of the drawing's <img>, under the lines. Only the network's
+links, which grow, keep their glow inside the SVG. Edit the numbers below and rerun both:
+  python3 tools/wireframes.py && node tools/wireglow.js
 """
-import math, os
+import math, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'assets', 'img', 'v2')
@@ -40,6 +45,8 @@ STYLE = f"""
   </style>
   <defs><filter id="blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter></defs>
 """
+
+STILL = []   # the glow groups of the drawing being built (they do not move): the still picture under the lines
 
 def fmt(v): return f'{v:.1f}'.rstrip('0').rstrip('.')
 
@@ -124,8 +131,8 @@ def multicharger():
     W, H = 1600, 900
     def group(paths, cls, w, delay):
         body = ''.join(f'<path pathLength="1" d="{d}"/>' for d in paths)
-        return (f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>'
-                f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>')
+        STILL.append(f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>')
+        return f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>'
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">{STYLE}'
            f'<g class="w faint" stroke-width="1">{"".join(f"<path d=\"{d}\"/>" for d in grid)}</g>'
            + group(back, 'back', 1.4, 'd1') + group(chassis, '', 1.6, 'd1') + group(side, '', 1.6, 'd2')
@@ -181,8 +188,8 @@ def globe():
     arcs.append('M' + ' L'.join(f'{fmt(a)} {fmt(b)}' for a, b in pts))
     def group(paths, cls, w, delay):
         body = ''.join(f'<path pathLength="1" d="{d}"/>' for d in paths)
-        return (f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>'
-                f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>')
+        STILL.append(f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>')
+        return f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>'
     outline = f'M{cx - R} {cy} A{R} {R} 0 1 1 {cx + R} {cy} A{R} {R} 0 1 1 {cx - R} {cy}'
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">{STYLE}'
             + group(back, 'back', 1.1, 'd1') + group([outline], '', 1.8, 'd1') + group(front, '', 1.3, 'd2')
@@ -337,8 +344,8 @@ def network_globe():
                         f'<circle class="w fade"{st} cx="{fmt(x)}" cy="{fmt(y)}" r="8.5" stroke-width="1" stroke-opacity=".55"/>')
     def group(paths, cls, w, delay):
         body = ''.join(f'<path pathLength="1" d="{d}"/>' for d in paths)
-        return (f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>'
-                f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>')
+        STILL.append(f'<g class="glow {cls}" stroke-width="{w * 3}">{body}</g>')
+        return f'<g class="w draw {delay} {cls}" stroke-width="{w}">{body}</g>'
     outline = f'M{cx - R} {cy} A{R} {R} 0 1 1 {cx + R} {cy} A{R} {R} 0 1 1 {cx - R} {cy}'
     extra = ('<style>.quiet { opacity: .45; } .back.quiet { opacity: .16; } .link { animation-duration: .8s; }'
              ' .hub { animation-duration: 1.4s; } .net-glow { opacity: .5; } .hubs { opacity: .85; }</style>')
@@ -352,10 +359,21 @@ def network_globe():
             + f'<g class="w hubs" stroke-width="1.3">{"".join(hubs)}</g>'
             + ''.join(dots) + '</svg>')
 
+def still(svg):
+    """the glow of a drawing as its own SVG: the same canvas, styles and blur filter, only the glow groups"""
+    head = re.match(r'<svg[^>]*>', svg).group(0)
+    styles = ''.join(re.findall(r'<style>.*?</style>|<defs>.*?</defs>', svg, re.S))
+    return head + styles + ''.join(STILL) + '</svg>'
+
 if __name__ == '__main__':
-    os.makedirs(OUT, exist_ok=True)
-    for name, svg in [('wire-multicharger.svg', multicharger()), ('wire-globe.svg', globe()),
-                      ('wire-globe-network.svg', network_globe())]:
+    GLOW_OUT = os.path.join(HERE, 'glow')
+    os.makedirs(OUT, exist_ok=True); os.makedirs(GLOW_OUT, exist_ok=True)
+    for name, build in [('wire-multicharger.svg', multicharger), ('wire-globe.svg', globe),
+                        ('wire-globe-network.svg', network_globe)]:
+        STILL.clear()
+        svg = build()
         with open(os.path.join(OUT, name), 'w', encoding='utf-8') as fh:
             fh.write(svg + '\n')
-        print(name, len(svg) // 1024, 'KB')
+        with open(os.path.join(GLOW_OUT, name.replace('.svg', '-glow.svg')), 'w', encoding='utf-8') as fh:
+            fh.write(still(svg) + '\n')
+        print(name, len(svg) // 1024, 'KB (+ glow)')

@@ -84,6 +84,18 @@ body::before {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass { background: rgba(255, 255, 255, .94); }
 }
+/* Glass with nothing behind it but the page's own even light needs no backdrop filter: blurred, that light
+   looks the same, and every filtered pane is redrawn in every frame while the page scrolls, which made the
+   pages lag (2026-11-09). The frost stays where something stands behind the glass: the Home hero and offers,
+   the panes over the hologram, the closing band, the page heads where the pane overlaps the globe or the
+   photo (the product heads only below 1200px, where the photo runs under the pane), the header (over the
+   hero photo) and the document viewer. */
+:is(.glass, .btn--glass):not(:is(.hero, .offer, .why, .closing, .page-hero--lead, .site-header, .lightbox) *) {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+@media (min-width: 1200px) {
+  :is(.page-hero--multicharger, .page-hero--multicharger-box) :is(.glass, .btn--glass) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 
 /* ---------- links and buttons ---------- */
 .link { text-decoration-color: rgba(11, 29, 25, .32); }
@@ -116,7 +128,7 @@ body::before {
 /* the globes in a round deep green lens, glowing as on the client's glass monitor */
 .globe {
   border-radius: 50%;
-  background: radial-gradient(closest-side, #12594f 0%, #0a3d37 58%, #062925 100%);
+  background: var(--glow, none) center / 100% 100% no-repeat, radial-gradient(closest-side, #12594f 0%, #0a3d37 58%, #062925 100%);
   box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .2), 0 44px 80px -46px rgba(6, 41, 37, .7);
 }
 .page-hero-globe::before {

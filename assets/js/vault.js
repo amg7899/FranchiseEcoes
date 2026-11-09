@@ -1,5 +1,7 @@
 // The Defense area (/defense/, /bg/defense/): the content is encrypted in the page (tools/defense.py) and opens
 // only with the access code: PBKDF2-SHA256 derives the AES-GCM key from the code, Web Crypto decrypts it here.
+// Its photos are encrypted files beside the page (vault-1.bin, ...: IV + ciphertext, the file name as associated
+// data), fetched and decrypted with the same key once the content is open, so the gate page stays small.
 // A right code is kept for this tab only (sessionStorage), so both languages open without typing it again;
 // "Lock" forgets it. Texts come from data-* on the form, so EN and BG differ only in the markup.
 (function () {
@@ -35,22 +37,42 @@
         return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: bytes(data.salt), iterations: data.iter, hash: 'SHA-256' },
           base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
       })
-      .then(function (key) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: bytes(data.iv) }, key, bytes(data.ct)); })
-      .then(function (buf) { return new TextDecoder().decode(buf); });
+      .then(function (key) {
+        return crypto.subtle.decrypt({ name: 'AES-GCM', iv: bytes(data.iv) }, key, bytes(data.ct))
+          .then(function (buf) { return { key: key, html: new TextDecoder().decode(buf) }; });
+      });
   }
 
-  function open(html, focus) {
-    target.innerHTML = html;
+  function photos(key) {
+    Array.prototype.forEach.call(target.querySelectorAll('img[data-vault-src]'), function (img) {
+      var name = img.getAttribute('data-vault-src');
+      fetch(name)
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+        .then(function (buf) {
+          return crypto.subtle.decrypt({ name: 'AES-GCM', iv: new Uint8Array(buf, 0, 12), additionalData: new TextEncoder().encode(name) },
+            key, new Uint8Array(buf, 12));
+        })
+        .then(function (plain) {
+          img.src = URL.createObjectURL(new Blob([plain], { type: img.getAttribute('data-vault-type') || 'image/webp' }));
+          img.removeAttribute('data-vault-src');
+        })
+        .catch(function () {});
+    });
+  }
+
+  function open(opened, focus) {
+    target.innerHTML = opened.html;
     target.hidden = false;
     gate.hidden = true;
     document.documentElement.classList.add('vault-open');
+    photos(opened.key);
     if (focus) { window.scrollTo(0, 0); target.focus({ preventScroll: true }); }
   }
 
   var saved = null;
   try { saved = sessionStorage.getItem(KEY); } catch (e) {}
   if (saved) {
-    unlock(saved).then(function (html) { open(html, false); }, function () {
+    unlock(saved).then(function (opened) { open(opened, false); }, function () {
       try { sessionStorage.removeItem(KEY); } catch (e) {}
     });
   }
@@ -61,10 +83,10 @@
     if (!code) { say(form.getAttribute('data-empty')); input.focus(); return; }
     button.disabled = true;
     say(form.getAttribute('data-busy'));
-    unlock(code).then(function (html) {
+    unlock(code).then(function (opened) {
       try { sessionStorage.setItem(KEY, code); } catch (err) {}
       say('');
-      open(html, true);
+      open(opened, true);
     }, function () {
       say(form.getAttribute('data-wrong'));
       input.select();
