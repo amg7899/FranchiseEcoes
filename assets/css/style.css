@@ -1251,7 +1251,7 @@ html.lightbox-open { overflow: hidden; }
 .vault-table { padding: clamp(18px, 2.6vw, 34px); }
 /* the two photos side by side at one height (3 : 2; the helicopter's wider frame loses only open sky and hills at its sides) */
 .vault-photos { margin: 0; }
-.vault-photos .shot-media img { aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
+.vault-photos .shot-media img { aspect-ratio: 1672 / 941; height: auto; object-fit: cover; }   /* both photos 16 : 9, shown whole (the Unimog photo replaced, 2026-11-09) */
 .vault-table .table-scroll { margin-top: 0; }
 
 /* ---------- footer ---------- */
