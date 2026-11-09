@@ -1,6 +1,6 @@
-// Forms (pre-order on Home, offer request on Contact us). Required fields are checked next to
+// Forms (pre-order, dealer application, offer request on Contact us). Required fields are checked next to
 // them; the form is sent by e-mail through FormSubmit (to sales@ecoes.eu, copy to
-// bulfire@ecoes.eu). Without JavaScript the form still posts to FormSubmit, which then returns
+// ecoes@ecoes.eu, client 2026-11-09). Without JavaScript the form still posts to FormSubmit, which then returns
 // here with ?sent=1. If sending fails, the message says why (e.g. the form still waits for
 // FormSubmit's one-time activation) and links to sales@ecoes.eu with everything the visitor
 // typed already filled in. Texts follow data-lang on the form ("en" or "bg").
@@ -96,7 +96,7 @@
       status.hidden = false;
     }
 
-    // a mailto link to sales@ecoes.eu (copy to bulfire@ecoes.eu) with the visitor's entries
+    // a mailto link to sales@ecoes.eu (copy to ecoes@ecoes.eu) with the visitor's entries
     function mailto() {
       var lines = [];
       Array.prototype.forEach.call(form.querySelectorAll('input, select, textarea'), function (el) {

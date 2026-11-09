@@ -24,10 +24,10 @@
   <link rel="preload" href="../assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/wix-madefor-text-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../assets/css/fonts.css?v=90f27b14">
-  <link rel="stylesheet" href="../assets/css/style.css?v=16518bad">
-  <link rel="stylesheet" href="../assets/css/eco.css?v=d679f200">
+  <link rel="stylesheet" href="../assets/css/style.css?v=c521ae3d">
+  <link rel="stylesheet" href="../assets/css/eco.css?v=bda83b28">
   <script src="../assets/js/main.js?v=e3f242bf" defer></script>
-  <script src="../assets/js/forms.js?v=125e6a67" defer></script>
+  <script src="../assets/js/forms.js?v=2a1011ed" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -261,7 +261,7 @@
         <div class="glass form-pane">
           <h3 class="pane-title" id="preorder-title">Pre-order form</h3>
           <form class="js-form preorder-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="en" data-subject="ECOES Franchise website: pre-order" aria-labelledby="preorder-title">
-            <input type="hidden" name="_cc" value="bulfire@ecoes.eu">
+            <input type="hidden" name="_cc" value="ecoes@ecoes.eu">
             <input type="hidden" name="_subject" value="ECOES Franchise website: pre-order">
             <input type="hidden" name="_template" value="table">
             <div class="hp" aria-hidden="true"><label for="p-hp">Leave this field empty</label><input id="p-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
@@ -358,6 +358,70 @@
         <li>Submitting a pre-order is for planning purposes only. It carries no obligation to purchase or make a payment.</li>
         <li>Orders for delivery in 2027 will be exempt from the onboarding fee for the<span translate="no"> ECOES Franchise</span> remote ecosystem.</li>
       </ol>
+      <div class="split-body dealer-body" id="dealers">
+        <div class="glass form-pane">
+          <h3 class="pane-title" id="dealer-title">Dealer application form</h3>
+          <p class="form-lead"><b>If you would like to become a dealer of<span translate="no"> ECOES JV</span>, fill in the application below and we will send you the requirements for authorised and exclusive dealers:</b></p>
+          <form class="js-form dealer-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="en" data-subject="ECOES Franchise website: dealer application" aria-labelledby="dealer-title">
+            <input type="hidden" name="_cc" value="ecoes@ecoes.eu">
+            <input type="hidden" name="_subject" value="ECOES Franchise website: dealer application">
+            <input type="hidden" name="_template" value="table">
+            <div class="hp" aria-hidden="true"><label for="d-hp">Leave this field empty</label><input id="d-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+            <div class="form-grid">
+              <div class="field field--wide">
+                <label for="d-name"><span class="field-no">1</span>Name of the company or person <span class="req" aria-hidden="true">*</span></label>
+                <input id="d-name" name="dealer" type="text" autocomplete="organization" required aria-describedby="d-name-e">
+                <p class="field-error" id="d-name-e" hidden>Please enter the name of the company or person.</p>
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">2</span>Phone/WhatsApp, e-mail</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="d-phone">Phone/WhatsApp</label>
+                    <input id="d-phone" name="phone" type="tel" autocomplete="tel">
+                  </div>
+                  <div class="field">
+                    <label for="d-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+                    <input id="d-email" name="email" type="email" autocomplete="email" required aria-describedby="d-email-e">
+                    <p class="field-error" id="d-email-e" hidden>Please enter a valid e-mail address.</p>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="field field--wide">
+                <label for="d-web"><span class="field-no">3</span>Website (if any)</label>
+                <input id="d-web" name="website" type="text" inputmode="url" autocomplete="url">
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">4</span>Country, city with postal code</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="d-country">Country <span class="req" aria-hidden="true">*</span></label>
+                    <input id="d-country" name="country" type="text" autocomplete="country-name" required aria-describedby="d-country-e">
+                    <p class="field-error" id="d-country-e" hidden>Please enter the country.</p>
+                  </div>
+                  <div class="field">
+                    <label for="d-city">City</label>
+                    <input id="d-city" name="city" type="text" autocomplete="address-level2">
+                  </div>
+                  <div class="field">
+                    <label for="d-zip">Postal code</label>
+                    <input id="d-zip" name="postal_code" type="text" autocomplete="postal-code">
+                  </div>
+                </div>
+              </fieldset>
+              <div class="field field--wide field--check">
+                <input id="d-consent" name="consent" type="checkbox" value="yes" required aria-describedby="d-consent-e">
+                <label for="d-consent">I agree that<span translate="no"> ECOES JV </span>may use the data in this form to answer my inquiry.</label>
+                <p class="field-error" id="d-consent-e" hidden>Please confirm, so that we can answer you.</p>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn--ice" type="submit"><span class="btn-label">Send the application</span></button>
+            </div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -616,6 +616,10 @@ p { margin: 0 0 1em; }
 .form-pane .pane-title { margin: 0 0 28px; font: 300 clamp(22px, 2vw, 30px)/1.15 var(--font-display); }
 
 /* ---------- forms ---------- */
+/* the dealer application under the pre-order form (client, 2026-11-09) */
+.dealer-body { margin-top: clamp(44px, 5vw, 80px); }
+.form-pane .form-lead { max-width: 64ch; margin: -14px 0 28px; font-size: 17px; line-height: 1.55; color: var(--text-hi); }
+.form-pane .form-lead b { font-weight: 600; }
 .form-grid { display: grid; gap: 26px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 760px) {
   .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
@@ -1071,6 +1075,13 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .partner-link:hover .partner-url { text-decoration-color: currentColor; }
 .partner p { max-width: 68ch; margin: 0; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.65; color: var(--text); }
 
+/* under KINTEX: who the contracts are made with (client, 2026-11-09) */
+.contracts { max-width: 1160px; margin-top: 16px; }
+.contracts .bullets { margin: 0; max-width: none; }
+.contracts .bullets li { padding: 12px 0 12px 26px; }
+.contracts .bullets li::before { top: 23px; }
+.contracts a { color: inherit; text-underline-offset: 4px; }
+
 /* HISTORY: "* * *", the text, the documents on a light table and the three awards with their texts */
 .about-history { position: relative; padding: var(--section) 0 0; }
 .about-history::before {
@@ -1201,6 +1212,36 @@ html.lightbox-open { overflow: hidden; }
   .road-dim-line::before { left: 50%; top: 4px; transform: translateX(-50%) rotate(45deg); }
   .road-dim-line::after { left: 50%; right: auto; top: auto; bottom: 4px; transform: translateX(-50%) rotate(-135deg); }
 }
+
+/* ---------- Defense (client, 2026-11-09): the gate asks for the access code, then the content opens
+   (encrypted in the page, see tools/defense.py and assets/js/vault.js) ---------- */
+.vault-hero { padding-bottom: var(--section); }
+.vault-gate { max-width: 780px; margin: 0 auto; padding: clamp(28px, 4.4vw, 60px); }
+.vault-title { margin: 0; font: 500 clamp(28px, 3.4vw, 46px)/1.1 var(--font-display); letter-spacing: -.03em; color: var(--text-hi); }
+.vault-division { margin: 10px 0 24px; font: 400 clamp(16px, 1.3vw, 19px)/1.3 var(--font-display); letter-spacing: .04em; color: var(--text); }
+.vault-text { margin: 0; max-width: 62ch; color: var(--text); }
+.vault-form { margin: 28px 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); }
+.vault-form label { display: block; margin: 0 0 12px; font-size: 17px; line-height: 1.45; color: var(--text-hi); }
+.vault-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.vault-row input { flex: 1 1 240px; min-width: 0; min-height: 52px; font: 500 18px/1.2 var(--font-text); letter-spacing: .14em; text-transform: uppercase; }
+.vault-row .btn { flex: none; min-width: 120px; }
+.vault-msg { margin: 12px 0 0; font-weight: 550; color: var(--text-hi); }
+.vault-request { margin: 26px 0 0; font-size: 16.5px; line-height: 1.6; color: var(--text-mute); }
+.vault-content:focus { outline: none; }
+.vault-head { padding-bottom: clamp(16px, 2.4vw, 40px); }
+.vault-head .vault-division { margin: 0 0 14px; }
+.vault-page-title { margin: 0 0 22px; font-size: clamp(32px, 4.6vw, 66px); line-height: 1.05; text-wrap: balance; }
+.vault-sub { max-width: 46ch; margin-bottom: 26px; }
+.vault-doc { padding-top: clamp(40px, 5vw, 80px); }
+.vault-doc--last { padding-bottom: var(--section); }
+.vault-list { max-width: 78ch; }
+.vault-list > li { padding: 14px 0 14px 26px; }
+.vault-list > li::before { top: 25px; }
+.vault-list ul.bullets { margin: 12px 0 0; }
+.spec-table th, .spec-table td { text-align: left; vertical-align: top; padding-right: 18px; }
+.spec-table tbody th { white-space: normal; min-width: 170px; }
+.vault-table { padding: clamp(18px, 2.6vw, 34px); }
+.vault-table .table-scroll { margin-top: 0; }
 
 /* ---------- footer ---------- */
 .site-footer { position: relative; padding: 80px 0 36px; border-top: 1px solid var(--line); background: rgba(8, 15, 24, .45); color: var(--text-mute); font-size: 17px; }

@@ -310,6 +310,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
   .closing .wrap::after { width: 150px; right: -40px; top: -36px; bottom: auto; opacity: .45; }
 }
 
+/* the Defense gate: a deep green screen, like the closing band */
+.vault-gate.glass {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  background:
+    radial-gradient(70% 90% at 100% 0%, rgba(31, 163, 108, .26), transparent 70%),
+    linear-gradient(160deg, #0c4039, var(--pine-deep) 72%);
+  box-shadow: inset 0 0 0 1px rgba(166, 244, 210, .16), 0 44px 80px -56px rgba(6, 41, 37, .8);
+}
+.vault-gate.glass::before { background: linear-gradient(140deg, rgba(166, 244, 210, .5), rgba(166, 244, 210, .06) 40%, rgba(166, 244, 210, .04) 70%, rgba(166, 244, 210, .3)); }
+.vault-gate .vault-division { color: var(--mint); }
+
 /* ---------- About us ---------- */
 .logo-plate { background: #fff; box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .1); }
 .flag { box-shadow: 0 0 0 1px rgba(11, 29, 25, .16); }
@@ -334,7 +345,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
 /* ================= where the night stays: the Home hero (unchanged, client 2026-11-04), the header over it,
    the document viewer; and the deep green screens. The v2 values, with zero specificity, so the hero's own
    tokens in style.css still win ================= */
-:where(.hero, .why, .site-footer, .closing, .lightbox,
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox,
        html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) {
   color-scheme: dark;
   --ice: #f2f5f7; --text-hi: #edf2f4; --text: #c3ced5; --text-mute: #b0bfca;
@@ -343,24 +354,24 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
   --glass-tint: rgba(30, 50, 72, .36); --glass-tint-strong: rgba(20, 36, 54, .55);
   --ground: #112031; --ground-rgb: 17, 32, 49; --ground-1: #162a3f;
 }
-:where(.hero, .why, .site-footer, .closing, .lightbox,
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox,
        html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.glass) {
   background: linear-gradient(160deg, rgba(255, 255, 255, .085), rgba(255, 255, 255, .015) 46%), var(--glass-tint);
   -webkit-backdrop-filter: blur(var(--blur)) saturate(1.6);
   backdrop-filter: blur(var(--blur)) saturate(1.6);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14);
 }
-:where(.hero, .why, .site-footer, .closing, .lightbox) :is(.glass)::before {
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox) :is(.glass)::before {
   background: linear-gradient(140deg, rgba(255, 255, 255, .42), rgba(255, 255, 255, .08) 32%, rgba(255, 255, 255, .03) 60%, rgba(255, 255, 255, .2));
 }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link) { text-decoration-color: rgba(255, 255, 255, .35); }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link--offer) { text-decoration-color: rgba(76, 195, 255, .5); }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice) { background: var(--ice); color: var(--night-0); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .7); }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice):hover { background: #fff; }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta) {
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link) { text-decoration-color: rgba(255, 255, 255, .35); }
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.link--offer) { text-decoration-color: rgba(76, 195, 255, .5); }
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice) { background: var(--ice); color: var(--night-0); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .7); }
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--ice):hover { background: #fff; }
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta) {
   color: var(--text-hi); background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
 }
-:where(.hero, .why, .site-footer, .closing, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta):hover { background: rgba(255, 255, 255, .13); }
+:where(.hero, .why, .site-footer, .closing, .vault-gate, .lightbox, html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.btn--glass, .header-cta):hover { background: rgba(255, 255, 255, .13); }
 :where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.header-cta)::before { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-soft); }
 :where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) :is(.lang-switch a, .menu-button) {
   background: rgba(255, 255, 255, .05); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); color: var(--text-hi);
@@ -372,15 +383,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
 :where(html:not(.is-scrolled):not(.menu-open) body:has(> main > .hero) .site-header) .brand :is(.brand-day) { display: none; }
 
 /* the screens: deep green instead of the night blue, mint instead of the charger's blue */
-.why, .site-footer, .closing {
+.why, .site-footer, .closing, .vault-gate {
   --text-hi: #f4faf7; --text: #dceae4; --text-mute: #c3dad1;
   --signal: var(--mint); --signal-soft: rgba(166, 244, 210, .22);
   --glass-tint: rgba(9, 60, 54, .4); --glass-tint-strong: rgba(6, 45, 40, .62);
   --ground: var(--pine-deep); --ground-rgb: 6, 41, 37; --ground-1: #0a3a35;
   --ice: #f4fbf7;
 }
-:where(.why, .site-footer, .closing) :is(.btn--ice) { color: var(--pine-deep); }
-:where(.why, .site-footer, .closing) :is(.link--offer) { text-decoration-color: rgba(166, 244, 210, .55); }
+:where(.why, .site-footer, .closing, .vault-gate) :is(.btn--ice) { color: var(--pine-deep); }
+:where(.why, .site-footer, .closing, .vault-gate) :is(.link--offer) { text-decoration-color: rgba(166, 244, 210, .55); }
 .why .go-chip { background: var(--mint); color: var(--pine-deep); }
 .why .tile:hover .go-chip { background: #c9f9e4; }
 .why .chart-bars .is-on .bar { background: linear-gradient(180deg, rgba(166, 244, 210, .95), rgba(166, 244, 210, .25)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }

@@ -24,10 +24,10 @@
   <link rel="preload" href="../../assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../assets/fonts/wix-madefor-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../assets/css/fonts.css?v=90f27b14">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=16518bad">
-  <link rel="stylesheet" href="../../assets/css/eco.css?v=d679f200">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=c521ae3d">
+  <link rel="stylesheet" href="../../assets/css/eco.css?v=bda83b28">
   <script src="../../assets/js/main.js?v=e3f242bf" defer></script>
-  <script src="../../assets/js/forms.js?v=125e6a67" defer></script>
+  <script src="../../assets/js/forms.js?v=2a1011ed" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Към съдържанието</a>
@@ -227,7 +227,7 @@
         <div class="glass form-pane">
           <h3 class="pane-title" id="preorder-title">Формуляр за предварителна заявка</h3>
           <form class="js-form preorder-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="bg" data-subject="Сайт ECOES Franchise: предварителна заявка" aria-labelledby="preorder-title">
-            <input type="hidden" name="_cc" value="bulfire@ecoes.eu">
+            <input type="hidden" name="_cc" value="ecoes@ecoes.eu">
             <input type="hidden" name="_subject" value="Сайт ECOES Franchise: предварителна заявка">
             <input type="hidden" name="_template" value="table">
             <div class="hp" aria-hidden="true"><label for="p-hp">Оставете това поле празно</label><input id="p-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
@@ -324,6 +324,70 @@
       <ol class="notices" start="2">
         <li>Поръчките за доставка през 2027 г. ще бъдат освободени от таксата за включване в дистанционната екосистема на<span translate="no"> ECOES Franchise</span>.</li>
       </ol>
+      <div class="split-body dealer-body" id="dealers">
+        <div class="glass form-pane">
+          <h3 class="pane-title" id="dealer-title">Формуляр заявка за дилъри</h3>
+          <p class="form-lead"><b>Ако искате да станете дилър на<span translate="no"> ECOES JV</span>, попълнете заявката по-долу, за да Ви изпратим изискванията към оторизирани и ексклузивни дилъри:</b></p>
+          <form class="js-form dealer-form" action="https://formsubmit.co/sales@ecoes.eu" method="POST" novalidate data-lang="bg" data-subject="Сайт ECOES Franchise: заявка за дилър" aria-labelledby="dealer-title">
+            <input type="hidden" name="_cc" value="ecoes@ecoes.eu">
+            <input type="hidden" name="_subject" value="Сайт ECOES Franchise: заявка за дилър">
+            <input type="hidden" name="_template" value="table">
+            <div class="hp" aria-hidden="true"><label for="d-hp">Оставете това поле празно</label><input id="d-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+            <div class="form-grid">
+              <div class="field field--wide">
+                <label for="d-name"><span class="field-no">1</span>Име на компания или личност <span class="req" aria-hidden="true">*</span></label>
+                <input id="d-name" name="dealer" type="text" autocomplete="organization" required aria-describedby="d-name-e">
+                <p class="field-error" id="d-name-e" hidden>Моля, въведете името на компанията или личността.</p>
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">2</span>Телефон/WhatsApp, имейл</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="d-phone">Телефон/WhatsApp</label>
+                    <input id="d-phone" name="phone" type="tel" autocomplete="tel">
+                  </div>
+                  <div class="field">
+                    <label for="d-email">Имейл <span class="req" aria-hidden="true">*</span></label>
+                    <input id="d-email" name="email" type="email" autocomplete="email" required aria-describedby="d-email-e">
+                    <p class="field-error" id="d-email-e" hidden>Моля, въведете валиден имейл адрес.</p>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="field field--wide">
+                <label for="d-web"><span class="field-no">3</span>Уебсайт (ако има)</label>
+                <input id="d-web" name="website" type="text" inputmode="url" autocomplete="url">
+              </div>
+              <fieldset class="field-group field--wide">
+                <legend><span class="field-no">4</span>Държава, град с пощенски код</legend>
+                <div class="group-fields">
+                  <div class="field">
+                    <label for="d-country">Държава <span class="req" aria-hidden="true">*</span></label>
+                    <input id="d-country" name="country" type="text" autocomplete="country-name" required aria-describedby="d-country-e">
+                    <p class="field-error" id="d-country-e" hidden>Моля, въведете държавата.</p>
+                  </div>
+                  <div class="field">
+                    <label for="d-city">Град</label>
+                    <input id="d-city" name="city" type="text" autocomplete="address-level2">
+                  </div>
+                  <div class="field">
+                    <label for="d-zip">Пощенски код</label>
+                    <input id="d-zip" name="postal_code" type="text" autocomplete="postal-code">
+                  </div>
+                </div>
+              </fieldset>
+              <div class="field field--wide field--check">
+                <input id="d-consent" name="consent" type="checkbox" value="yes" required aria-describedby="d-consent-e">
+                <label for="d-consent">Съгласявам се<span translate="no"> ECOES JV </span>да използва данните от тази форма, за да отговори на запитването ми.</label>
+                <p class="field-error" id="d-consent-e" hidden>Моля, потвърдете, за да можем да ви отговорим.</p>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn--ice" type="submit"><span class="btn-label">Изпратете заявката</span></button>
+            </div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 
