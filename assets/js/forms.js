@@ -90,10 +90,23 @@
       });
     });
 
-    function show(text, isError) {
+    // the message under the button, kept on screen with a little room (the button may sit at the bottom edge,
+    // and the fixed header covers the top)
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function reveal() {
+      var r = status.getBoundingClientRect(), room = 24;
+      var header = document.querySelector('.site-header');
+      var top = (header ? header.offsetHeight : 0) + room;
+      var dy = r.bottom > window.innerHeight - room ? Math.min(r.bottom - window.innerHeight + room, r.top - top)
+        : (r.top < top ? r.top - top : 0);
+      if (dy) window.scrollBy({ top: dy, behavior: calm ? 'auto' : 'smooth' });
+    }
+    function show(text, isError, busy) {
       status.textContent = text;
-      status.classList.toggle('is-error', isError);
+      status.classList.toggle('is-error', !!isError);
+      status.classList.toggle('is-busy', !!busy);
       status.hidden = false;
+      reveal();
     }
 
     // a mailto link to sales@ecoes.eu (copy to ecoes@ecoes.eu) with the visitor's entries
@@ -130,6 +143,7 @@
         detail.textContent = T.detail + reason;
         status.appendChild(detail);
       }
+      reveal();   // again: the link and the details made it taller
     }
 
     form.addEventListener('submit', function (e) {
@@ -143,7 +157,9 @@
       subject.value = form.getAttribute('data-subject') + (topic ? ': ' + topic.value : '');
       button.disabled = true;
       buttonLabel.textContent = T.sending;
-      status.hidden = true;
+      // "Sending…" at once under the button too: when FormSubmit is slow, the visitor saw nothing but the
+      // button's label change and thought nothing happened (client, 2026-11-09)
+      show(T.sending, false, true);
 
       var data = {};
       new FormData(form).forEach(function (value, key) { data[key] = value; });

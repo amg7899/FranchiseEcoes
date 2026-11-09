@@ -230,6 +230,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
 .req { color: var(--pine); }
 .form-status { color: var(--ink); background: rgba(31, 163, 108, .12); box-shadow: inset 0 0 0 1px rgba(31, 163, 108, .45); }
 .form-status.is-error { background: rgba(180, 35, 24, .07); box-shadow: inset 0 0 0 1px rgba(180, 35, 24, .4); }
+.form-status.is-busy { background: rgba(13, 74, 68, .05); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .28); }
 .notices li::marker { color: var(--pine); }
 
 /* ---------- page heads ---------- */
