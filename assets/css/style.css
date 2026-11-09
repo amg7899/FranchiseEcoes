@@ -209,7 +209,7 @@ p { margin: 0 0 1em; }
 .header-row {
   max-width: 1480px; height: var(--header-h);
   margin: 0 auto; padding: 0 var(--gutter);
-  display: flex; align-items: center; gap: 22px;
+  display: flex; align-items: center; gap: 14px;
 }
 /* the logo for dark grounds (ecoes.eu's own night variant), straight on the header, no plate */
 .brand { flex: none; display: block; padding: 4px 0; border-radius: 10px; }
@@ -219,10 +219,10 @@ p { margin: 0 0 1em; }
   .brand img { height: 50px; }
 }
 .main-nav { display: none; flex: 1 1 auto; min-width: 0; }
-.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 0 clamp(14px, 1.25vw, 30px); }
+.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 0 clamp(9px, .85vw, 28px); }   /* seven links since Defense (2026-11-09) */
 .main-nav a {
   position: relative; display: block; padding: 14px 0;
-  font-size: 16px; font-weight: 500; letter-spacing: .01em;
+  font-size: 16px; font-weight: 500; letter-spacing: 0;
   color: var(--text); text-decoration: none; white-space: nowrap;
   transition: color .2s ease-out;
 }
@@ -242,7 +242,7 @@ p { margin: 0 0 1em; }
 }
 .lang-switch a:hover { background: rgba(255, 255, 255, .12); }
 .lang-switch a[aria-current] { display: none; }
-.header-cta { display: none; }
+.header-cta { display: none; padding-left: 15px; padding-right: 15px; }
 .menu-button {
   display: inline-flex; align-items: center; gap: 10px;
   height: 44px; padding: 0 16px 0 14px;
