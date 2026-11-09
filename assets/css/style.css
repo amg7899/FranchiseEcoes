@@ -1241,6 +1241,9 @@ html.lightbox-open { overflow: hidden; }
 .spec-table th, .spec-table td { text-align: left; vertical-align: top; padding-right: 18px; }
 .spec-table tbody th { white-space: normal; min-width: 170px; }
 .vault-table { padding: clamp(18px, 2.6vw, 34px); }
+/* the two photos side by side at one height (3 : 2; the helicopter's wider frame loses only open sky and hills at its sides) */
+.vault-photos { margin: 0; }
+.vault-photos .shot-media img { aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
 .vault-table .table-scroll { margin-top: 0; }
 
 /* ---------- footer ---------- */
