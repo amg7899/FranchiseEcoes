@@ -4,6 +4,9 @@
 // here with ?sent=1. If sending fails, the message says why (e.g. the form still waits for
 // FormSubmit's one-time activation) and links to sales@ecoes.eu with everything the visitor
 // typed already filled in. Texts follow data-lang on the form ("en" or "bg").
+// A subject of the contact form may bring a ready message (data-message on its option), a hint shown while it is
+// chosen (data-hint: the id of the hint) and a download offered once the form is sent (data-download: the id of a
+// <template> with the link): the presentation (client, 2026-11-10: through the contact form, not a form of its own).
 (function () {
   var TO = 'sales@ecoes.eu';
   var TEXT = {
@@ -29,9 +32,10 @@
   // Visitor statistics (Plausible: no cookies, no personal data, so no consent banner): a form that was really
   // sent counts as a goal of its kind. The goals carry these names in Plausible (Site settings → Goals → custom
   // events). Without the statistics script on the page this does nothing.
-  function goal(form) {
+  function goal(form, chosen) {
     var name = form.classList.contains('preorder-form') ? 'Pre-order'
-      : form.classList.contains('dealer-form') ? 'Dealer application' : 'Contact form';
+      : form.classList.contains('dealer-form') ? 'Dealer application'
+      : chosen && chosen.getAttribute('data-topic') === 'presentation' ? 'Presentation request' : 'Contact form';
     if (typeof window.plausible === 'function') window.plausible(name);
   }
 
@@ -43,14 +47,38 @@
     var sendLabel = buttonLabel.textContent;
     var subject = form.querySelector('input[name="_subject"]');
     var topic = form.querySelector('select[data-topics]');
+    var message = form.querySelector('textarea[name="message"]');
 
-    // the subject of the contact form follows ?topic= (franchise, multicharger, multicharger-box, other)
+    // the subject of the contact form follows ?topic= (franchise, multicharger, multicharger-box, presentation, other)
     var wanted = params.get('topic');
     if (topic && wanted) {
       for (var i = 0; i < topic.options.length; i++) {
         if (topic.options[i].getAttribute('data-topic') === wanted) topic.selectedIndex = i;
       }
     }
+    function chosen() { return topic ? topic.options[topic.selectedIndex] : null; }
+    // the chosen subject's hint and ready message; a ready message is replaced only while the visitor has not
+    // changed it (or written nothing)
+    var ready = '';
+    function follow() {
+      if (!topic) return;
+      var current = chosen();
+      Array.prototype.forEach.call(topic.options, function (o) {
+        var hint = o.getAttribute('data-hint') && document.getElementById(o.getAttribute('data-hint'));
+        if (hint) hint.hidden = o !== current;
+      });
+      if (current && current.hasAttribute('data-hint')) topic.setAttribute('aria-describedby', current.getAttribute('data-hint'));
+      else topic.removeAttribute('aria-describedby');
+      if (message && (message.value.trim() === '' || message.value === ready)) {
+        ready = (current && current.getAttribute('data-message')) || '';
+        if (message.value !== ready) {
+          message.value = ready;
+          message.dispatchEvent(new Event('input'));   // clears its error, if it had one
+        }
+      }
+    }
+    if (topic) topic.addEventListener('change', follow);
+    follow();
 
     var next = document.createElement('input');
     next.type = 'hidden';
@@ -137,6 +165,15 @@
         '&body=' + encodeURIComponent(lines.join('\r\n'));
     }
 
+    // the download that comes with the subject (the presentation), under the message
+    function offer(option) {
+      var id = option && option.getAttribute('data-download');
+      var template = id && document.getElementById(id);
+      if (!template) return;
+      status.appendChild(template.content.cloneNode(true));
+      reveal();
+    }
+
     function showError(reason) {
       var notActive = /activat/i.test(reason);
       show(notActive ? T.notActive : T.failed, true);
@@ -164,6 +201,7 @@
       if (honey && honey.value) return;   // filled in by a bot
 
       subject.value = form.getAttribute('data-subject') + (topic ? ': ' + topic.value : '');
+      var sentTopic = chosen();
       button.disabled = true;
       buttonLabel.textContent = T.sending;
       // "Sending…" at once under the button too: when FormSubmit is slow, the visitor saw nothing but the
@@ -190,12 +228,16 @@
           if (String(result.success) !== 'true') throw new Error(result.message || 'not sent');
           form.reset();
           checks.forEach(function (c) { c.marks.forEach(function (m) { m.removeAttribute('aria-invalid'); }); });
+          ready = '';
+          follow();
           show(T.sent, false);
-          goal(form);
+          offer(sentTopic);
+          goal(form, sentTopic);
         })
         .catch(function (err) {
           if (window.console) console.warn('Form:', err);
           showError(err && err.name === 'AbortError' ? 'timeout' : String(err && err.message || err));
+          offer(sentTopic);   // the visitor did their part: the download is theirs even when sending failed
         })
         .then(function () {
           if (timer) clearTimeout(timer);

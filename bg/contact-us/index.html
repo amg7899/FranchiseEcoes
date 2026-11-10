@@ -24,10 +24,10 @@
   <link rel="preload" href="../../assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../assets/fonts/wix-madefor-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../assets/css/fonts.css?v=90f27b14">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=5e8628ad">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=69ae6619">
   <link rel="stylesheet" href="../../assets/css/eco.css?v=ba528329">
   <script src="../../assets/js/main.js?v=c0c3ebb0" defer></script>
-  <script src="../../assets/js/forms.js?v=b291fc01" defer></script>
+  <script src="../../assets/js/forms.js?v=35108719" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Към съдържанието</a>
@@ -157,8 +157,10 @@
                   <option value="ECOES Franchise" data-topic="franchise">ECOES Franchise</option>
                   <option value="ECOES MultiCharger" data-topic="multicharger">ECOES MultiCharger</option>
                   <option value="ECOES MultiCharger Box" data-topic="multicharger-box">ECOES MultiCharger Box</option>
+                  <option value="Презентация (PDF)" data-topic="presentation" data-message="Желая да получа презентацията на ECOES Franchise." data-hint="c-topic-hint" data-download="c-download">Презентация (PDF)</option>
                   <option value="Друго" data-topic="other">Друго</option>
                 </select>
+                <p class="field-hint" id="c-topic-hint" hidden>След изпращане можете веднага да изтеглите презентацията.</p>
               </div>
               <div class="field field--wide">
                 <label for="c-message">Съобщение <span class="req" aria-hidden="true">*</span></label>
@@ -174,6 +176,7 @@
             <div class="form-actions">
               <button class="btn btn--ice" type="submit"><span class="btn-label">Изпрати</span></button>
             </div>
+            <template id="c-download"><a class="btn btn--ice btn--small" href="../../assets/docs/ecoes-franchise-presentation-bg.pdf" download="ECOES-Franchise-презентация.pdf">Изтеглете презентацията (PDF, 4,8 MB)</a></template>
             <p class="form-status" role="status" aria-live="polite" hidden></p>
           </form>
         </div>
@@ -190,7 +193,10 @@
         <img src="../../assets/img/logo-night.svg" alt="ECOES JV" width="220" height="106" loading="lazy" decoding="async">
       </a>
       <p class="footer-company" translate="no">ECOES (ECO ENGINEERING SYSTEMS) JV</p>
-      <a class="btn btn--glass btn--small" href="../contact-us/#contact-form">Форма за контакт</a>
+      <div class="footer-actions">
+        <a class="btn btn--glass btn--small" href="../contact-us/#contact-form">Форма за контакт</a>
+        <a class="btn btn--glass btn--small" href="../contact-us/?topic=presentation#contact-form">Презентация (PDF)</a>
+      </div>
     </div>
     <div class="footer-offices">
       <div class="footer-office">

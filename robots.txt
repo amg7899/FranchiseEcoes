@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# the presentation is offered through the contact form (contact-us/?topic=presentation)
+Disallow: /assets/docs/
 
 Sitemap: https://franchise.ecoes.eu/sitemap.xml
