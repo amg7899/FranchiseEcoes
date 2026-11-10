@@ -26,6 +26,15 @@
   };
   var params = new URLSearchParams(window.location.search);
 
+  // Visitor statistics (Plausible: no cookies, no personal data, so no consent banner): a form that was really
+  // sent counts as a goal of its kind. The goals carry these names in Plausible (Site settings → Goals → custom
+  // events). Without the statistics script on the page this does nothing.
+  function goal(form) {
+    var name = form.classList.contains('preorder-form') ? 'Pre-order'
+      : form.classList.contains('dealer-form') ? 'Dealer application' : 'Contact form';
+    if (typeof window.plausible === 'function') window.plausible(name);
+  }
+
   Array.prototype.forEach.call(document.querySelectorAll('.js-form'), function (form) {
     var T = TEXT[form.getAttribute('data-lang')] || TEXT.en;
     var status = form.querySelector('.form-status');
@@ -182,6 +191,7 @@
           form.reset();
           checks.forEach(function (c) { c.marks.forEach(function (m) { m.removeAttribute('aria-invalid'); }); });
           show(T.sent, false);
+          goal(form);
         })
         .catch(function (err) {
           if (window.console) console.warn('Form:', err);
