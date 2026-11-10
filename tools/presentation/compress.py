@@ -24,6 +24,8 @@ for obj in pdf.objects:
     if len(raw) < 20_000:
         continue
     img = pikepdf.PdfImage(obj).as_pil_image()
+    if img.mode == 'RGBA':      # newer pikepdf merges the /SMask into the picture; the mask stays its own object
+        img = img.convert('RGB')
     if img.mode not in ('RGB', 'L'):
         continue
     buf = io.BytesIO()

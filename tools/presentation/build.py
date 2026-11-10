@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 HERE = os.path.join(ROOT, 'tools', 'presentation')
 A = '../../'                                   # from tools/presentation/ to the site root
-SITE = 'https://amg7899.github.io/FranchiseEcoes/'   # GitHub Pages redirects to the own domain once it is live
+SITE = 'https://franchise.ecoes.eu/'                   # the own domain, live since 2026-11-06
 
 # larger pictures for the PDF (the pages use small ones in their src, and srcset is dropped here)
 UPGRADE = {'cut-multicharger-640.webp': 'cut-multicharger-1100.webp', 'cut-box-480.webp': 'cut-box-960.webp',
@@ -45,8 +45,13 @@ def src(img):
 
 
 def static_svg(rel):
-    """a line drawing finished (no drawing animation in print), as a data URI"""
+    """a line drawing finished (no drawing animation in print), as a data URI; its still glow (since
+    2026-11-09 in tools/glow/*-glow.svg, a picture under the lines on the site) is put back under the lines"""
     s = open(os.path.join(ROOT, rel), encoding='utf-8').read()
+    glow = os.path.join(ROOT, 'tools', 'glow', os.path.basename(rel).replace('.svg', '-glow.svg'))
+    if os.path.exists(glow):
+        groups = ''.join(re.findall(r'<g class="glow[^"]*"[^>]*>.*?</g>', open(glow, encoding='utf-8').read(), re.S))
+        s = s.replace('</defs>', '</defs>' + groups, 1)
     s = s.replace('</svg>', '<style>.draw{animation:none!important;stroke-dashoffset:0!important}'
                             '.fade{animation:none!important;opacity:1!important}'
                             '.glow{filter:none!important;opacity:.16!important}</style></svg>')   # a blur would be printed as big pictures
@@ -253,6 +258,7 @@ table.pt { width: 100%; border-collapse: collapse; font-size: 14px; font-variant
 .cert li { position: relative; padding: 16px 20px 16px 64px; border-radius: 18px; }
 .cert li::before { content: attr(data-n); position: absolute; left: 20px; top: 16px; width: 30px; height: 30px; border-radius: 50%;
   display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(76, 195, 255, .6); font: 400 13px/1 var(--fd); color: var(--hi); }
+.cert li.notice::before { content: none; }   /* the notice in the grid has no number: only its signal dot */
 .cert h3 { margin: 0 0 4px; font: 400 16px/1.3 var(--fd); }
 .cert p { font-size: 13.5px; line-height: 1.5; }
 
@@ -272,6 +278,7 @@ table.pt { width: 100%; border-collapse: collapse; font-size: 14px; font-variant
 .office .kind { display: block; margin-bottom: 8px; font: 400 13.5px/1.4 var(--ft); letter-spacing: 0; color: var(--mute); }
 .office .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 16px; }
 .office a { color: var(--hi); text-decoration: none; }
+.card-link { color: inherit; text-decoration: none; }   /* the site's cards are links (heading = link) since 2026-11-05 */
 .office .lines a, .office .lines span[translate="no"] { white-space: nowrap; }
 '''
 
@@ -503,6 +510,8 @@ def build(lang):
     html = (f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><title>ECOES Franchise</title>'
             f'<link rel="stylesheet" href="{A}assets/css/fonts.css"><style>{CSS}</style></head><body>{fix(body)}</body></html>')
     out = os.path.join(HERE, f'{lang}.html')
+    # the cards' links point at the live pages (on the site they are relative: in the PDF they would lead nowhere)
+    html = re.sub(r'(<a class="card-link" href=")([^"]*)"', lambda m: m.group(1) + base + m.group(2) + '"', html)
     open(out, 'w', encoding='utf-8').write(html)
     print('wrote', out, total, 'pages')
 
