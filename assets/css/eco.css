@@ -63,6 +63,7 @@ body::before {
    "франчайзополучателят?") still fit their line instead of breaking inside the word */
 .section-title:not(.section-title--sub) { font-size: clamp(min(28px, 7.6vw), 3.1vw, 46px); }
 .section-title--sub { font-size: clamp(min(22px, 6.2vw), 2.1vw, 32px); }
+.split--financing .section-title--sub { font-size: clamp(min(20px, 5.6vw), 1.75vw, 26px); font-weight: 450; }   /* Financing: the client's long opening sentence */
 .lead-pane .hero-kind { font-size: clamp(min(30px, 6.9vw), 3.4vw, 54px); }
 .read-pane h3 { font-size: clamp(min(19px, 5vw), 1.55vw, 23px); }
 .pillars h3, .pillars h4, .pillars h5 { font-size: min(18px, 5.2vw); }
@@ -119,6 +120,13 @@ body::before {
 .header-cta::before { background: var(--mint); box-shadow: 0 0 0 3px rgba(166, 244, 210, .25); }
 .menu-panel { background: rgba(var(--ground-rgb), .94); }
 .menu-panel nav a[aria-current="page"] { color: var(--pine); }
+.main-nav .sub-menu {
+  background: rgba(255, 255, 255, .97);
+  box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .1), 0 24px 48px -24px rgba(6, 41, 37, .38);
+}
+.main-nav .sub-menu a { color: var(--ink); }   /* --ink stays dark also in the night header over the Home hero */
+.main-nav .sub-menu a:hover { background: rgba(31, 163, 108, .1); }
+.main-nav .sub-menu a[aria-current="page"] { color: var(--pine); }
 
 /* ---------- Home ---------- */
 .intro { background: none; }

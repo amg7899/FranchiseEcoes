@@ -219,7 +219,7 @@ p { margin: 0 0 1em; }
   .brand img { height: 50px; }
 }
 .main-nav { display: none; flex: 1 1 auto; min-width: 0; }
-.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 0 clamp(10px, 10vw - 118px, 26px); }   /* seven links since Defense: 10px at 1280 (all the room there is in Bulgarian), 26px from 1440 (client, 2026-11-09: the labels a little further apart) */
+.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 0 clamp(20px, 6.25vw - 55px, 32px); }   /* since the Products dropdown (2026-11-12) the labels need about 545px (EN) / 570px (BG), so the gaps grow: 20px at 1200, 25px at 1280, 32px from 1400 (client, 2026-11-09: the labels further apart) */
 .main-nav a {
   position: relative; display: block; padding: 14px 0;
   font-size: 16px; font-weight: 500; letter-spacing: 0;
@@ -231,6 +231,47 @@ p { margin: 0 0 1em; }
   content: ""; position: absolute; left: 50%; bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px;
   border-radius: 50%; background: var(--signal);
 }
+/* the Products dropdown (client, 2026-11-12: the two products under one entry, to make room for Financing). With a
+   mouse it opens on hover; the button opens it for touch and keyboard (aria-expanded); main.js closes it on Escape,
+   a click elsewhere or focus leaving */
+.main-nav .has-sub { position: relative; }
+.sub-toggle {
+  position: relative; display: flex; align-items: center; gap: 7px; padding: 14px 0;
+  border: 0; background: none; cursor: pointer;
+  font-family: inherit; font-size: 16px; font-weight: 500; line-height: inherit; letter-spacing: 0;
+  color: var(--text); white-space: nowrap;
+  transition: color .2s ease-out;
+}
+.sub-toggle::after {
+  content: ""; width: 7px; height: 7px; margin-top: -4px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg); transition: transform .2s ease-out, margin .2s ease-out;
+}
+.sub-toggle:hover, .sub-toggle.is-current, .has-sub.is-open .sub-toggle { color: var(--text-hi); }
+.has-sub.is-open .sub-toggle::after { transform: rotate(225deg); margin-top: 4px; }
+.sub-toggle.is-current::before {
+  content: ""; position: absolute; left: calc(50% - 7px); bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px;
+  border-radius: 50%; background: var(--signal);
+}
+.main-nav .sub-menu {
+  position: absolute; top: 100%; left: 50%; z-index: 60;
+  display: none; flex-direction: column; gap: 2px; justify-content: flex-start;
+  min-width: max-content; margin: 0; padding: 8px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  background: rgba(var(--ground-rgb), .97);
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 24px 48px -20px rgba(0, 0, 0, .6);
+}
+.main-nav .has-sub.is-open .sub-menu { display: flex; }
+@media (hover: hover) {
+  .main-nav .has-sub:hover .sub-menu { display: flex; }
+  .main-nav .has-sub.is-dismissed .sub-menu { display: none; }   /* Escape closes it even under the mouse */
+}
+.main-nav .sub-menu a { padding: 11px 16px; border-radius: 12px; color: var(--text-hi); }
+.main-nav .sub-menu a:hover { background: rgba(255, 255, 255, .08); }
+.main-nav .sub-menu a[aria-current="page"] { color: var(--signal); }
+.main-nav .sub-menu a[aria-current="page"]::after { content: none; }
+.main-nav .sub-menu a:focus-visible { outline-offset: -2px; }
 .header-tools { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 .lang-switch { display: flex; }
 .lang-switch a {
@@ -287,6 +328,14 @@ p { margin: 0 0 1em; }
   color: var(--text-hi); text-decoration: none;
 }
 .menu-panel nav a[aria-current="page"] { color: var(--signal); }
+/* the products, grouped under a label in the full-screen menu */
+.menu-panel .menu-group-label {
+  display: block; padding: 18px 0 2px;
+  font-size: 15px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-mute);
+}
+.menu-panel .menu-group ul { margin: 0 0 8px; padding-left: clamp(16px, 3vw, 28px); }
+.menu-panel .menu-group li + li { border-top: 0; }
+.menu-panel .menu-group a { padding: 10px 0; font-size: clamp(21px, 4.6vw, 30px); }
 .menu-open { overflow: hidden; }
 
 /* ---------- hero: the scene, and a pane of frosted glass in front of it ---------- */
@@ -762,6 +811,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .lead-pane .hero-name { font-size: clamp(16px, 1.15vw, 17px); }   /* the product name in the page heads (the Home hero keeps its own) */
 .page-nav { display: flex; flex-wrap: wrap; gap: 0 26px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
 .section-title--sub { font-size: clamp(22px, 2.1vw, 32px); line-height: 1.25; }
+.split--financing .section-title--sub { font-size: clamp(20px, 1.75vw, 26px); }
 .notice {
   z-index: 1; display: block;
   margin: 16px 0 0; padding: 16px 22px 16px 48px; border-radius: var(--r-m);

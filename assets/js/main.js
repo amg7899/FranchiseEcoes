@@ -32,6 +32,27 @@
     });
   }
 
+  // ---- the Products dropdown in the row of links: hover opens it (CSS); its button opens it for touch and keyboard;
+  //      Escape, a click elsewhere or focus leaving closes it ----
+  Array.prototype.forEach.call(document.querySelectorAll('.main-nav .has-sub'), function (item) {
+    var toggle = item.querySelector('.sub-toggle');
+    if (!toggle) return;
+    function set(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      item.classList.toggle('is-open', open);
+      if (open) item.classList.remove('is-dismissed');
+    }
+    toggle.addEventListener('click', function () { set(toggle.getAttribute('aria-expanded') !== 'true'); });
+    document.addEventListener('click', function (e) { if (!item.contains(e.target)) set(false); });
+    item.addEventListener('focusout', function (e) { if (!e.relatedTarget || !item.contains(e.relatedTarget)) set(false); });
+    item.addEventListener('mouseleave', function () { item.classList.remove('is-dismissed'); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (item.classList.contains('is-open')) { set(false); toggle.focus(); }
+      if (item.matches(':hover')) item.classList.add('is-dismissed');
+    });
+  });
+
   // ---- the row of links stays on one line: if it does not fit (e.g. a long translation),
   //      only the menu button remains ----
   var nav = document.querySelector('.main-nav');
