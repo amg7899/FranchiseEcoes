@@ -20,6 +20,7 @@ SITE = 'https://franchise.ecoes.eu/'                   # the own domain, live si
 UPGRADE = {'cut-multicharger-640.webp': 'cut-multicharger-1100.webp', 'cut-box-480.webp': 'cut-box-960.webp',
            'cut-container-640.webp': 'cut-container-1100.webp', 'on-trailer-700.jpg': 'on-trailer-1167.jpg',
            'on-truck-700.jpg': 'on-truck-1196.jpg', 'side-chargers-600.jpg': 'side-chargers-919.jpg',
+           'side-chargers-600.webp': 'side-chargers-919.webp',
            }
 
 
@@ -444,7 +445,7 @@ def build(lang):
     slides.append(('', f'''<h2 class="t t--s">{inner(iv)}</h2><p style="max-width:92ch">{inner(ivp[1])}</p>
       <div style="margin-top:18px">{compare(mm.select_one('.compare'))}</div>'''))
 
-    # 13 ECOES MultiCharger Box: the page head, the key figures and the cut-out
+    # 13 ECOES MultiCharger Box: the page head, the key figures and the Box front (three DC chargers, 2026-11-15)
     bh = bm.select_one('h1')
     bw = bm.select_one('#what')
     slides.append(('', f'''
@@ -452,10 +453,10 @@ def build(lang):
         <div><h2><span class="kind" style="font-size:34px">{inner(bh.select_one('.hero-kind'))}</span><span class="name" translate="no">{inner(bh.select_one('.hero-name'))}</span></h2>
           <p class="lead" style="margin:18px 0 20px;font-size:16px">{inner(bm.select_one('.lead-pane .hero-statement'))}</p>
           {chips(bm.select('.figures-band')[0], 'chips--2')}</div>
-        <img class="cut over-cut" src="{A}assets/img/v2/cut-box-960.webp" alt="">
+        <img class="cut over-cut" src="{A}assets/img/multicharger/side-chargers-919.webp" alt="">
       </div>'''))
 
-    # 14 the Box: gross profit and investment (a taxi = one Box)
+    # 14 the Box: gross profit and investment (a box van = one Box)
     bg_ = bm.select_one('#gross-profit')
     bi = bm.select_one('#investment')
     slides.append(('', f'''
