@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """The two-page ECOES Franchise brochure (A4), a short ad for e-mail and print (client, 2026-11-16: "a 2-page PDF with
 the best slogans and the strongest points of both variants; the full-site PDF freezes the system").
-Every sentence is taken from the site's own pages (EN + BG), so the brochure says exactly what the site says.
+Every sentence is taken from the site's own pages (EN + BG), so the brochure says exactly what the site says, except the
+opening lines at the top of page 1 (AUDIENCE: the client's text for the PDF, 2026-11-16; English ours).
 
   python3 tools/brochure/build.py              -> tools/brochure/bg.html, en.html (+ img/, generated)
   node tools/brochure/render.js <lang> <out.pdf> [png-dir]     (site served on :8765, e.g. scratch serve.sh)
@@ -35,11 +36,24 @@ def images():
     bg = Image.new('RGBA', mc.size, (255, 255, 255, 255)); bg.alpha_composite(mc)
     bg = bg.convert('RGB').resize((780, round(mc.height * 780 / mc.width)), Image.LANCZOS)
     bg.save(os.path.join(HERE, 'img/mobile.jpg'), quality=82, optimize=True); out['mobile'] = 'img/mobile.jpg'
-    bx = Image.open(os.path.join(ROOT, 'assets/img/v2/head-box3-1672.jpg')).convert('RGB')
-    w, h = bx.size; box = bx.crop((int(w * .30), int(h * .20), int(w * .98), int(h * .70)))   # the truck with the Box at the hotel
-    box = box.resize((780, round(box.height * 780 / box.width)), Image.LANCZOS)
-    box.save(os.path.join(HERE, 'img/box.jpg'), quality=80, optimize=True); out['box'] = 'img/box.jpg'
+    # the client's visualisation of the Box at a restaurant, gas station, hotel and supermarket (2026-11-16), on white
+    box = Image.open(os.path.join(ROOT, 'assets/img/box/stationary2-1600.webp')).convert('RGB')
+    box = box.resize((1100, round(box.height * 1100 / box.width)), Image.LANCZOS)
+    box.save(os.path.join(HERE, 'img/box.jpg'), quality=88, optimize=True); out['box'] = 'img/box.jpg'
     return out
+
+# The client's opening lines (2026-11-16, for the PDF only): typos and commas fixed, normal case like the rest of the
+# site, and "за" not repeated in the items (the heading ends with it); English ours.
+AUDIENCE = {
+    'bg': ('Сертифициран продукт за:', [
+        ('Фирми', ', които искат да увеличат клиентите и приходите си и да намалят разходите си.'),
+        ('Предприемачи', ', които искат да влязат в енергийния бизнес и да изградят мрежа от зарядни станции.'),
+        ('Лица', ', желаещи да имат собствен достъпен бизнес, генериращ печалби от първия ден.')]),
+    'en': ('A certified product for:', [
+        ('Companies', ' that want to increase their customers and revenue and reduce their costs.'),
+        ('Entrepreneurs', ' who want to enter the energy business and build a network of charging stations.'),
+        ('Individuals', ' who want an affordable business of their own that generates profit from the first day.')]),
+}
 
 def texts(lang):
     p = 'bg/' if lang == 'bg' else ''
@@ -110,6 +124,8 @@ def page(lang, t, img):
     phones = phones_bg if L else phones_en
     cities = ('София', 'Лондон') if L else ('Sofia', 'London')
     unit = 'EUR на месец' if L else 'EUR a month'
+    aud_h, aud_items = AUDIENCE[lang]
+    aud = f'<div class="aud"><h2>{esc(aud_h)}</h2><ul>' + ''.join(f'<li><b>{esc(a)}</b>{esc(b)}</li>' for a, b in aud_items) + '</ul></div>'
     return f'''<!doctype html>
 <html lang="{lang}"><head><meta charset="utf-8"><title>ECOES Franchise</title>
 <style>
@@ -125,24 +141,31 @@ html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
 body {{ font-family: "Wix Madefor Text", sans-serif; color: var(--text); background: var(--haze); font-size: 10pt; line-height: 1.45; }}
 .page {{ width: 210mm; height: 297mm; padding: 11mm 13mm 9.5mm; position: relative; overflow: hidden; background: var(--haze); page-break-after: always; display: flex; flex-direction: column; }}
 .page:last-child {{ page-break-after: auto; }}
-.top {{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 7mm; }}
-.top img {{ height: 13mm; }}
+.page > * {{ flex-shrink: 0; }}
+.top {{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 4mm; }}
+.top img {{ height: 12mm; }}
+.aud {{ background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; padding: 4mm 5mm 4.4mm; margin-bottom: 5mm; }}
+.aud h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.2; color: var(--pine); margin-bottom: 2.6mm; }}
+.aud ul {{ list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }}
+.aud li {{ font-size: 8.9pt; line-height: 1.38; text-wrap: pretty; padding-left: 4mm; position: relative; color: var(--text); }}
+.aud li::before {{ content: ""; position: absolute; left: 0; top: 1.45mm; width: 1.9mm; height: 1.9mm; border-radius: 50%; background: var(--leaf); }}
+.aud li b {{ font-weight: 700; color: var(--ink); }}
 .top .url {{ font-family: "Unbounded"; font-weight: 500; font-size: 9pt; color: var(--pine); }}
-.kicker {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; color: var(--pine); margin-bottom: 3mm; }}
-h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 21pt; line-height: 1.16; color: var(--ink); letter-spacing: -.01em; max-width: 172mm; }}
-.hero {{ margin: 6mm 0 5mm; height: 82mm; border-radius: 5mm; overflow: hidden; }}
-.hero img {{ width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; }}
-.intro {{ font-size: 11.5pt; line-height: 1.5; color: var(--text); max-width: 176mm; }}
-.products {{ display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 6mm; flex: 1; }}
+.kicker {{ font-family: "Unbounded"; font-weight: 500; font-size: 10pt; color: var(--pine); margin-bottom: 2.4mm; }}
+h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 1.16; color: var(--ink); letter-spacing: -.01em; max-width: 172mm; }}
+.hero {{ margin: 5mm 0 4.5mm; flex: 1 0 46mm; min-height: 46mm; border-radius: 5mm; overflow: hidden; position: relative; }}
+.hero img {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; }}
+.intro {{ font-size: 10.6pt; line-height: 1.45; color: var(--text); max-width: 176mm; }}
+.products {{ display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 5mm; }}
 .prod {{ background: var(--paper); border-radius: 4mm; padding: 5mm 5mm 5.5mm; border: .3mm solid var(--line); display: flex; flex-direction: column; }}
-.prod .pic {{ height: 38mm; display: flex; align-items: center; justify-content: center; margin-bottom: 4mm; border-radius: 2.5mm; overflow: hidden; }}
+.prod .pic {{ height: 31mm; display: flex; align-items: center; justify-content: center; margin-bottom: 3.5mm; border-radius: 2.5mm; overflow: hidden; }}
 .prod .pic img {{ max-width: 100%; max-height: 100%; display: block; }}
 .prod .pic--photo img {{ width: 100%; height: 100%; object-fit: cover; }}
 .prod h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11.5pt; line-height: 1.2; color: var(--ink); margin-bottom: 2mm; }}
-.prod p {{ font-size: 9.6pt; line-height: 1.45; }}
+.prod p {{ font-size: 9.3pt; line-height: 1.43; }}
 .prod p + p {{ margin-top: 2mm; }}
 .prod .auto {{ font-weight: 700; color: var(--pine); }}
-.figs {{ margin-top: 5mm; background: var(--deep); border-radius: 4mm; display: grid; grid-template-columns: repeat(4, 1fr); padding: 5mm 6mm; gap: 4mm; }}
+.figs {{ margin-top: 4.5mm; background: var(--deep); border-radius: 4mm; display: grid; grid-template-columns: repeat(4, 1fr); padding: 5mm 6mm; gap: 4mm; }}
 .figs div {{ border-left: .3mm solid rgba(166,244,210,.35); padding-left: 3.5mm; }}
 .figs dd {{ font-family: "Unbounded"; font-weight: 400; font-size: 14pt; color: #ffffff; line-height: 1.15; white-space: nowrap; }}
 .figs dt {{ font-size: 8.4pt; line-height: 1.3; color: #c3dad1; margin-top: 1.2mm; }}
@@ -187,13 +210,14 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 21pt; line-height: 
 </style></head><body>
 <section class="page">
   <div class="top"><img src="{A}assets/img/logo.svg" alt="ECOES JV"><span class="url">franchise.ecoes.eu</span></div>
+  {aud}
   <p class="kicker">{esc(t['kicker'])}</p>
   <h1>{esc(t['slogan'])}</h1>
   <figure class="hero"><img src="{img['hero']}" alt=""></figure>
   <p class="intro">{esc(t['intro'])}</p>
   <div class="products">
     <article class="prod"><div class="pic"><img src="{img['mobile']}" alt=""></div><h2>{esc(t['mobile'][0])}</h2><p>{esc(t['mobile'][1])}</p></article>
-    <article class="prod"><div class="pic pic--photo"><img src="{img['box']}" alt=""></div><h2>{esc(t['box'][0])}</h2><p>{esc(t['box'][1])}</p><p class="auto">{esc(t['box_auto'])}</p></article>
+    <article class="prod"><div class="pic"><img src="{img['box']}" alt=""></div><h2>{esc(t['box'][0])}</h2><p>{esc(t['box'][1])}</p><p class="auto">{esc(t['box_auto'])}</p></article>
   </div>
   <dl class="figs">{''.join(f'<div><dd>{esc(a)}</dd><dt>{esc(b)}</dt></div>' for a, b in t['figs'])}</dl>
 </section>
