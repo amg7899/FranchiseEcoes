@@ -17,7 +17,7 @@ A = '../../'                                   # from tools/presentation/ to the
 SITE = 'https://franchise.ecoes.eu/'                   # the own domain, live since 2026-11-06
 
 # larger pictures for the PDF (the pages use small ones in their src, and srcset is dropped here)
-UPGRADE = {'cut-multicharger-640.webp': 'cut-multicharger-1100.webp', 'cut-box-480.webp': 'cut-box-960.webp',
+UPGRADE = {'cut-multicharger-640.webp': 'cut-multicharger-1100.webp',
            'cut-container-640.webp': 'cut-container-1100.webp', 'on-trailer-700.jpg': 'on-trailer-1167.jpg',
            'on-truck-700.jpg': 'on-truck-1196.jpg', 'side-chargers-600.jpg': 'side-chargers-919.jpg',
            'side-chargers-600.webp': 'side-chargers-919.webp',
