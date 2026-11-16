@@ -6,3 +6,5 @@
 .playwright/
 __pycache__/
 tools/presentation/*.html
+tools/brochure/*.html
+tools/brochure/img/
