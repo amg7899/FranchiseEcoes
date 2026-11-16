@@ -22,8 +22,11 @@ SITE = 'https://franchise.ecoes.eu/'
 
 def load(rel):
     return BeautifulSoup(open(os.path.join(ROOT, rel), encoding='utf-8').read(), 'html.parser')
+NB_UNIT = re.compile(r'(\d) (?=(?:kW|kWh|V|EUR|°C|г\.|км|km)(?!\w))')   # a number never breaks from its unit
 def txt(el):
-    return ' '.join(el.get_text(' ', strip=True).split()).replace(' ,', ',').replace(' !', '!').replace(' .', '.') if el else ''
+    if not el: return ''
+    s = ' '.join(el.get_text(' ', strip=True).split()).replace(' ,', ',').replace(' !', '!').replace(' .', '.')
+    return NB_UNIT.sub('\\1\u00a0', s)
 def esc(s): return html.escape(s, quote=False)
 
 def images():
@@ -111,7 +114,7 @@ def page(lang, t, img):
     mob_sentence = re.sub(r'^[\d.,%\s]+', '', mob_sentence)
     box50 = next((c for c in t['box_cards'] if '50%' in c), '')
     m = re.match(r'(.*?(?:месец|a month))\s*(.*)$', box50); box_sent, box_pay = (m.group(1) + '.', m.group(2).rstrip('.')) if m else (box50, '')
-    if not L: box_sent = box_sent.replace('.00 EUR', ' EUR')
+    if not L: box_sent = re.sub(r'\.00(?=[\s\u00a0]EUR)', '', box_sent)
     loads = [10, 25, 50, 75, 100]
     def bars(vals):
         top = 60000
@@ -138,8 +141,8 @@ def page(lang, t, img):
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
 html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
 :lang(bg), :lang(bg) * {{ font-feature-settings: "locl" 0; }}
-body {{ font-family: "Wix Madefor Text", sans-serif; color: var(--text); background: var(--haze); font-size: 10pt; line-height: 1.45; }}
-.page {{ width: 210mm; height: 297mm; padding: 11mm 13mm 9.5mm; position: relative; overflow: hidden; background: var(--haze); page-break-after: always; display: flex; flex-direction: column; }}
+body {{ font-family: "Wix Madefor Text", sans-serif; color: var(--text); background: var(--haze); font-size: 10pt; line-height: 1.45; font-weight: 450; }}
+.page {{ width: 210mm; height: 297mm; padding: 9mm 12mm 7.5mm; position: relative; overflow: hidden; background: var(--haze); page-break-after: always; display: flex; flex-direction: column; }}
 .page:last-child {{ page-break-after: auto; }}
 .page > * {{ flex-shrink: 0; }}
 .top {{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 4mm; }}
@@ -147,7 +150,7 @@ body {{ font-family: "Wix Madefor Text", sans-serif; color: var(--text); backgro
 .aud {{ background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; padding: 4mm 5mm 4.4mm; margin-bottom: 5mm; }}
 .aud h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.2; color: var(--pine); margin-bottom: 2.6mm; }}
 .aud ul {{ list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }}
-.aud li {{ font-size: 8.9pt; line-height: 1.38; text-wrap: pretty; padding-left: 4mm; position: relative; color: var(--text); }}
+.aud li {{ font-size: 9.6pt; line-height: 1.36; text-wrap: pretty; padding-left: 4mm; position: relative; color: var(--text); }}
 .aud li::before {{ content: ""; position: absolute; left: 0; top: 1.45mm; width: 1.9mm; height: 1.9mm; border-radius: 50%; background: var(--leaf); }}
 .aud li b {{ font-weight: 700; color: var(--ink); }}
 .top .url {{ font-family: "Unbounded"; font-weight: 500; font-size: 9pt; color: var(--pine); }}
@@ -158,55 +161,55 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .intro {{ font-size: 10.6pt; line-height: 1.45; color: var(--text); max-width: 176mm; }}
 .products {{ display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 5mm; }}
 .prod {{ background: var(--paper); border-radius: 4mm; padding: 5mm 5mm 5.5mm; border: .3mm solid var(--line); display: flex; flex-direction: column; }}
-.prod .pic {{ height: 31mm; display: flex; align-items: center; justify-content: center; margin-bottom: 3.5mm; border-radius: 2.5mm; overflow: hidden; }}
+.prod .pic {{ height: 29mm; display: flex; align-items: center; justify-content: center; margin-bottom: 3.5mm; border-radius: 2.5mm; overflow: hidden; }}
 .prod .pic img {{ max-width: 100%; max-height: 100%; display: block; }}
 .prod .pic--photo img {{ width: 100%; height: 100%; object-fit: cover; }}
 .prod h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11.5pt; line-height: 1.2; color: var(--ink); margin-bottom: 2mm; }}
-.prod p {{ font-size: 9.3pt; line-height: 1.43; }}
+.prod p {{ font-size: 9.9pt; line-height: 1.4; }}
 .prod p + p {{ margin-top: 2mm; }}
 .prod .auto {{ font-weight: 700; color: var(--pine); }}
 .figs {{ margin-top: 4.5mm; background: var(--deep); border-radius: 4mm; display: grid; grid-template-columns: repeat(4, 1fr); padding: 5mm 6mm; gap: 4mm; }}
 .figs div {{ border-left: .3mm solid rgba(166,244,210,.35); padding-left: 3.5mm; }}
 .figs dd {{ font-family: "Unbounded"; font-weight: 400; font-size: 14pt; color: #ffffff; line-height: 1.15; white-space: nowrap; }}
-.figs dt {{ font-size: 8.4pt; line-height: 1.3; color: #c3dad1; margin-top: 1.2mm; }}
+.figs dt {{ font-size: 9.2pt; line-height: 1.3; text-wrap: balance; font-weight: 500; color: #dceae4; margin-top: 1.2mm; }}
 /* page 2 */
-.profit {{ background: var(--deep); color: #dceae4; border-radius: 5mm; padding: 6mm 7mm 5mm; }}
-.profit h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 13pt; line-height: 1.2; color: #ffffff; margin-bottom: 4mm; }}
+.profit {{ background: var(--deep); color: #dceae4; border-radius: 5mm; padding: 5.5mm 7mm 5mm; }}
+.profit h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 13pt; line-height: 1.2; color: #ffffff; margin-bottom: 3.5mm; }}
 .pcols {{ display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }}
 .pcol {{ display: flex; flex-direction: column; }}
 .pcol .name {{ font-family: "Unbounded"; font-weight: 500; font-size: 9.5pt; color: var(--mint); margin-bottom: 2mm; }}
 .pcol .big {{ font-family: "Unbounded"; font-weight: 300; font-size: 26pt; line-height: 1; color: #ffffff; letter-spacing: -.01em; }}
-.pcol .big small {{ font-size: 12pt; font-weight: 400; color: #c3dad1; margin-left: 1.5mm; letter-spacing: 0; }}
-.pcol .cap {{ font-size: 8.4pt; line-height: 1.38; margin-top: 1.8mm; color: #c3dad1; }}
-.pcol .pay {{ font-weight: 700; font-size: 9.2pt; color: #ffffff; margin-top: 1.2mm; }}
+.pcol .big small {{ font-size: 12pt; font-weight: 400; color: #dceae4; margin-left: 1.5mm; letter-spacing: 0; }}
+.pcol .cap {{ font-size: 9.2pt; line-height: 1.36; margin-top: 1.8mm; color: #dceae4; }}
+.pcol .pay {{ font-weight: 700; font-size: 9.8pt; color: #ffffff; margin-top: 1.2mm; }}
 .chart {{ margin-top: auto; padding-top: 3mm; }}
 .bars, .axis {{ list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5mm; }}
-.bars {{ align-items: end; height: 14mm; border-bottom: .3mm solid rgba(166,244,210,.4); }}
-.bars li {{ position: relative; height: calc(var(--f) * 10mm); background: var(--mint); border-radius: 1mm 1mm 0 0; }}
-.bars b {{ position: absolute; left: -2mm; right: -2mm; bottom: 100%; margin-bottom: .7mm; text-align: center; font-weight: 600; font-size: 7pt; line-height: 1.2; color: #dceae4; white-space: nowrap; }}
-.axis {{ margin-top: 1mm; text-align: center; font-size: 7pt; line-height: 1.3; color: #c3dad1; }}
-.paynote {{ margin-top: 4mm; font-size: 8.4pt; color: #c3dad1; border-top: .3mm solid rgba(166,244,210,.25); padding-top: 3mm; }}
-.page--2 {{ justify-content: space-between; gap: 4mm; }}
-.reasons {{ display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 7mm; }}
-.reasons h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 9pt; line-height: 1.25; color: var(--ink); margin-bottom: 1.2mm; padding-left: 4mm; position: relative; }}
+.bars {{ align-items: end; height: 12mm; border-bottom: .3mm solid rgba(166,244,210,.4); }}
+.bars li {{ position: relative; height: calc(var(--f) * 8mm); background: var(--mint); border-radius: 1mm 1mm 0 0; }}
+.bars b {{ position: absolute; left: -2mm; right: -2mm; bottom: 100%; margin-bottom: .7mm; text-align: center; font-weight: 600; font-size: 8pt; line-height: 1.2; color: #ffffff; white-space: nowrap; }}
+.axis {{ margin-top: 1mm; text-align: center; font-size: 8pt; line-height: 1.3; font-weight: 500; color: #dceae4; }}
+.paynote {{ margin-top: 3.5mm; font-size: 9pt; line-height: 1.38; text-wrap: pretty; color: #dceae4; border-top: .3mm solid rgba(166,244,210,.25); padding-top: 3mm; }}
+.page--2 {{ justify-content: space-between; gap: 2.8mm; }}
+.reasons {{ display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm 7mm; }}
+.reasons h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 9.6pt; line-height: 1.22; color: var(--ink); margin-bottom: 1.1mm; padding-left: 4.2mm; position: relative; }}
 .reasons h3::before {{ content: ""; position: absolute; left: 0; top: 1.3mm; width: 2mm; height: 2mm; border-radius: 50%; background: var(--leaf); }}
-.reasons p {{ font-size: 8.2pt; line-height: 1.34; padding-left: 4mm; color: var(--mute); }}
-.finance {{ background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; padding: 4mm 5mm; }}
-.finance h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 9.6pt; color: var(--pine); margin-bottom: 2.2mm; }}
-.finance ul {{ list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.8mm 4.5mm; }}
-.finance li {{ font-size: 8.3pt; line-height: 1.33; padding-left: 4mm; position: relative; }}
+.reasons p {{ font-size: 9pt; line-height: 1.36; text-wrap: pretty; padding-left: 4.2mm; color: var(--text); }}
+.finance {{ background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; padding: 3.6mm 5mm; }}
+.finance h2 {{ font-family: "Unbounded"; font-weight: 500; font-size: 10pt; color: var(--pine); margin-bottom: 2mm; }}
+.finance ul {{ list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6mm 8mm; }}
+.finance li {{ font-size: 9.2pt; line-height: 1.32; padding-left: 4mm; position: relative; }}
 .finance li::before {{ content: ""; position: absolute; left: 0; top: 1.4mm; width: 1.8mm; height: 1.8mm; border-radius: 50%; background: var(--leaf); }}
-.closing .lead {{ font-size: 10pt; color: var(--mute); margin-bottom: 1.2mm; }}
+.closing .lead {{ font-size: 10.5pt; color: var(--text); margin-bottom: 1.2mm; }}
 .closing .statement {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.3; color: var(--pine); }}
-.cta {{ display: grid; grid-template-columns: 1fr auto; gap: 6mm; align-items: end; border-top: .3mm solid var(--line); padding-top: 4mm; }}
-.cta .ann p {{ font-size: 8.5pt; line-height: 1.38; }}
+.cta {{ display: grid; grid-template-columns: 1fr auto; gap: 6mm; align-items: end; border-top: .3mm solid var(--line); padding-top: 3.5mm; }}
+.cta .ann p {{ font-size: 9.3pt; line-height: 1.36; }}
 .cta .ann p + p {{ margin-top: 1.4mm; font-weight: 700; color: var(--pine); }}
-.cta .contacts {{ margin-top: 2.6mm; display: flex; flex-wrap: wrap; gap: 1mm 6mm; font-size: 8.5pt; }}
+.cta .contacts {{ margin-top: 2.2mm; display: flex; flex-wrap: wrap; gap: 1mm 6mm; font-size: 9.3pt; }}
 .cta .contacts span b {{ font-weight: 600; color: var(--ink); }}
 .qr {{ text-align: center; }}
-.qr svg {{ width: 25mm; height: 25mm; display: block; margin: 0 auto 1.5mm; }}
-.qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8pt; color: var(--pine); line-height: 1.3; }}
-.qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 7.6pt; color: var(--mute); }}
+.qr svg {{ width: 20mm; height: 20mm; display: block; margin: 0 auto 1.5mm; }}
+.qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8.6pt; color: var(--pine); line-height: 1.3; }}
+.qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 8.6pt; color: var(--text); }}
 </style></head><body>
 <section class="page">
   <div class="top"><img src="{A}assets/img/logo.svg" alt="ECOES JV"><span class="url">franchise.ecoes.eu</span></div>
