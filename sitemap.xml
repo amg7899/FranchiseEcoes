@@ -84,4 +84,16 @@
     <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/financing/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/financing/"/>
   </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/privacy/"/>
+  </url>
+  <url>
+    <loc>https://franchise.ecoes.eu/bg/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/privacy/"/>
+  </url>
 </urlset>
