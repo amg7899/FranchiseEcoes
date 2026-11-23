@@ -1,4 +1,4 @@
-// The two-page brochure to PDF (A4) and one PNG per page for previews, with the site served on :8765:
+// The brochure to PDF (A4, three pages) and one PNG per page for previews, with the site served on :8765:
 //   node tools/brochure/render.js <lang> <out.pdf> [png-dir]
 // Reports any page whose content runs past its bottom edge.
 const { chromium } = require('playwright');
@@ -17,7 +17,7 @@ const { chromium } = require('playwright');
     const sh = pg.scrollHeight - pg.clientHeight;
     return (worst > 0 || sh > 1) ? `page ${i + 1}: ${Math.round(Math.max(worst, sh))}px over (${what})` : null;
   }).filter(Boolean));
-  console.log(over.length ? over.join('\n') : 'both pages fit');
+  console.log(over.length ? over.join('\n') : 'all pages fit');
   if (pngDir) {
     const pages = await p.$$('.page');
     for (let i = 0; i < pages.length; i++) await pages[i].screenshot({ path: `${pngDir}/page-${i + 1}.png` });

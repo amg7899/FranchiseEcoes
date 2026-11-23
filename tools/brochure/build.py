@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""The two-page ECOES Franchise brochure (A4), a short ad for e-mail and print (client, 2026-11-16: "a 2-page PDF with
-the best slogans and the strongest points of both variants; the full-site PDF freezes the system").
+"""The ECOES Franchise brochure (A4), a short ad for e-mail and print (client, 2026-11-16: "a 2-page PDF with
+the best slogans and the strongest points of both variants; the full-site PDF freezes the system"); page 3 since
+2026-11-23: the Investors page, shortened (client: "a 3rd page with the best arguments from this document").
 Every sentence is taken from the site's own pages (EN + BG), so the brochure says exactly what the site says, except the
 opening lines at the top of page 1 (AUDIENCE: the client's text for the PDF, 2026-11-16; English ours).
 
@@ -22,12 +23,28 @@ SITE = 'https://franchise.ecoes.eu/'
 
 def load(rel):
     return BeautifulSoup(open(os.path.join(ROOT, rel), encoding='utf-8').read(), 'html.parser')
-NB_UNIT = re.compile(r'(\d) (?=(?:kW|kWh|V|EUR|°C|г\.|км|km)(?!\w))')   # a number never breaks from its unit
+NB_UNIT = re.compile(r'(\d) (?=(?:kW|kWh|kVA|V|EUR|USD|°C|г\.|км|km)(?!\w))')   # a number never breaks from its unit
 def txt(el):
     if not el: return ''
     s = ' '.join(el.get_text(' ', strip=True).split()).replace(' ,', ',').replace(' !', '!').replace(' .', '.')
     return NB_UNIT.sub('\\1\u00a0', s)
+WS = re.compile(r'[ \t\r\n\f\v]+')   # collapses source whitespace only (keeps the pages' no-break spaces)
+NB_WORD = re.compile(r'(?<![\d.,])(\d+) (?=[^\W\d_])')   # page 3: a number never breaks from the word after it
+def flat(el):
+    """The text as written, without the spaces txt() puts at tag edges ('“<b>NO</b>”' stays '“NO”')."""
+    if not el: return ''
+    return NB_WORD.sub('\\1\u00a0', NB_UNIT.sub('\\1\u00a0', WS.sub(' ', el.get_text()).strip()))
+def rich(el):
+    """Like flat(), as HTML with the source's bold kept (the long paragraphs of page 3)."""
+    def walk(n):
+        if isinstance(n, str): return esc(str(n))
+        inner = ''.join(walk(c) for c in n.children)
+        return f'<b>{inner}</b>' if n.name in ('b', 'strong') else inner
+    s = WS.sub(' ', ''.join(walk(c) for c in el.children)).strip()
+    s = NB_WORD.sub('\\1\u00a0', NB_UNIT.sub('\\1\u00a0', s.replace('<b> ', ' <b>').replace(' </b>', '</b> ').replace('  ', ' ')))
+    return re.sub(r'(\d+–\d+)', r'<span class="nw">\1</span>', s)   # '5–6 months' never breaks after the dash
 def esc(s): return html.escape(s, quote=False)
+def cell(s): return re.sub(r'(\(?\d+-[^\s)]+\)?)', r'<span class="nw">\1</span>', esc(s))   # '(7-day' stays whole
 
 def images():
     os.makedirs(os.path.join(HERE, 'img'), exist_ok=True)
@@ -43,6 +60,10 @@ def images():
     box = Image.open(os.path.join(ROOT, 'assets/img/box/stationary2-1600.webp')).convert('RGB')
     box = box.resize((1100, round(box.height * 1100 / box.width)), Image.LANCZOS)
     box.save(os.path.join(HERE, 'img/box.jpg'), quality=88, optimize=True); out['box'] = 'img/box.jpg'
+    # page 3: the Box front, twelve times (12 x ECOES MultiCharger Box for the price of one battery setup)
+    bf = Image.open(os.path.join(ROOT, 'assets/img/multicharger/side-chargers-919.webp')).convert('RGB')
+    bf = bf.resize((330, round(bf.height * 330 / bf.width)), Image.LANCZOS)
+    bf.save(os.path.join(HERE, 'img/box-front.jpg'), quality=86, optimize=True); out['box_front'] = 'img/box-front.jpg'
     return out
 
 # The client's opening lines (2026-11-16, for the PDF only): typos and commas fixed, normal case like the rest of the
@@ -97,6 +118,35 @@ def texts(lang):
     t['preorder'] = 'Предварителна заявка' if lang == 'bg' else 'Pre-order'
     foot = load(p + 'contact-us/index.html').select_one('footer')
     t['foot'] = txt(foot)
+    # page 3: the Investors page (the client's comparison, 2026-11-23), shortened: the opening paragraph, the table,
+    # the bottom line, the two price/profit cards and the closing sentence
+    inv = load(p + 'investors/index.html').find('main')
+    def split_cell(el):
+        el = BeautifulSoup(str(el), 'html.parser')
+        note = el.select_one('.vs-note'); nt = flat(note) if note else ''
+        if note: note.decompose()
+        b = el.select_one('b')
+        if b:
+            main = flat(b); b.decompose()
+            return main, nt or flat(el).lstrip('–- ').strip()
+        return flat(el), nt
+    def profit_lines(par):
+        par = BeautifulSoup(str(par), 'html.parser').p
+        lab = flat(par.span.extract())
+        return lab, [rich(BeautifulSoup(x, 'html.parser')) for x in re.split(r'<br\s*/?>', par.decode_contents())]
+    def price(c):   # 'Approx. 1,200,000 EUR (12 × 100,000 EUR)' -> the sum large, the bracket small
+        s = flat(c.select_one('.vs-price b')); m = re.match(r'^(.*?)\s*(\(.*\))?$', s)
+        return flat(c.select_one('.vs-price span')), m.group(1), m.group(2) or ''
+    t['inv_title'] = flat(inv.select_one('h1')); t['inv_sub'] = flat(inv.select_one('.page-sub'))
+    t['inv_p1'] = rich(inv.select('.doc--vs .wrap > p.prose')[0])
+    t['inv_head'] = [split_cell(h) for h in inv.select('.vs-table thead th')]
+    t['inv_rows'] = [(flat(tr.th), split_cell(tr.select('td')[0]), split_cell(tr.select('td')[1])) for tr in inv.select('.vs-table tbody tr')]
+    t['inv_bottom'] = rich(inv.select_one('.vs-bottom'))
+    cards = inv.select('.vs-card')
+    t['inv_bat_items'] = [flat(li) for li in cards[0].select('.vs-items li')]
+    t['inv_cards'] = [(price(c), profit_lines(c.select_one('.vs-profit'))) for c in cards]
+    t['inv_grid'] = inv.select_one('.box-grid')['aria-label']
+    t['inv_statement'] = flat(inv.select_one('.vs-statement'))
     return t
 
 def num(v, lang): return f'{v:,}'.replace(',', '.') if lang == 'bg' else f'{v:,}'
@@ -209,6 +259,43 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .qr {{ text-align: center; }}
 .qr svg {{ width: 20mm; height: 20mm; display: block; margin: 0 auto 1.5mm; }}
 .qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8.6pt; color: var(--pine); line-height: 1.3; }}
+.page--3 {{ gap: 3.4mm; justify-content: space-between; }}
+.page--3 .top {{ margin-bottom: 0; }}
+.nw {{ white-space: nowrap; }}
+.inv-h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 15pt; line-height: 1.18; color: var(--ink); letter-spacing: -.01em; }}
+.inv-sub {{ font-family: "Unbounded"; font-weight: 500; font-size: 10.5pt; color: var(--pine); margin-top: 1.6mm; }}
+.inv-p {{ font-size: 9.6pt; line-height: 1.42; }}
+.inv-p b {{ color: var(--ink); }}
+.inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; font-size: 9pt; line-height: 1.28; table-layout: fixed; }}
+.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 1.7mm 2.8mm; border-bottom: .3mm solid var(--line); }}
+.inv-table tbody tr:last-child th, .inv-table tbody tr:last-child td {{ border-bottom: 0; }}
+.inv-table thead th {{ font-weight: 600; font-size: 9pt; color: var(--ink); vertical-align: bottom; }}
+.inv-table col.m {{ width: 26%; }}
+.inv-table col.b {{ width: 39%; }}
+.inv-table tbody th {{ font-weight: 600; color: var(--ink); }}
+.inv-table .ours {{ background: #e3f3ea; }}
+.inv-table b {{ display: block; font-weight: 700; color: var(--ink); }}
+.inv-table .ours b {{ color: var(--pine); }}
+.inv-table small {{ display: block; margin-top: .3mm; font-size: 8.2pt; line-height: 1.28; color: var(--text); }}
+.inv-bottom {{ font-size: 9.6pt; line-height: 1.42; }}
+.inv-bottom b {{ color: var(--ink); }}
+.inv-cards {{ display: grid; grid-template-columns: 1fr 1.25fr; gap: 4mm; }}
+.inv-card {{ border-radius: 4mm; padding: 3.6mm 5mm; }}
+.inv-card--bat {{ background: var(--paper); border: .3mm solid var(--line); }}
+.inv-card--ours {{ background: var(--deep); color: #dceae4; }}
+.inv-card h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 10pt; line-height: 1.25; color: var(--ink); margin-bottom: 1.6mm; }}
+.inv-card--ours h3 {{ color: #ffffff; }}
+.inv-card ul {{ list-style: none; font-size: 8.8pt; line-height: 1.4; }}
+.inv-card .lab {{ margin-top: 2.2mm; font-size: 8.4pt; font-weight: 600; }}
+.inv-card .price {{ font-family: "Unbounded"; font-weight: 400; font-size: 12.5pt; line-height: 1.2; color: var(--ink); }}
+.inv-card--ours .price {{ color: #ffffff; }}
+.inv-card .price small {{ display: inline-block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 9pt; }}
+.inv-card .pl {{ font-size: 9pt; line-height: 1.4; }}
+.inv-card .pl b {{ font-weight: 700; color: var(--ink); }}
+.inv-card--ours .pl b {{ color: var(--mint); }}
+.inv-grid {{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.2mm; margin-bottom: .6mm; }}
+.inv-grid img {{ display: block; width: 100%; border-radius: .5mm; }}
+.inv-statement {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.3; color: var(--pine); }}
 .qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 8.6pt; color: var(--text); }}
 </style></head><body>
 <section class="page">
@@ -244,6 +331,23 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
         <span>{cities[0]}: {phones[0][0]} <b>{phones[0][1]}</b></span><span>{cities[1]}: {phones[1][0]} <b>{phones[1][1]}</b></span></div></div>
     <div class="qr">{qr_svg}<p>{esc(t['preorder'])}<small>franchise.ecoes.eu</small></p></div>
   </div>
+</section>
+<section class="page page--3">
+  <div class="top"><img src="{A}assets/img/logo.svg" alt="ECOES JV"><span class="url">franchise.ecoes.eu/{'bg/' if L else ''}investors/</span></div>
+  <div><h2 class="inv-h1">{esc(t['inv_title']).replace('ECOES MultiCharger Box', '<span class="nw">ECOES MultiCharger Box</span>')}</h2><p class="inv-sub">{esc(t['inv_sub'])}</p></div>
+  <p class="inv-p">{t['inv_p1']}</p>
+  <table class="inv-table"><colgroup><col class="m"><col class="b"><col></colgroup><thead><tr>{''.join(f'<th{" class=ours" if i == 2 else ""}>{esc(a)}<small>{esc(b)}</small></th>' for i, (a, b) in enumerate(t['inv_head']))}</tr></thead>
+    <tbody>{''.join(f'<tr><th>{cell(m)}</th><td><b>{esc(a[0])}</b>{"<small>" + esc(a[1]) + "</small>" if a[1] else ""}</td><td class="ours"><b>{esc(b[0])}</b>{"<small>" + esc(b[1]) + "</small>" if b[1] else ""}</td></tr>' for m, a, b in t['inv_rows'])}</tbody></table>
+  <p class="inv-bottom">{t['inv_bottom']}</p>
+  <div class="inv-cards">
+    <div class="inv-card inv-card--bat"><h3>{esc(t['inv_bat_items'][0])}</h3><ul>{''.join(f'<li>{esc(x)}</li>' for x in t['inv_bat_items'][1:])}</ul>
+      <p class="lab">{esc(t['inv_cards'][0][0][0])}</p><p class="price">{esc(t['inv_cards'][0][0][1])}{' <small>' + esc(t['inv_cards'][0][0][2]) + '</small>' if t['inv_cards'][0][0][2] else ''}</p>
+      <p class="lab">{esc(t['inv_cards'][0][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][0][1][1])}</div>
+    <div class="inv-card inv-card--ours"><h3>{esc(t['inv_grid'])}</h3><div class="inv-grid">{f'<img src="{img["box_front"]}" alt="">' * 12}</div>
+      <p class="lab">{esc(t['inv_cards'][1][0][0])}</p><p class="price">{esc(t['inv_cards'][1][0][1])}{' <small>' + esc(t['inv_cards'][1][0][2]) + '</small>' if t['inv_cards'][1][0][2] else ''}</p>
+      <p class="lab">{esc(t['inv_cards'][1][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][1][1][1])}</div>
+  </div>
+  <p class="inv-statement">{esc(t['inv_statement'])}</p>
 </section>
 </body></html>'''
 

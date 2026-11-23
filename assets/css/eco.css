@@ -305,6 +305,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--pine); backgroun
 .vkey--1::before, .vseg--1 { background: #a3dcc2; }
 .compare-card--ours { box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1.5px rgba(31, 163, 108, .65), 0 24px 48px -34px rgba(6, 41, 37, .34); }
 .compare-card--ours b { color: var(--pine); }
+.vs-table .vs-ours { background: rgba(31, 163, 108, .08); }
+.vs-table .vs-ours b, .vs-card--ours b { color: var(--pine); }
+.vs-card--ours { box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1.5px rgba(31, 163, 108, .65), 0 24px 48px -34px rgba(6, 41, 37, .34); }
 .road-scene-row::after { background: linear-gradient(90deg, rgba(11, 29, 25, 0), rgba(11, 29, 25, .3) 10%, rgba(11, 29, 25, .3) 90%, rgba(11, 29, 25, 0)); }
 .road-dim { color: rgba(11, 29, 25, .62); }
 
