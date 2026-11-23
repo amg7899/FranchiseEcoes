@@ -1074,16 +1074,23 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .vs-card p > span { display: block; margin-bottom: 4px; font-size: 16px; font-weight: 600; color: var(--text-mute); }
 .vs-card b { font-weight: 600; color: var(--text-hi); }
 .vs-price b { font: 400 clamp(21px, 1.9vw, 27px)/1.25 var(--font-display); }
-.vs-items { list-style: none; margin: 0; padding: 0; color: var(--text-hi); }
-.vs-items li { padding: 7px 0; border-bottom: 1px solid var(--line); }
-.vs-items li:first-child { padding-top: 0; font: 400 clamp(19px, 1.6vw, 22px)/1.3 var(--font-display); }
+.vs-card > :first-child { margin-top: 0; }
+/* the battery picture of the client's document: its three parts with their labels, pylons and transformer beside the trucks */
+.bat-fig { display: grid; grid-template-columns: minmax(0, 36fr) minmax(0, 62fr); grid-template-areas: "grid trucks" "trafo trucks"; align-content: start; gap: 14px; margin-top: 20px; }
+.bat-fig figure { margin: 0; }
+.bat-grid { grid-area: grid; }
+.bat-trucks { grid-area: trucks; }
+.bat-trafo { grid-area: trafo; }
+.bat-fig figcaption { margin-bottom: 6px; font-size: 16px; font-weight: 600; line-height: 1.3; color: var(--text-hi); }
+.bat-fig img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.vs-card { container-type: inline-size; }
+@container (max-width: 440px) {   /* narrow card: pylons and transformer side by side, the trucks under them */
+  .bat-fig { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "grid trafo" "trucks trucks"; align-items: end; }
+}
 .vs-card--ours { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 1px rgba(76, 195, 255, .45); }
 .vs-card--ours b { color: var(--signal); }
 .vs-price small { display: inline-block; font: 500 17px/1.4 var(--font-text); color: var(--text); }
-.box-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; }
-@media (min-width: 900px) {
-  .box-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }   /* 4 x 3: the card about as tall as the battery card */
-}
+.box-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; margin-top: 20px; }   /* 3 x 4, as in the document */
 .box-grid img { display: block; width: 100%; height: auto; }
 .vs-statement { margin: 0 0 28px; }
 

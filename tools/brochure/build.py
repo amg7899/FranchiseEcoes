@@ -45,6 +45,7 @@ def rich(el):
     return re.sub(r'(\d+–\d+)', r'<span class="nw">\1</span>', s)   # '5–6 months' never breaks after the dash
 def esc(s): return html.escape(s, quote=False)
 def cell(s): return re.sub(r'(\(?\d+-[^\s)]+\)?)', r'<span class="nw">\1</span>', esc(s))   # '(7-day' stays whole
+def cap(s): return re.sub(r'(\S+-\S+)', r'<span class="nw">\1</span>', esc(s))   # 'high-voltage' stays whole
 
 def images():
     os.makedirs(os.path.join(HERE, 'img'), exist_ok=True)
@@ -60,10 +61,16 @@ def images():
     box = Image.open(os.path.join(ROOT, 'assets/img/box/stationary2-1600.webp')).convert('RGB')
     box = box.resize((1100, round(box.height * 1100 / box.width)), Image.LANCZOS)
     box.save(os.path.join(HERE, 'img/box.jpg'), quality=88, optimize=True); out['box'] = 'img/box.jpg'
-    # page 3: the Box front, twelve times (12 x ECOES MultiCharger Box for the price of one battery setup)
-    bf = Image.open(os.path.join(ROOT, 'assets/img/multicharger/side-chargers-919.webp')).convert('RGB')
-    bf = bf.resize((330, round(bf.height * 330 / bf.width)), Image.LANCZOS)
-    bf.save(os.path.join(HERE, 'img/box-front.jpg'), quality=86, optimize=True); out['box_front'] = 'img/box-front.jpg'
+    # page 3, as in the client's document: the battery picture (its three parts, from the Investors page) and
+    # the MultiCharger on its trailer twelve times (the cut-out set on the card's deep green: no transparency in the PDF)
+    for key, name, w in (('bat_pylons', 'battery-pylons-400', 300), ('bat_trafo', 'battery-transformer-400', 300), ('bat_trucks', 'battery-trucks-760', 560)):
+        im = Image.open(os.path.join(ROOT, f'assets/img/investors/{name}.webp')).convert('RGB')
+        im = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
+        im.save(os.path.join(HERE, f'img/{key}.jpg'), quality=86, optimize=True); out[key] = f'img/{key}.jpg'
+    tr = Image.open(os.path.join(ROOT, 'assets/img/v2/cut-multicharger-640.webp')).convert('RGBA')
+    tr = tr.resize((300, round(tr.height * 300 / tr.width)), Image.LANCZOS)
+    bg = Image.new('RGBA', tr.size, (6, 41, 37, 255)); bg.alpha_composite(tr)
+    bg.convert('RGB').save(os.path.join(HERE, 'img/trailer.jpg'), quality=88, optimize=True); out['trailer'] = 'img/trailer.jpg'
     return out
 
 # The client's opening lines (2026-11-16, for the PDF only): typos and commas fixed, normal case like the rest of the
@@ -143,7 +150,7 @@ def texts(lang):
     t['inv_rows'] = [(flat(tr.th), split_cell(tr.select('td')[0]), split_cell(tr.select('td')[1])) for tr in inv.select('.vs-table tbody tr')]
     t['inv_bottom'] = rich(inv.select_one('.vs-bottom'))
     cards = inv.select('.vs-card')
-    t['inv_bat_items'] = [flat(li) for li in cards[0].select('.vs-items li')]
+    t['inv_fig'] = {f['class'][0]: flat(f.figcaption) for f in cards[0].select('.bat-fig figure')}   # bat-grid, bat-trucks, bat-trafo
     t['inv_cards'] = [(price(c), profit_lines(c.select_one('.vs-profit'))) for c in cards]
     t['inv_grid'] = inv.select_one('.box-grid')['aria-label']
     t['inv_statement'] = flat(inv.select_one('.vs-statement'))
@@ -259,42 +266,47 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .qr {{ text-align: center; }}
 .qr svg {{ width: 20mm; height: 20mm; display: block; margin: 0 auto 1.5mm; }}
 .qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8.6pt; color: var(--pine); line-height: 1.3; }}
-.page--3 {{ gap: 3.4mm; justify-content: space-between; }}
+.page--3 {{ gap: 2.6mm; justify-content: space-between; }}
 .page--3 .top {{ margin-bottom: 0; }}
 .nw {{ white-space: nowrap; }}
 .inv-h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 15pt; line-height: 1.18; color: var(--ink); letter-spacing: -.01em; }}
 .inv-sub {{ font-family: "Unbounded"; font-weight: 500; font-size: 10.5pt; color: var(--pine); margin-top: 1.6mm; }}
-.inv-p {{ font-size: 9.6pt; line-height: 1.42; }}
+.inv-p {{ font-size: 9.3pt; line-height: 1.4; }}
 .inv-p b {{ color: var(--ink); }}
-.inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; font-size: 9pt; line-height: 1.28; table-layout: fixed; }}
-.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 1.7mm 2.8mm; border-bottom: .3mm solid var(--line); }}
+.inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; font-size: 8.7pt; line-height: 1.26; table-layout: fixed; }}
+.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 1.35mm 2.6mm; border-bottom: .3mm solid var(--line); }}
 .inv-table tbody tr:last-child th, .inv-table tbody tr:last-child td {{ border-bottom: 0; }}
-.inv-table thead th {{ font-weight: 600; font-size: 9pt; color: var(--ink); vertical-align: bottom; }}
+.inv-table thead th {{ font-weight: 600; font-size: 8.7pt; color: var(--ink); vertical-align: bottom; }}
 .inv-table col.m {{ width: 26%; }}
 .inv-table col.b {{ width: 39%; }}
 .inv-table tbody th {{ font-weight: 600; color: var(--ink); }}
 .inv-table .ours {{ background: #e3f3ea; }}
 .inv-table b {{ display: block; font-weight: 700; color: var(--ink); }}
 .inv-table .ours b {{ color: var(--pine); }}
-.inv-table small {{ display: block; margin-top: .3mm; font-size: 8.2pt; line-height: 1.28; color: var(--text); }}
-.inv-bottom {{ font-size: 9.6pt; line-height: 1.42; }}
+.inv-table small {{ display: block; margin-top: .2mm; font-size: 8pt; line-height: 1.26; color: var(--text); }}
+.inv-bottom {{ font-size: 9.3pt; line-height: 1.4; }}
 .inv-bottom b {{ color: var(--ink); }}
 .inv-cards {{ display: grid; grid-template-columns: 1fr 1.25fr; gap: 4mm; }}
 .inv-card {{ border-radius: 4mm; padding: 3.6mm 5mm; }}
 .inv-card--bat {{ background: var(--paper); border: .3mm solid var(--line); }}
 .inv-card--ours {{ background: var(--deep); color: #dceae4; }}
-.inv-card h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 10pt; line-height: 1.25; color: var(--ink); margin-bottom: 1.6mm; }}
-.inv-card--ours h3 {{ color: #ffffff; }}
-.inv-card ul {{ list-style: none; font-size: 8.8pt; line-height: 1.4; }}
 .inv-card .lab {{ margin-top: 2.2mm; font-size: 8.4pt; font-weight: 600; }}
+.inv-card .lab:first-child {{ margin-top: 0; }}
+.inv-fig {{ display: grid; grid-template-columns: 32fr 66fr; grid-template-areas: "g t" "f t"; align-content: start; gap: 1.4mm 2.4mm; margin-top: 2mm; }}
+.inv-fig .g {{ grid-area: g; }}
+.inv-fig .t {{ grid-area: t; }}
+.inv-fig .f {{ grid-area: f; }}
+.inv-fig figcaption {{ margin-bottom: .7mm; font-size: 7.9pt; font-weight: 600; line-height: 1.2; color: var(--ink); }}
+.inv-fig img {{ display: block; width: 100%; border-radius: .6mm; }}
 .inv-card .price {{ font-family: "Unbounded"; font-weight: 400; font-size: 12.5pt; line-height: 1.2; color: var(--ink); }}
+.inv-card .price .lab {{ display: inline-block; margin: 0 2mm 0 0; font-family: "Wix Madefor Text"; vertical-align: .25em; }}
 .inv-card--ours .price {{ color: #ffffff; }}
 .inv-card .price small {{ display: inline-block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 9pt; }}
 .inv-card .pl {{ font-size: 9pt; line-height: 1.4; }}
 .inv-card .pl b {{ font-weight: 700; color: var(--ink); }}
 .inv-card--ours .pl b {{ color: var(--mint); }}
-.inv-grid {{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.2mm; margin-bottom: .6mm; }}
-.inv-grid img {{ display: block; width: 100%; border-radius: .5mm; }}
+.inv-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6mm 2mm; margin-top: 2.2mm; }}
+.inv-grid img {{ display: block; width: 100%; }}
 .inv-statement {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.3; color: var(--pine); }}
 .qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 8.6pt; color: var(--text); }}
 </style></head><body>
@@ -340,11 +352,13 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
     <tbody>{''.join(f'<tr><th>{cell(m)}</th><td><b>{esc(a[0])}</b>{"<small>" + esc(a[1]) + "</small>" if a[1] else ""}</td><td class="ours"><b>{esc(b[0])}</b>{"<small>" + esc(b[1]) + "</small>" if b[1] else ""}</td></tr>' for m, a, b in t['inv_rows'])}</tbody></table>
   <p class="inv-bottom">{t['inv_bottom']}</p>
   <div class="inv-cards">
-    <div class="inv-card inv-card--bat"><h3>{esc(t['inv_bat_items'][0])}</h3><ul>{''.join(f'<li>{esc(x)}</li>' for x in t['inv_bat_items'][1:])}</ul>
-      <p class="lab">{esc(t['inv_cards'][0][0][0])}</p><p class="price">{esc(t['inv_cards'][0][0][1])}{' <small>' + esc(t['inv_cards'][0][0][2]) + '</small>' if t['inv_cards'][0][0][2] else ''}</p>
+    <div class="inv-card inv-card--bat">
+      <p class="price"><span class="lab">{esc(t['inv_cards'][0][0][0])}</span>{esc(t['inv_cards'][0][0][1])}{' <small>' + esc(t['inv_cards'][0][0][2]) + '</small>' if t['inv_cards'][0][0][2] else ''}</p>
+      <div class="inv-fig"><figure class="g"><figcaption>{cap(t['inv_fig']['bat-grid'])}</figcaption><img src="{img['bat_pylons']}" alt=""></figure><figure class="t"><figcaption>{cap(t['inv_fig']['bat-trucks'])}</figcaption><img src="{img['bat_trucks']}" alt=""></figure><figure class="f"><figcaption>{cap(t['inv_fig']['bat-trafo'])}</figcaption><img src="{img['bat_trafo']}" alt=""></figure></div>
       <p class="lab">{esc(t['inv_cards'][0][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][0][1][1])}</div>
-    <div class="inv-card inv-card--ours"><h3>{esc(t['inv_grid'])}</h3><div class="inv-grid">{f'<img src="{img["box_front"]}" alt="">' * 12}</div>
-      <p class="lab">{esc(t['inv_cards'][1][0][0])}</p><p class="price">{esc(t['inv_cards'][1][0][1])}{' <small>' + esc(t['inv_cards'][1][0][2]) + '</small>' if t['inv_cards'][1][0][2] else ''}</p>
+    <div class="inv-card inv-card--ours">
+      <p class="price"><span class="lab">{esc(t['inv_cards'][1][0][0])}</span>{esc(t['inv_cards'][1][0][1])}{' <small>' + esc(t['inv_cards'][1][0][2]) + '</small>' if t['inv_cards'][1][0][2] else ''}</p>
+      <div class="inv-grid" role="img" aria-label="{esc(t['inv_grid'])}">{f'<img src="{img["trailer"]}" alt="">' * 12}</div>
       <p class="lab">{esc(t['inv_cards'][1][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][1][1][1])}</div>
   </div>
   <p class="inv-statement">{esc(t['inv_statement'])}</p>
