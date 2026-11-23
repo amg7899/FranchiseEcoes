@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """The ECOES Franchise brochure (A4), a short ad for e-mail and print (client, 2026-11-16: "a 2-page PDF with
 the best slogans and the strongest points of both variants; the full-site PDF freezes the system"); page 3 since
-2026-11-23: the Investors page, shortened (client: "a 3rd page with the best arguments from this document").
+2026-11-23: "For investors", our short version of the client's comparison (INV below; client: "start with За инвеститори,
+readable, shortened to the strongest arguments, not word for word").
 Every sentence is taken from the site's own pages (EN + BG), so the brochure says exactly what the site says, except the
 opening lines at the top of page 1 (AUDIENCE: the client's text for the PDF, 2026-11-16; English ours).
 
@@ -34,17 +35,11 @@ def flat(el):
     """The text as written, without the spaces txt() puts at tag edges ('“<b>NO</b>”' stays '“NO”')."""
     if not el: return ''
     return NB_WORD.sub('\\1\u00a0', NB_UNIT.sub('\\1\u00a0', WS.sub(' ', el.get_text()).strip()))
-def rich(el):
-    """Like flat(), as HTML with the source's bold kept (the long paragraphs of page 3)."""
-    def walk(n):
-        if isinstance(n, str): return esc(str(n))
-        inner = ''.join(walk(c) for c in n.children)
-        return f'<b>{inner}</b>' if n.name in ('b', 'strong') else inner
-    s = WS.sub(' ', ''.join(walk(c) for c in el.children)).strip()
-    s = NB_WORD.sub('\\1\u00a0', NB_UNIT.sub('\\1\u00a0', s.replace('<b> ', ' <b>').replace(' </b>', '</b> ').replace('  ', ' ')))
-    return re.sub(r'(\d+–\d+)', r'<span class="nw">\1</span>', s)   # '5–6 months' never breaks after the dash
 def esc(s): return html.escape(s, quote=False)
 def cell(s): return re.sub(r'(\(?\d+-[^\s)]+\)?)', r'<span class="nw">\1</span>', esc(s))   # '(7-day' stays whole
+def nb(s):   # page 3: '≈ 1.200.000 EUR', '12 × 100.000', '5 минути' never break
+    s = s.replace('≈ ', '≈\u00a0').replace(' × ', '\u00a0×\u00a0')
+    return NB_WORD.sub('\\1\u00a0', NB_UNIT.sub('\\1\u00a0', s))
 def cap(s): return re.sub(r'(\S+-\S+)', r'<span class="nw">\1</span>', esc(s))   # 'high-voltage' stays whole
 
 def images():
@@ -86,6 +81,51 @@ AUDIENCE = {
         ('Individuals', ' who want an affordable business of their own that generates profit from the first day.')]),
 }
 
+# Page 3 "For investors" (client, 2026-11-23: start with "За инвеститори"; "don't copy my document word for word, shorten it
+# to the strongest arguments and make it readable"): our short version of the client's document "Battery Mobile Charging
+# Station vs. ECOES MultiCharger Box" (its figures unchanged; the full text is on the Investors page). Rows of the table:
+# (label, under the label, battery, battery note, Box, Box note).
+INV = {
+    'bg': dict(
+        kicker='За инвеститори',
+        title='Мобилна зарядна станция с батерии срещу ECOES MultiCharger Box',
+        sub='Икономическата реалност в цифри',
+        hook='„Предлагате ли мобилни зарядни станции с батерии?“ Отговорът ни е <b>„НЕ“</b>. Станциите само с батерии изглеждат '
+             'добре на хартия, но в реални условия носят <b>загуби от първия ден</b>. ECOES MultiCharger Box носи <b>печалба от първия ден</b>.',
+        cols=('Мобилна станция с батерии', 'ECOES MultiCharger Box'),
+        rows=[('Начална инвестиция', '', '≈ 1.200.000 EUR', '', '≈ 100.000 EUR', '12 пъти по-малко'),
+              ('Разходи за курсове', 'за година', '≈ 200.000 EUR', 'дизел за влекача, шофьори, гуми, застраховки', '0 EUR', 'без курсове и шофьори'),
+              ('Всеки ден', '', '400 км с 30-тонни контейнери', '2 контейнера по 2.000 kWh до подстанцията в града и обратно', 'Работи на място', 'без контейнери по магистралата'),
+              ('Електрическа мрежа', '', 'Нужна е мощна мрежа', 'присъединяване 1000 kVA за зареждането', '100% независим от мрежата', 'гориво за 5 минути, работи 24/7')],
+        same='Една и съща сума – 1.200.000 EUR',
+        bat=('1 мобилна станция с батерии', 'над 1.200.000 EUR'),
+        box=('12 броя ECOES MultiCharger Box', '12 × 100.000 EUR'),
+        profit='Брутна печалба при 50% натовареност',
+        bat_profit=('≈ 16.500 EUR', 'на месец', '≈ 200.000 EUR годишно'),
+        box_profit=('≈ 311.040 EUR', 'на месец', '≈ 3.732.480 EUR годишно'),
+        pay='С 12 броя ECOES MultiCharger Box инвестицията се изплаща за около 5–6 месеца.',
+        statement='При по-висока натовареност брутната печалба расте пропорционално!'),
+    'en': dict(
+        kicker='For investors',
+        title='Battery mobile charging station vs. ECOES MultiCharger Box',
+        sub='The economic reality in numbers',
+        hook='“Do you offer battery-powered mobile charging stations?” Our answer is <b>“NO”</b>. Battery-only stations look good '
+             'on paper, but in real conditions they <b>lose money from day one</b>. The ECOES MultiCharger Box <b>makes a profit from day one</b>.',
+        cols=('Battery mobile station', 'ECOES MultiCharger Box'),
+        rows=[('Initial investment', '', '≈ €1,200,000', '', '≈ €100,000', '12 times less'),
+              ('Hauling costs', 'per year', '≈ €200,000', 'tractor diesel, drivers, tires, insurance', '€0', 'no trips, no drivers'),
+              ('Every day', '', '400 km with 30-ton containers', '2 containers of 2,000 kWh to the city substation and back', 'Works on site', 'no containers on the highway'),
+              ('Power grid', '', 'Needs a strong grid', 'a 1000 kVA connection for recharging', '100% off-grid', 'refuel in 5 minutes, runs 24/7')],
+        same='The same amount – €1,200,000',
+        bat=('1 battery mobile station', 'over €1,200,000'),
+        box=('12 × ECOES MultiCharger Box', '12 × €100,000'),
+        profit='Gross profit at 50% utilization',
+        bat_profit=('≈ €16,500', 'a month', '≈ €200,000 a year'),
+        box_profit=('≈ €311,040', 'a month', '≈ €3,732,480 a year'),
+        pay='With 12 ECOES MultiCharger Box units, the investment pays back in about 5–6 months.',
+        statement='At a higher utilization rate, gross profit increases proportionally!'),
+}
+
 def texts(lang):
     p = 'bg/' if lang == 'bg' else ''
     home = load(p + 'index.html').find('main')
@@ -125,41 +165,17 @@ def texts(lang):
     t['preorder'] = 'Предварителна заявка' if lang == 'bg' else 'Pre-order'
     foot = load(p + 'contact-us/index.html').select_one('footer')
     t['foot'] = txt(foot)
-    # page 3: the Investors page (the client's comparison, 2026-11-23), shortened: the opening paragraph, the table,
-    # the bottom line, the two price/profit cards and the closing sentence
+    # page 3: our short text (INV) and the labels of the document's battery picture, as on the Investors page
     inv = load(p + 'investors/index.html').find('main')
-    def split_cell(el):
-        el = BeautifulSoup(str(el), 'html.parser')
-        note = el.select_one('.vs-note'); nt = flat(note) if note else ''
-        if note: note.decompose()
-        b = el.select_one('b')
-        if b:
-            main = flat(b); b.decompose()
-            return main, nt or flat(el).lstrip('–- ').strip()
-        return flat(el), nt
-    def profit_lines(par):
-        par = BeautifulSoup(str(par), 'html.parser').p
-        lab = flat(par.span.extract())
-        return lab, [rich(BeautifulSoup(x, 'html.parser')) for x in re.split(r'<br\s*/?>', par.decode_contents())]
-    def price(c):   # 'Approx. 1,200,000 EUR (12 × 100,000 EUR)' -> the sum large, the bracket small
-        s = flat(c.select_one('.vs-price b')); m = re.match(r'^(.*?)\s*(\(.*\))?$', s)
-        return flat(c.select_one('.vs-price span')), m.group(1), m.group(2) or ''
-    t['inv_title'] = flat(inv.select_one('h1')); t['inv_sub'] = flat(inv.select_one('.page-sub'))
-    t['inv_p1'] = rich(inv.select('.doc--vs .wrap > p.prose')[0])
-    t['inv_head'] = [split_cell(h) for h in inv.select('.vs-table thead th')]
-    t['inv_rows'] = [(flat(tr.th), split_cell(tr.select('td')[0]), split_cell(tr.select('td')[1])) for tr in inv.select('.vs-table tbody tr')]
-    t['inv_bottom'] = rich(inv.select_one('.vs-bottom'))
-    cards = inv.select('.vs-card')
-    t['inv_fig'] = {f['class'][0]: flat(f.figcaption) for f in cards[0].select('.bat-fig figure')}   # bat-grid, bat-trucks, bat-trafo
-    t['inv_cards'] = [(price(c), profit_lines(c.select_one('.vs-profit'))) for c in cards]
+    t['inv_fig'] = {f['class'][0]: flat(f.figcaption) for f in inv.select('.bat-fig figure')}   # bat-grid, bat-trucks, bat-trafo
     t['inv_grid'] = inv.select_one('.box-grid')['aria-label']
-    t['inv_statement'] = flat(inv.select_one('.vs-statement'))
     return t
 
 def num(v, lang): return f'{v:,}'.replace(',', '.') if lang == 'bg' else f'{v:,}'
 
 def page(lang, t, img):
     L = lang == 'bg'
+    v = INV[lang]
     why = {h: d for h, d in t['why'] if h}
     pick_bg = ['Там, където няма зарядни станции', 'Готов сертифициран актив вместо години разработка', 'Мобилен, стационарен или смесен режим',
                'Около 20% допълнителни приходи', 'Резервно захранване и стационарна зарядна станция', 'Хардуер, софтуер и дистанционна поддръжка']
@@ -266,48 +282,50 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .qr {{ text-align: center; }}
 .qr svg {{ width: 20mm; height: 20mm; display: block; margin: 0 auto 1.5mm; }}
 .qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8.6pt; color: var(--pine); line-height: 1.3; }}
-.page--3 {{ gap: 2.6mm; justify-content: space-between; }}
+.page--3 {{ gap: 2.4mm; justify-content: space-between; }}
 .page--3 .top {{ margin-bottom: 0; }}
 .nw {{ white-space: nowrap; }}
-.inv-h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 15pt; line-height: 1.18; color: var(--ink); letter-spacing: -.01em; }}
-.inv-sub {{ font-family: "Unbounded"; font-weight: 500; font-size: 10.5pt; color: var(--pine); margin-top: 1.6mm; }}
-.inv-p {{ font-size: 9.3pt; line-height: 1.4; }}
-.inv-p b {{ color: var(--ink); }}
-.inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; font-size: 8.7pt; line-height: 1.26; table-layout: fixed; }}
-.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 1.35mm 2.6mm; border-bottom: .3mm solid var(--line); }}
-.inv-table tbody tr:last-child th, .inv-table tbody tr:last-child td {{ border-bottom: 0; }}
-.inv-table thead th {{ font-weight: 600; font-size: 8.7pt; color: var(--ink); vertical-align: bottom; }}
-.inv-table col.m {{ width: 26%; }}
-.inv-table col.b {{ width: 39%; }}
+.inv-kicker {{ font-family: "Unbounded"; font-weight: 500; font-size: 26pt; line-height: 1.1; color: var(--ink); letter-spacing: -.012em; }}
+.inv-title {{ margin-top: 2.2mm; font-family: "Unbounded"; font-weight: 500; font-size: 12.5pt; line-height: 1.3; color: var(--pine); }}
+.inv-title small {{ display: block; margin-top: .8mm; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 10.8pt; color: var(--text); }}
+.inv-hook {{ font-size: 11.3pt; line-height: 1.45; }}
+.inv-hook b {{ font-weight: 700; color: var(--ink); }}
+.inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; table-layout: fixed; font-size: 10.6pt; line-height: 1.3; }}
+.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 2.2mm 3.2mm; border-bottom: .3mm solid var(--line); }}
+.inv-table tbody tr:last-child > * {{ border-bottom: 0; }}
+.inv-table thead th {{ font-size: 10.4pt; font-weight: 600; color: var(--ink); vertical-align: bottom; }}
+.inv-table col.m {{ width: 25%; }}
+.inv-table col.b {{ width: 37%; }}
 .inv-table tbody th {{ font-weight: 600; color: var(--ink); }}
+.inv-table small {{ display: block; margin-top: .4mm; font-size: 9.6pt; font-weight: 450; line-height: 1.3; color: var(--text); }}
+.inv-table td b {{ display: block; font-weight: 700; color: var(--ink); }}
 .inv-table .ours {{ background: #e3f3ea; }}
-.inv-table b {{ display: block; font-weight: 700; color: var(--ink); }}
 .inv-table .ours b {{ color: var(--pine); }}
-.inv-table small {{ display: block; margin-top: .2mm; font-size: 8pt; line-height: 1.26; color: var(--text); }}
-.inv-bottom {{ font-size: 9.3pt; line-height: 1.4; }}
-.inv-bottom b {{ color: var(--ink); }}
-.inv-cards {{ display: grid; grid-template-columns: 1fr 1.25fr; gap: 4mm; }}
-.inv-card {{ border-radius: 4mm; padding: 3.6mm 5mm; }}
+.inv-same {{ font-family: "Unbounded"; font-weight: 500; font-size: 13pt; line-height: 1.25; color: var(--ink); }}
+.inv-cards {{ display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }}
+.inv-card {{ display: flex; flex-direction: column; border-radius: 4mm; padding: 4mm 5mm; }}
 .inv-card--bat {{ background: var(--paper); border: .3mm solid var(--line); }}
 .inv-card--ours {{ background: var(--deep); color: #dceae4; }}
-.inv-card .lab {{ margin-top: 2.2mm; font-size: 8.4pt; font-weight: 600; }}
-.inv-card .lab:first-child {{ margin-top: 0; }}
-.inv-fig {{ display: grid; grid-template-columns: 32fr 66fr; grid-template-areas: "g t" "f t"; align-content: start; gap: 1.4mm 2.4mm; margin-top: 2mm; }}
+.inv-card h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11.3pt; line-height: 1.25; color: var(--ink); }}
+.inv-card--ours h3 {{ color: #ffffff; }}
+.inv-card .cost {{ margin-top: .8mm; font-size: 10.4pt; font-weight: 500; }}
+.inv-fig {{ display: grid; grid-template-columns: 34fr 64fr; grid-template-areas: "g t" "f t"; align-content: start; gap: 1.6mm 2.4mm; margin-top: 2.6mm; }}
 .inv-fig .g {{ grid-area: g; }}
 .inv-fig .t {{ grid-area: t; }}
 .inv-fig .f {{ grid-area: f; }}
-.inv-fig figcaption {{ margin-bottom: .7mm; font-size: 7.9pt; font-weight: 600; line-height: 1.2; color: var(--ink); }}
+.inv-fig figcaption {{ margin-bottom: .8mm; font-size: 9pt; font-weight: 600; line-height: 1.2; color: var(--ink); }}
 .inv-fig img {{ display: block; width: 100%; border-radius: .6mm; }}
-.inv-card .price {{ font-family: "Unbounded"; font-weight: 400; font-size: 12.5pt; line-height: 1.2; color: var(--ink); }}
-.inv-card .price .lab {{ display: inline-block; margin: 0 2mm 0 0; font-family: "Wix Madefor Text"; vertical-align: .25em; }}
-.inv-card--ours .price {{ color: #ffffff; }}
-.inv-card .price small {{ display: inline-block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 9pt; }}
-.inv-card .pl {{ font-size: 9pt; line-height: 1.4; }}
-.inv-card .pl b {{ font-weight: 700; color: var(--ink); }}
-.inv-card--ours .pl b {{ color: var(--mint); }}
-.inv-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6mm 2mm; margin-top: 2.2mm; }}
+.inv-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8mm 2.2mm; margin-top: 2.6mm; }}
 .inv-grid img {{ display: block; width: 100%; }}
-.inv-statement {{ font-family: "Unbounded"; font-weight: 500; font-size: 11pt; line-height: 1.3; color: var(--pine); }}
+.inv-card .plab {{ margin-top: auto; padding-top: 3mm; font-size: 9.8pt; font-weight: 600; }}
+.inv-card .month {{ margin-top: .6mm; font-family: "Unbounded"; font-weight: 500; font-size: 16.5pt; line-height: 1.15; color: var(--ink); }}
+.inv-card .month small {{ margin-left: 1.6mm; font-family: "Wix Madefor Text"; font-size: 10.4pt; font-weight: 500; color: var(--text); }}
+.inv-card--ours .month {{ color: var(--mint); }}
+.inv-card--ours .month small {{ color: #dceae4; }}
+.inv-card .year {{ margin-top: .8mm; font-size: 10.8pt; font-weight: 600; color: var(--ink); }}
+.inv-card--ours .year {{ color: #ffffff; }}
+.inv-close .pay {{ font-size: 12pt; font-weight: 700; line-height: 1.4; color: var(--ink); }}
+.inv-close .inv-statement {{ margin-top: 1.6mm; font-family: "Unbounded"; font-weight: 500; font-size: 13pt; line-height: 1.3; color: var(--pine); }}
 .qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 8.6pt; color: var(--text); }}
 </style></head><body>
 <section class="page">
@@ -346,22 +364,21 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 </section>
 <section class="page page--3">
   <div class="top"><img src="{A}assets/img/logo.svg" alt="ECOES JV"><span class="url">franchise.ecoes.eu/{'bg/' if L else ''}investors/</span></div>
-  <div><h2 class="inv-h1">{esc(t['inv_title']).replace('ECOES MultiCharger Box', '<span class="nw">ECOES MultiCharger Box</span>')}</h2><p class="inv-sub">{esc(t['inv_sub'])}</p></div>
-  <p class="inv-p">{t['inv_p1']}</p>
-  <table class="inv-table"><colgroup><col class="m"><col class="b"><col></colgroup><thead><tr>{''.join(f'<th{" class=ours" if i == 2 else ""}>{esc(a)}<small>{esc(b)}</small></th>' for i, (a, b) in enumerate(t['inv_head']))}</tr></thead>
-    <tbody>{''.join(f'<tr><th>{cell(m)}</th><td><b>{esc(a[0])}</b>{"<small>" + esc(a[1]) + "</small>" if a[1] else ""}</td><td class="ours"><b>{esc(b[0])}</b>{"<small>" + esc(b[1]) + "</small>" if b[1] else ""}</td></tr>' for m, a, b in t['inv_rows'])}</tbody></table>
-  <p class="inv-bottom">{t['inv_bottom']}</p>
+  <div class="inv-head"><h2 class="inv-kicker">{esc(v['kicker'])}</h2><p class="inv-title">{nb(esc(v['title'])).replace('ECOES MultiCharger Box', '<span class="nw">ECOES MultiCharger Box</span>')}<small>{esc(v['sub'])}</small></p></div>
+  <p class="inv-hook">{nb(v['hook'])}</p>
+  <table class="inv-table"><colgroup><col class="m"><col class="b"><col></colgroup>
+    <thead><tr><th></th><th>{esc(v['cols'][0])}</th><th class="ours">{esc(v['cols'][1])}</th></tr></thead>
+    <tbody>{''.join(f'<tr><th>{nb(cell(r[0]))}{"<small>" + esc(r[1]) + "</small>" if r[1] else ""}</th><td><b>{nb(cell(r[2]))}</b>{"<small>" + nb(cell(r[3])) + "</small>" if r[3] else ""}</td><td class="ours"><b>{nb(cell(r[4]))}</b>{"<small>" + nb(cell(r[5])) + "</small>" if r[5] else ""}</td></tr>' for r in v['rows'])}</tbody></table>
+  <p class="inv-same">{nb(esc(v['same']))}</p>
   <div class="inv-cards">
-    <div class="inv-card inv-card--bat">
-      <p class="price"><span class="lab">{esc(t['inv_cards'][0][0][0])}</span>{esc(t['inv_cards'][0][0][1])}{' <small>' + esc(t['inv_cards'][0][0][2]) + '</small>' if t['inv_cards'][0][0][2] else ''}</p>
+    <div class="inv-card inv-card--bat"><h3>{nb(esc(v['bat'][0]))}</h3><p class="cost">{nb(esc(v['bat'][1]))}</p>
       <div class="inv-fig"><figure class="g"><figcaption>{cap(t['inv_fig']['bat-grid'])}</figcaption><img src="{img['bat_pylons']}" alt=""></figure><figure class="t"><figcaption>{cap(t['inv_fig']['bat-trucks'])}</figcaption><img src="{img['bat_trucks']}" alt=""></figure><figure class="f"><figcaption>{cap(t['inv_fig']['bat-trafo'])}</figcaption><img src="{img['bat_trafo']}" alt=""></figure></div>
-      <p class="lab">{esc(t['inv_cards'][0][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][0][1][1])}</div>
-    <div class="inv-card inv-card--ours">
-      <p class="price"><span class="lab">{esc(t['inv_cards'][1][0][0])}</span>{esc(t['inv_cards'][1][0][1])}{' <small>' + esc(t['inv_cards'][1][0][2]) + '</small>' if t['inv_cards'][1][0][2] else ''}</p>
+      <p class="plab">{nb(esc(v['profit']))}</p><p class="month">{nb(esc(v['bat_profit'][0]))}<small>{esc(v['bat_profit'][1])}</small></p><p class="year">{nb(esc(v['bat_profit'][2]))}</p></div>
+    <div class="inv-card inv-card--ours"><h3>{nb(esc(v['box'][0])).replace('ECOES MultiCharger Box', '<span class="nw">ECOES MultiCharger Box</span>')}</h3><p class="cost">{nb(esc(v['box'][1]))}</p>
       <div class="inv-grid" role="img" aria-label="{esc(t['inv_grid'])}">{f'<img src="{img["trailer"]}" alt="">' * 12}</div>
-      <p class="lab">{esc(t['inv_cards'][1][1][0])}</p>{''.join(f'<p class="pl">{x}</p>' for x in t['inv_cards'][1][1][1])}</div>
+      <p class="plab">{nb(esc(v['profit']))}</p><p class="month">{nb(esc(v['box_profit'][0]))}<small>{esc(v['box_profit'][1])}</small></p><p class="year">{nb(esc(v['box_profit'][2]))}</p></div>
   </div>
-  <p class="inv-statement">{esc(t['inv_statement'])}</p>
+  <div class="inv-close"><p class="pay">{nb(esc(v['pay']))}</p><p class="inv-statement">{esc(v['statement'])}</p></div>
 </section>
 </body></html>'''
 
