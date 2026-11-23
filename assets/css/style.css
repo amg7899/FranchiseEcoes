@@ -1079,7 +1079,11 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .vs-items li:first-child { padding-top: 0; font: 400 clamp(19px, 1.6vw, 22px)/1.3 var(--font-display); }
 .vs-card--ours { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 1px rgba(76, 195, 255, .45); }
 .vs-card--ours b { color: var(--signal); }
+.vs-price small { display: inline-block; font: 500 17px/1.4 var(--font-text); color: var(--text); }
 .box-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; }
+@media (min-width: 900px) {
+  .box-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }   /* 4 x 3: the card about as tall as the battery card */
+}
 .box-grid img { display: block; width: 100%; height: auto; }
 .vs-statement { margin: 0 0 28px; }
 
