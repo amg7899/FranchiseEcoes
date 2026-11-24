@@ -1240,6 +1240,32 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 }
 .award .doc-title { margin-top: 18px; font-size: 18px; }
 .award p { margin: 10px 4px 0; font-size: 17px; line-height: 1.65; color: var(--text); }
+/* a document in two languages (client, 2026-11-24): both pictures stacked in the link, a small button on the card's
+   corner swaps them with a cross-fade; the link, and so the viewer, follows the version on screen (gallery.js) */
+.doc-wrap { position: relative; }
+.award .doc-wrap { max-width: 340px; }
+@supports (grid-template-rows: subgrid) {
+  .award .doc-wrap { align-self: stretch; display: grid; }
+}
+.doc-frame { position: relative; display: block; }
+.doc-frame picture { display: block; transition: opacity .35s ease; }
+.doc-alt { position: absolute; inset: 0; opacity: 0; }
+.is-alt .doc-alt { opacity: 1; }
+.is-alt .doc-main { opacity: 0; }
+.doc-lang {
+  position: absolute; z-index: 2; top: -11px; right: -11px; display: none; align-items: center; gap: 5px;
+  height: 30px; padding: 0 10px 0 8px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--pine, #0d4a44); color: #fff; font: 600 14px/1 var(--font-text); letter-spacing: .03em;
+  box-shadow: 0 6px 14px -8px rgba(6, 41, 37, .55); transition: background-color .2s ease-out, transform .2s ease-out;
+}
+.js .doc-lang { display: inline-flex; }
+.doc-lang svg { width: 15px; height: 15px; flex: none; }
+.doc-lang::after { content: ""; position: absolute; inset: -7px; }   /* a 44px target around the small pill */
+.doc-lang:hover { background: #0a3b36; transform: translateY(-1px); }
+.doc-lang:focus-visible { outline-color: var(--pine, #0d4a44); border-radius: 999px; }
+@media (prefers-reduced-motion: reduce) {
+  .doc-frame picture, .doc-lang { transition: none; }
+}
 
 /* the BULFIRE card and the closing link */
 .about-closing { padding: var(--section) 0; }
