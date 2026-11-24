@@ -57,14 +57,14 @@ def images():
     box = box.resize((1100, round(box.height * 1100 / box.width)), Image.LANCZOS)
     box.save(os.path.join(HERE, 'img/box.jpg'), quality=88, optimize=True); out['box'] = 'img/box.jpg'
     # page 3, as in the client's document: the battery picture (its three parts, from the Investors page) and
-    # the MultiCharger on its trailer twelve times (the cut-out set on the card's deep green: no transparency in the PDF)
+    # the MultiCharger on its trailer twelve times (the cut-out set on white, as on the site: no transparency in the PDF)
     for key, name, w in (('bat_pylons', 'battery-pylons-400', 300), ('bat_trafo', 'battery-transformer-400', 300), ('bat_trucks', 'battery-trucks-760', 560)):
         im = Image.open(os.path.join(ROOT, f'assets/img/investors/{name}.webp')).convert('RGB')
         im = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
         im.save(os.path.join(HERE, f'img/{key}.jpg'), quality=86, optimize=True); out[key] = f'img/{key}.jpg'
     tr = Image.open(os.path.join(ROOT, 'assets/img/v2/cut-multicharger-640.webp')).convert('RGBA')
     tr = tr.resize((300, round(tr.height * 300 / tr.width)), Image.LANCZOS)
-    bg = Image.new('RGBA', tr.size, (6, 41, 37, 255)); bg.alpha_composite(tr)
+    bg = Image.new('RGBA', tr.size, (255, 255, 255, 255)); bg.alpha_composite(tr)
     bg.convert('RGB').save(os.path.join(HERE, 'img/trailer.jpg'), quality=88, optimize=True); out['trailer'] = 'img/trailer.jpg'
     return out
 
@@ -305,9 +305,8 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .inv-cards {{ display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }}
 .inv-card {{ display: flex; flex-direction: column; border-radius: 4mm; padding: 4mm 5mm; }}
 .inv-card--bat {{ background: var(--paper); border: .3mm solid var(--line); }}
-.inv-card--ours {{ background: var(--deep); color: #dceae4; }}
+.inv-card--ours {{ background: var(--paper); border: .5mm solid #57ba91; }}   /* white with the site's green edge */
 .inv-card h3 {{ font-family: "Unbounded"; font-weight: 500; font-size: 11.3pt; line-height: 1.25; color: var(--ink); }}
-.inv-card--ours h3 {{ color: #ffffff; }}
 .inv-card .cost {{ margin-top: .8mm; font-size: 10.4pt; font-weight: 500; }}
 .inv-fig {{ display: grid; grid-template-columns: 34fr 64fr; grid-template-areas: "g t" "f t"; align-content: start; gap: 1.6mm 2.4mm; margin-top: 2.6mm; }}
 .inv-fig .g {{ grid-area: g; }}
@@ -320,10 +319,9 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .inv-card .plab {{ margin-top: auto; padding-top: 3mm; font-size: 9.8pt; font-weight: 600; }}
 .inv-card .month {{ margin-top: .6mm; font-family: "Unbounded"; font-weight: 500; font-size: 16.5pt; line-height: 1.15; color: var(--ink); }}
 .inv-card .month small {{ margin-left: 1.6mm; font-family: "Wix Madefor Text"; font-size: 10.4pt; font-weight: 500; color: var(--text); }}
-.inv-card--ours .month {{ color: var(--mint); }}
-.inv-card--ours .month small {{ color: #dceae4; }}
+.inv-card--ours .month {{ color: var(--pine); }}
 .inv-card .year {{ margin-top: .8mm; font-size: 10.8pt; font-weight: 600; color: var(--ink); }}
-.inv-card--ours .year {{ color: #ffffff; }}
+.inv-card--ours .year {{ color: var(--pine); }}
 .inv-close .pay {{ font-size: 12pt; font-weight: 700; line-height: 1.4; color: var(--ink); }}
 .inv-close .inv-statement {{ margin-top: 1.6mm; font-family: "Unbounded"; font-weight: 500; font-size: 13pt; line-height: 1.3; color: var(--pine); }}
 .qr p small {{ display: block; font-family: "Wix Madefor Text"; font-weight: 500; font-size: 8.6pt; color: var(--text); }}
