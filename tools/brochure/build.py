@@ -81,6 +81,18 @@ AUDIENCE = {
         ('Individuals', ' who want an affordable business of their own that generates profit from the first day.')]),
 }
 
+# Page 2's headline figures (client, 2026-11-24, after a review in another chat: "25% instead of 50% in front, the
+# figures as forecasts"): gross profit a month at 25 % load from the product tables; the payback doubles the client's
+# "about 5 months" at 50 % (half the profit, twice the time).
+P2 = {
+    'bg': dict(mob='Прогнозна брутна печалба на месец на един ECOES MultiCharger Mobile при 25% натовареност.',
+               box='Прогнозна брутна печалба на месец на един ECOES MultiCharger Box при 25% натовареност.',
+               pay='Прогнозно изплащане: около 10 месеца'),
+    'en': dict(mob='Forecast gross profit a month of one ECOES MultiCharger Mobile at 25% load.',
+               box='Forecast gross profit a month of one ECOES MultiCharger Box at 25% load.',
+               pay='Forecast payback: about 10 months'),
+}
+
 # Page 3 "For investors" (client, 2026-11-23: start with "За инвеститори"; "don't copy my document word for word, shorten it
 # to the strongest arguments and make it readable"): our short version of the client's document "Battery Mobile Charging
 # Station vs. ECOES MultiCharger Box" (its figures unchanged; the full text is on the Investors page). Rows of the table:
@@ -100,10 +112,10 @@ INV = {
         same='Една и съща сума – 1.200.000 EUR',
         bat=('1 мобилна станция с батерии', 'над 1.200.000 EUR'),
         box=('12 броя ECOES MultiCharger Box', '12 × 100.000 EUR'),
-        profit='Брутна печалба при 50% натовареност',
+        profit='Прогнозна брутна печалба при 50% натовареност',
         bat_profit=('≈ 16.500 EUR', 'на месец', '≈ 200.000 EUR годишно'),
         box_profit=('≈ 311.040 EUR', 'на месец', '≈ 3.732.480 EUR годишно'),
-        pay='С 12 броя ECOES MultiCharger Box инвестицията се изплаща за около 5–6 месеца.',
+        pay='С 12 броя ECOES MultiCharger Box прогнозното изплащане е около 5–6 месеца.',
         statement='При по-висока натовареност брутната печалба расте пропорционално!'),
     'en': dict(
         kicker='For investors',
@@ -119,10 +131,10 @@ INV = {
         same='The same amount – €1,200,000',
         bat=('1 battery mobile station', 'over €1,200,000'),
         box=('12 × ECOES MultiCharger Box', '12 × €100,000'),
-        profit='Gross profit at 50% utilization',
+        profit='Forecast gross profit at 50% utilization',
         bat_profit=('≈ €16,500', 'a month', '≈ €200,000 a year'),
         box_profit=('≈ €311,040', 'a month', '≈ €3,732,480 a year'),
-        pay='With 12 ECOES MultiCharger Box units, the investment pays back in about 5–6 months.',
+        pay='With 12 ECOES MultiCharger Box units, the forecast payback is about 5–6 months.',
         statement='At a higher utilization rate, gross profit increases proportionally!'),
 }
 
@@ -150,7 +162,6 @@ def texts(lang):
     box = load(p + 'multicharger-box/index.html')
     t['box_month'] = [round((float(r['data-dc']) + float(r['data-service'])) * 30) for r in box.select('#gross-profit table tbody tr')]
     t['box_auto'] = txt(box.select('#what .prose b')[-1])
-    t['box_cards'] = [txt(c) for c in box.select('.compare-card')]
     fin = load(p + 'financing/index.html')
     t['fin_title'] = txt(fin.select_one('#page-title'))
     t['fin'] = [txt(h) for h in fin.select('.pillars h3')]
@@ -182,19 +193,16 @@ def page(lang, t, img):
     pick_en = ['Where there are no charging stations', 'A ready certified asset instead of years of development', 'Mobile, stationary or mixed mode',
                'About 20% additional revenue', 'Backup power and a stationary charging station', 'Hardware, software and remote support']
     reasons = [(h, why[h]) for h in (pick_bg if L else pick_en)]
-    payback = next((h for h, d in t['why'] if re.search(r'(около 5 месеца|about 5 months)', h)), '')
-    mob_sentence = next((d for h, d in t['why'] if h == payback), '')
-    mob_sentence = re.sub(r'^[\d.,%\s]+', '', mob_sentence)
-    box50 = next((c for c in t['box_cards'] if '50%' in c), '')
-    m = re.match(r'(.*?(?:месец|a month))\s*(.*)$', box50); box_sent, box_pay = (m.group(1) + '.', m.group(2).rstrip('.')) if m else (box50, '')
-    if not L: box_sent = re.sub(r'\.00(?=[\s\u00a0]EUR)', '', box_sent)
+    q = P2[lang]
+    mob_sentence = nb(q['mob'].format(v=num(t['mob_month'][1], lang)))
+    box_sent = nb(q['box'].format(v=num(t['box_month'][1], lang)))
     loads = [10, 25, 50, 75, 100]
     def bars(vals):
         top = 60000
         return ('<div class="chart"><ol class="bars">' + ''.join(f'<li style="--f:{v / top:.4f}"><b>{num(v, lang)}</b></li>' for v in vals)
                 + '</ol><ol class="axis">' + ''.join(f'<li>{l}%</li>' for l in loads) + '</ol></div>')
     qr = segno.make(SITE + ('bg/' if L else '') + '#pre-order', error='m')
-    qr_svg = qr.svg_inline(scale=3, dark='#062925', light=None, border=0)
+    qr_svg = qr.svg_inline(dark='#062925', light='#ffffff', border=4, omitsize=True)
     phones_bg = [('Моб./WhatsApp', '+359 889988042'), ('Телефон и WhatsApp', '+44 7460659111')]
     phones_en = [('Mobile/WhatsApp', '+359 889988042'), ('Phone & WhatsApp', '+44 7460659111')]
     phones = phones_bg if L else phones_en
@@ -282,7 +290,7 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .qr {{ text-align: center; }}
 .qr svg {{ width: 20mm; height: 20mm; display: block; margin: 0 auto 1.5mm; }}
 .qr p {{ font-family: "Unbounded"; font-weight: 500; font-size: 8.6pt; color: var(--pine); line-height: 1.3; }}
-.page--3 {{ gap: 2.4mm; justify-content: space-between; }}
+.page--3 {{ gap: 2.2mm; justify-content: space-between; }}
 .page--3 .top {{ margin-bottom: 0; }}
 .nw {{ white-space: nowrap; }}
 .inv-kicker {{ font-family: "Unbounded"; font-weight: 500; font-size: 26pt; line-height: 1.1; color: var(--ink); letter-spacing: -.012em; }}
@@ -291,7 +299,7 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
 .inv-hook {{ font-size: 11.3pt; line-height: 1.45; }}
 .inv-hook b {{ font-weight: 700; color: var(--ink); }}
 .inv-table {{ width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border: .3mm solid var(--line); border-radius: 4mm; overflow: hidden; table-layout: fixed; font-size: 10.6pt; line-height: 1.3; }}
-.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 2.2mm 3.2mm; border-bottom: .3mm solid var(--line); }}
+.inv-table th, .inv-table td {{ text-align: left; vertical-align: top; padding: 1.9mm 3.2mm; border-bottom: .3mm solid var(--line); }}
 .inv-table tbody tr:last-child > * {{ border-bottom: 0; }}
 .inv-table thead th {{ font-size: 10.4pt; font-weight: 600; color: var(--ink); vertical-align: bottom; }}
 .inv-table col.m {{ width: 25%; }}
@@ -343,10 +351,10 @@ h1 {{ font-family: "Unbounded"; font-weight: 500; font-size: 20pt; line-height: 
   <div class="profit">
     <h2>{esc(t['punch'])}</h2>
     <div class="pcols">
-      <div class="pcol"><p class="name">ECOES MultiCharger Mobile</p><p class="big">{num(t['mob_month'][2], lang)}<small>EUR</small></p>
-        <p class="cap">{esc(mob_sentence)}</p><p class="pay">{esc(payback)}</p>{bars(t['mob_month'])}</div>
-      <div class="pcol"><p class="name">ECOES MultiCharger Box</p><p class="big">{num(t['box_month'][2], lang)}<small>EUR</small></p>
-        <p class="cap">{esc(box_sent)}</p><p class="pay">{esc(box_pay)}</p>{bars(t['box_month'])}</div>
+      <div class="pcol"><p class="name">ECOES MultiCharger Mobile</p><p class="big">{num(t['mob_month'][1], lang)}<small>EUR</small></p>
+        <p class="cap">{esc(mob_sentence)}</p><p class="pay">{esc(q['pay'])}</p>{bars(t['mob_month'])}</div>
+      <div class="pcol"><p class="name">ECOES MultiCharger Box</p><p class="big">{num(t['box_month'][1], lang)}<small>EUR</small></p>
+        <p class="cap">{esc(box_sent)}</p><p class="pay">{esc(q['pay'])}</p>{bars(t['box_month'])}</div>
     </div>
     <p class="paynote">{esc(t['pay'])}</p>
   </div>
