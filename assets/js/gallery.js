@@ -2,20 +2,20 @@
 // dialog, with its caption, previous / next through all of them (also the arrow keys) and a close
 // button (also Escape or a click beside the document). Without JavaScript, or without <dialog>,
 // the link opens the image itself.
-// A document in two languages: the small button on its corner swaps the picture shown (a cross-fade in CSS) and
-// what the link opens, so the viewer below always shows the version on screen; the picture's description follows.
+// A document in two languages: the button under it ("View in Bulgarian") swaps the picture shown (a cross-fade in
+// CSS) and what the link opens, so the viewer below always shows the version on screen; the picture's description
+// and the button's own words follow.
 (function () {
   Array.prototype.forEach.call(document.querySelectorAll('.doc-lang'), function (btn) {
     var wrap = btn.parentNode, link = wrap.querySelector('.doc-link'), img = link.querySelector('.doc-main img');
-    var code = btn.querySelector('.doc-lang-code');
+    var label = btn.querySelector('.doc-lang-label');
     function swap(el, a, b) { var t = el.getAttribute(a); el.setAttribute(a, el.getAttribute(b)); el.setAttribute(b, t); }
     btn.addEventListener('click', function () {
       wrap.classList.toggle('is-alt');
       swap(link, 'href', 'data-alt-href');
       swap(link, 'data-webp', 'data-alt-webp');
       var t = img.alt; img.alt = link.getAttribute('data-alt-text'); link.setAttribute('data-alt-text', t);
-      var c = code.textContent; code.textContent = code.getAttribute('data-alt'); code.setAttribute('data-alt', c);
-      swap(btn, 'aria-label', 'data-label-alt');
+      var l = label.textContent; label.textContent = label.getAttribute('data-alt'); label.setAttribute('data-alt', l);
     });
   });
 })();

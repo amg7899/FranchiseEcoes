@@ -1093,6 +1093,12 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .box-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; margin-top: 20px; }   /* 3 x 4, as in the document */
 .box-grid img { display: block; width: 100%; height: auto; }
 .vs-statement { margin: 0 0 28px; }
+/* the chart shows the full monthly sums of 12 units (client, 2026-11-25: "622" read as hundreds): six figures, so on
+   phones they are set in the narrower text face to stay above their own column */
+.vs-chart .vcol b { font-size: clamp(14px, 1.25vw, 17px); }
+@media (max-width: 599px) {
+  .vs-chart .vcol b { font: 600 14px/1 var(--font-text); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+}
 
 /* ---------- About us (the content of ecoes.eu/about-us/, unchanged) ---------- */
 /* head: the title and the button beside the logo's globe in light (the JV spans the UK and the EU) */
@@ -1240,12 +1246,16 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 }
 .award .doc-title { margin-top: 18px; font-size: 18px; }
 .award p { margin: 10px 4px 0; font-size: 17px; line-height: 1.65; color: var(--text); }
-/* a document in two languages (client, 2026-11-24): both pictures stacked in the link, a small button on the card's
-   corner swaps them with a cross-fade; the link, and so the viewer, follows the version on screen (gallery.js) */
+/* a document in two languages (client, 2026-11-24): both pictures stacked in the link, a button under it swaps them
+   with a cross-fade; the link, and so the viewer, follows the version on screen (gallery.js). The button says what it
+   does, "View in Bulgarian" / "Вижте на английски" (client, 2026-11-25: the small "BG" pill on the card's corner was
+   not seen as a language switch) */
 .doc-wrap { position: relative; }
 .award .doc-wrap { max-width: 340px; }
 @supports (grid-template-rows: subgrid) {
-  .award .doc-wrap { align-self: stretch; display: grid; }
+  .award .doc-wrap { align-self: stretch; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+  /* in the documents' grid only some cards have the button: the captions still start on one line */
+  .docs .doc-card { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-items: start; }
 }
 .doc-frame { position: relative; display: block; }
 .doc-frame picture { display: block; transition: opacity .35s ease; }
@@ -1253,16 +1263,16 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--ice); outli
 .is-alt .doc-alt { opacity: 1; }
 .is-alt .doc-main { opacity: 0; }
 .doc-lang {
-  position: absolute; z-index: 2; top: -11px; right: -11px; display: none; align-items: center; gap: 5px;
-  height: 30px; padding: 0 10px 0 8px; border: 0; border-radius: 999px; cursor: pointer;
-  background: var(--pine, #0d4a44); color: #fff; font: 600 14px/1 var(--font-text); letter-spacing: .03em;
-  box-shadow: 0 6px 14px -8px rgba(6, 41, 37, .55); transition: background-color .2s ease-out, transform .2s ease-out;
+  display: none; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; margin-top: 10px;
+  padding: 8px 14px; border: 1.5px solid var(--pine, #0d4a44); border-radius: 999px; cursor: pointer;
+  background: #fff; color: var(--pine, #0d4a44); font: 600 15px/1.25 var(--font-text); letter-spacing: 0; text-align: center;
+  transition: background-color .2s ease-out, color .2s ease-out;
 }
-.js .doc-lang { display: inline-flex; }
-.doc-lang svg { width: 15px; height: 15px; flex: none; }
-.doc-lang::after { content: ""; position: absolute; inset: -7px; }   /* a 44px target around the small pill */
-.doc-lang:hover { background: #0a3b36; transform: translateY(-1px); }
-.doc-lang:focus-visible { outline-color: var(--pine, #0d4a44); border-radius: 999px; }
+.js .doc-lang { display: flex; }
+.doc-lang svg { width: 18px; height: 18px; flex: none; }
+.doc-lang-label { text-wrap: balance; }
+.doc-lang:hover { background: var(--pine, #0d4a44); color: #fff; }
+.doc-lang:focus-visible { outline: 2px solid var(--pine, #0d4a44); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .doc-frame picture, .doc-lang { transition: none; }
 }
