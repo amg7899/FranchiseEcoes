@@ -7,6 +7,8 @@
 // A subject of the contact form may bring a ready message (data-message on its option), a hint shown while it is
 // chosen (data-hint: the id of the hint) and a download offered once the form is sent (data-download: the id of a
 // <template> with the link): the presentation (client, 2026-11-10: through the contact form, not a form of its own).
+// The profit calculator sends its figures as ?topic=finance&calc=…: they become the ready message of the subject
+// "Financial analysis", with the hint data-hint-calc instead of data-hint.
 (function () {
   var TO = 'sales@ecoes.eu';
   var TEXT = {
@@ -35,7 +37,8 @@
   function goal(form, chosen) {
     var name = form.classList.contains('preorder-form') ? 'Pre-order'
       : form.classList.contains('dealer-form') ? 'Dealer application'
-      : chosen && chosen.getAttribute('data-topic') === 'presentation' ? 'Presentation request' : 'Contact form';
+      : chosen && chosen.getAttribute('data-topic') === 'presentation' ? 'Presentation request'
+      : chosen && chosen.getAttribute('data-topic') === 'finance' ? 'Financial analysis request' : 'Contact form';
     if (typeof window.plausible === 'function') window.plausible(name);
   }
 
@@ -49,11 +52,19 @@
     var topic = form.querySelector('select[data-topics]');
     var message = form.querySelector('textarea[name="message"]');
 
-    // the subject of the contact form follows ?topic= (franchise, multicharger, multicharger-box, presentation, other)
-    var wanted = params.get('topic');
+    // the subject of the contact form follows ?topic= (franchise, multicharger, multicharger-box, finance,
+    // presentation, other)
+    var wanted = params.get('topic'), calc = params.get('calc');
     if (topic && wanted) {
       for (var i = 0; i < topic.options.length; i++) {
-        if (topic.options[i].getAttribute('data-topic') === wanted) topic.selectedIndex = i;
+        var o = topic.options[i];
+        if (o.getAttribute('data-topic') !== wanted) continue;
+        topic.selectedIndex = i;
+        if (wanted === 'finance' && calc && message) {
+          o.setAttribute('data-message', calc.slice(0, 4000));
+          if (o.hasAttribute('data-hint-calc')) o.setAttribute('data-hint', o.getAttribute('data-hint-calc'));
+          message.rows = Math.min(20, calc.split('\n').length + 1);   // the whole calculation in view
+        }
       }
     }
     function chosen() { return topic ? topic.options[topic.selectedIndex] : null; }

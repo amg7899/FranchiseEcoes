@@ -215,6 +215,9 @@ body::before {
 .meter-steps span { background: rgba(255, 255, 255, .72); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .26); color: var(--ink); }
 .meter-steps input:hover + span { background: #fff; }
 .meter-steps input:checked + span { background: var(--pine); color: #fff; box-shadow: 0 10px 22px -14px rgba(6, 41, 37, .8); }
+.seg input + span, .calc-presets button { background: rgba(255, 255, 255, .72); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .26); color: var(--ink); }
+.seg input:hover + span, .calc-presets button:hover { background: #fff; }
+.seg input:checked + span, .calc-presets button[aria-pressed="true"] { background: var(--pine); color: #fff; box-shadow: 0 10px 22px -14px rgba(6, 41, 37, .8); }
 .meter-bar { background: rgba(11, 29, 25, .08); }
 .meter-bar span { background: linear-gradient(90deg, var(--leaf), var(--pine)); }
 .readout-main { color: var(--pine); }
@@ -231,6 +234,19 @@ select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.o
 select option { background: #fff; color: var(--ink); }
 input:hover, select:hover, textarea:hover { border-color: rgba(11, 29, 25, .44); }
 input:focus, select:focus, textarea:focus { border-color: var(--pine); background-color: #fff; }
+.calc-num { border-color: rgba(11, 29, 25, .26); background-color: rgba(255, 255, 255, .86); }
+.calc-num:hover { border-color: rgba(11, 29, 25, .44); }
+.calc-num:focus-within { border-color: var(--pine); background-color: #fff; }
+.calc-num > input[type="text"] { background-color: transparent; }
+.calc-ledger tr + tr > * { border-top-color: rgba(11, 29, 25, .2); }
+.calc-ledger .is-sub > * { border-top-color: rgba(11, 29, 25, .3); }
+.calc-ledger .is-total > * { border-top-color: var(--pine); color: var(--pine); }
+.link-card-icon { background: rgba(31, 163, 108, .1); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .18); color: var(--pine); }
+.link-card:hover .go-chip { background: var(--pine-hi); }
+.cmp-table thead th, .cmp-table thead tr { background: rgba(250, 252, 251, .97); border-bottom-color: var(--pine); }
+.cmp-group th { border-bottom-color: rgba(13, 74, 68, .28); }
+.cmp-both-in { background: rgba(31, 163, 108, .09); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .14); }
+.calc-protect { background: rgba(31, 163, 108, .09); box-shadow: inset 0 0 0 1px rgba(13, 74, 68, .2); color: var(--ink); }
 .choice-item { background: rgba(255, 255, 255, .76); box-shadow: inset 0 0 0 1px rgba(11, 29, 25, .22); color: var(--ink); }
 .choice-item:hover { background: #fff; }
 .choice-item:has(input:checked) { background: rgba(31, 163, 108, .12); box-shadow: inset 0 0 0 1.5px var(--pine); }

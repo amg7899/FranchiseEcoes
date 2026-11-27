@@ -22,12 +22,13 @@
   <meta name="theme-color" content="#112031">
   <link rel="icon" href="../../assets/img/logo.svg" type="image/svg+xml">
   <link rel="preload" href="../../assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../assets/fonts/wix-madefor-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../assets/css/fonts.css?v=90f27b14">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=ba3c79c2">
-  <link rel="stylesheet" href="../../assets/css/eco.css?v=42bb6044">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=2e968674">
+  <link rel="stylesheet" href="../../assets/css/eco.css?v=0bd5f9b6">
   <script src="../../assets/js/main.js?v=61052942" defer></script>
-  <script src="../../assets/js/forms.js?v=35108719" defer></script>
+  <script src="../../assets/js/forms.js?v=6be65480" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Към съдържанието</a>
@@ -48,6 +49,8 @@
           <ul class="sub-menu" id="sub-products">
             <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
             <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+            <li><a href="../compare/"><span translate="no">Mobile </span>или<span translate="no"> Box</span>?</a></li>
+            <li><a href="../calculator/">Калкулатор на печалбата</a></li>
           </ul>
         </li>
         <li><a href="../financing/">Финансиране</a></li>
@@ -80,6 +83,8 @@
         <ul>
           <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
           <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+          <li><a href="../compare/"><span translate="no">Mobile </span>или<span translate="no"> Box</span>?</a></li>
+          <li><a href="../calculator/">Калкулатор на печалбата</a></li>
         </ul>
       </li>
       <li><a href="../financing/">Финансиране</a></li>
@@ -171,10 +176,13 @@
                   <option value="ECOES Franchise" data-topic="franchise">ECOES Franchise</option>
                   <option value="ECOES MultiCharger Mobile" data-topic="multicharger">ECOES MultiCharger Mobile</option>
                   <option value="ECOES MultiCharger Box" data-topic="multicharger-box">ECOES MultiCharger Box</option>
+                  <option value="Финансов анализ" data-topic="finance" data-message="Моля, изгответе финансов анализ за моя случай.&#10;Продукт: &#10;Държава и място на работа: &#10;Очаквана натовареност или брой зареждания на ден: &#10;Финансиране (собствени средства, разсрочено плащане или лизинг): " data-hint="c-finance-hint" data-hint-calc="c-finance-calc">Финансов анализ</option>
                   <option value="Презентация (PDF)" data-topic="presentation" data-message="Желая да получа презентацията на ECOES Franchise." data-hint="c-topic-hint" data-download="c-download">Презентация (PDF)</option>
                   <option value="Друго" data-topic="other">Друго</option>
                 </select>
                 <p class="field-hint" id="c-topic-hint" hidden>След изпращане можете веднага да изтеглите презентацията.</p>
+                <p class="field-hint" id="c-finance-hint" hidden><a class="link" href="../calculator/">Калкулаторът на печалбата</a> изчислява вашия случай и попълва това съобщение вместо вас.</p>
+                <p class="field-hint" id="c-finance-calc" hidden>Разчетът от калкулатора на печалбата е в съобщението. Моля, допишете държавата и мястото на работа.</p>
               </div>
               <div class="field field--wide">
                 <label for="c-message">Съобщение <span class="req" aria-hidden="true">*</span></label>
@@ -240,6 +248,8 @@
           <li><a href="../franchise/" translate="no">ECOES Franchise</a></li>
           <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
           <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+          <li><a href="../compare/"><span translate="no">Mobile </span>или<span translate="no"> Box</span>?</a></li>
+          <li><a href="../calculator/">Калкулатор на печалбата</a></li>
           <li><a href="../financing/">Финансиране</a></li>
           <li><a href="../investors/">За инвеститори</a></li>
           <li><a href="../defense/" translate="no">Defense</a></li>

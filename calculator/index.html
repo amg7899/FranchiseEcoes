@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profit calculator – ECOES Franchise</title>
+  <meta name="description" content="Calculate the gross profit, the lease or instalment payments and the payback of the ECOES MultiCharger Mobile and ECOES MultiCharger Box at different loads.">
+  <link rel="canonical" href="https://franchise.ecoes.eu/calculator/">
+  <link rel="alternate" hreflang="en" href="https://franchise.ecoes.eu/calculator/">
+  <link rel="alternate" hreflang="bg" href="https://franchise.ecoes.eu/bg/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://franchise.ecoes.eu/calculator/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ECOES Franchise">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Profit calculator – ECOES Franchise">
+  <meta property="og:description" content="Calculate the gross profit, the lease or instalment payments and the payback of the ECOES MultiCharger Mobile and ECOES MultiCharger Box at different loads.">
+  <meta property="og:url" content="https://franchise.ecoes.eu/calculator/">
+  <meta property="og:image" content="https://franchise.ecoes.eu/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#112031">
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/wix-madefor-text-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css?v=90f27b14">
+  <link rel="stylesheet" href="../assets/css/style.css?v=2e968674">
+  <link rel="stylesheet" href="../assets/css/eco.css?v=0bd5f9b6">
+  <script src="../assets/js/calc.js?v=9340c064" defer></script>
+  <script src="../assets/js/main.js?v=61052942" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../" aria-label="ECOES Franchise – Home" translate="no">
+      <img class="brand-night" src="../assets/img/logo-night.svg" alt="ECOES JV" width="220" height="106">
+      <img class="brand-day" src="../assets/img/logo.svg" alt="ECOES JV" width="220" height="106">
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="../about-us/">About us</a></li>
+        <li><a href="../franchise/" translate="no">ECOES Franchise</a></li>
+        <li class="has-sub">
+          <button class="sub-toggle is-current" type="button" aria-expanded="false" aria-controls="sub-products">Products</button>
+          <ul class="sub-menu" id="sub-products">
+            <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
+            <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+            <li><a href="../compare/"><span translate="no">Mobile </span>or<span translate="no"> Box</span>?</a></li>
+            <li><a href="../calculator/" aria-current="page">Profit calculator</a></li>
+          </ul>
+        </li>
+        <li><a href="../financing/">Financing</a></li>
+        <li><a href="../investors/">For investors</a></li>
+        <li><a href="../defense/" translate="no">Defense</a></li>
+        <li><a href="../contact-us/">Contact us</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <div class="lang-switch">
+        <a href="./" hreflang="en" lang="en" aria-current="true">EN</a>
+        <a href="../bg/calculator/" hreflang="bg" lang="bg" title="Български">BG</a>
+      </div>
+      <a class="btn btn--glass btn--small btn--signal header-cta" href="../contact-us/?topic=franchise#contact-form">Get an offer</a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="menu-panel">
+        <span class="menu-icon" aria-hidden="true"></span><span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-panel" id="menu-panel" hidden>
+  <nav aria-label="Menu">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../about-us/">About us</a></li>
+      <li><a href="../franchise/" translate="no">ECOES Franchise</a></li>
+      <li class="menu-group">
+        <span class="menu-group-label">Products</span>
+        <ul>
+          <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
+          <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+          <li><a href="../compare/"><span translate="no">Mobile </span>or<span translate="no"> Box</span>?</a></li>
+          <li><a href="../calculator/" aria-current="page">Profit calculator</a></li>
+        </ul>
+      </li>
+      <li><a href="../financing/">Financing</a></li>
+      <li><a href="../investors/">For investors</a></li>
+      <li><a href="../defense/" translate="no">Defense</a></li>
+      <li><a href="../contact-us/">Contact us</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn--ice" href="../contact-us/?topic=franchise#contact-form">Get an offer</a>
+</div>
+
+<main id="main">
+
+  <section class="page-hero page-hero--calc" aria-labelledby="page-title">
+    <div class="wrap">
+      <h1 class="page-title" id="page-title">Profit calculator</h1>
+      <p class="page-sub">The gross profit, the payments and the payback for your own scenario – on the assumptions of the product pages.</p>
+    </div>
+  </section>
+
+  <section class="calc" aria-label="Calculator">
+    <div class="wrap">
+      <noscript><p class="glass calc-nojs">The calculator needs JavaScript. The gross profit at 10–100% load is in the tables on the pages of the <a class="link" href="../multicharger/#gross-profit" translate="no">ECOES MultiCharger Mobile</a> and <a class="link" href="../multicharger-box/#gross-profit" translate="no">ECOES MultiCharger Box</a>.</p></noscript>
+      <div class="calc-app" data-calc data-lang="en">
+        <div class="calc-grid">
+          <form class="glass calc-inputs" novalidate>
+            <fieldset class="calc-field">
+              <legend>Product</legend>
+              <div class="seg"><label><input type="radio" name="product" value="mobile"><span><span translate="no">MultiCharger Mobile</span></span></label><label><input type="radio" name="product" value="box" checked><span><span translate="no">MultiCharger Box</span></span></label></div>
+            </fieldset>
+            <fieldset class="calc-field">
+              <legend>Operating mode</legend>
+              <div class="seg"><label><input type="radio" name="mode" value="generator" checked><span>Mobile<small>power from the generator</small></span></label><label><input type="radio" name="mode" value="grid"><span>Stationary<small>power from the grid</small></span></label></div>
+              <p class="calc-hint" data-when="mobile-grid" hidden>In stationary mode no customer-service profit is included: next to an existing site, the customers go there.</p>
+            </fieldset>
+            <fieldset class="calc-field">
+              <legend>Load</legend>
+              <div class="seg seg--5"><label><input type="radio" name="load" value="10"><span>10%</span></label><label><input type="radio" name="load" value="25"><span>25%</span></label><label><input type="radio" name="load" value="50" checked><span>50%</span></label><label><input type="radio" name="load" value="75"><span>75%</span></label><label><input type="radio" name="load" value="100"><span>100%</span></label></div>
+              <p class="calc-hint" data-out="hours"></p>
+            </fieldset>
+            <details class="calc-assume" open>
+              <summary>Assumptions <small>average European prices incl. VAT, Q4 2026</small></summary>
+              <div class="calc-rows">
+                <div class="calc-row" data-when="generator">
+                  <label for="c-diesel">Diesel price</label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-diesel" name="diesel" data-kind="dec" value="2.00"><span>EUR/L</span></div>
+                  <div class="calc-presets" role="group" aria-label="Average diesel prices by region"><button type="button" data-diesel="2.00" aria-pressed="false">Europe 2.00</button><button type="button" data-diesel="1.48" aria-pressed="false">North America 1.48</button><button type="button" data-diesel="1.34" aria-pressed="false">Africa 1.34</button><button type="button" data-diesel="1.16" aria-pressed="false">Latin America 1.16</button></div>
+                </div>
+                <div class="calc-row" data-when="generator">
+                  <label for="c-use">Diesel per kWh<small>after all mechanical and electrical losses</small></label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-use" name="use" data-kind="dec" value="0.30"><span>L/kWh</span></div>
+                </div>
+                <div class="calc-row" data-when="grid">
+                  <label for="c-grid">Grid power price</label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-grid" name="grid" data-kind="dec" value="0.30"><span>EUR/kWh</span></div>
+                </div>
+                <div class="calc-row">
+                  <label for="c-sale">Selling price of DC power</label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-sale" name="sale" data-kind="dec" value="1.20"><span>EUR/kWh</span></div>
+                </div>
+                <div class="calc-row" data-when="mobile-generator">
+                  <label for="c-service">Customer service at 100% load<small>forecast value; it grows with the load</small></label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-service" name="service" data-kind="money" value="200"><span>EUR/day</span></div>
+                </div>
+              </div>
+            </details>
+            <div class="calc-row">
+              <label for="c-costs">Other costs a month<small>staff, maintenance, insurance, site rent, taxes and the like</small></label>
+              <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-costs" name="costs" data-kind="money" value="0"><span>EUR</span></div>
+            </div>
+            <fieldset class="calc-field calc-fin">
+              <legend>Financing</legend>
+              <div class="seg seg--3"><label><input type="radio" name="fin" value="own" checked><span>Own funds</span></label><label><input type="radio" name="fin" value="split"><span>Instalments</span></label><label><input type="radio" name="fin" value="lease"><span>Leasing</span></label></div>
+              <div class="calc-row">
+                <label for="c-price">Price of the station</label>
+                <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-price" name="price" data-kind="money" value="" placeholder="e.g. 100,000"><span>EUR</span></div>
+                <p class="calc-hint" data-when="box">About 100,000 EUR, as on the investors page.</p>
+                <p class="calc-hint" data-when="mobile">The <span translate="no">MultiCharger Mobile</span> is priced by offer – enter its price to see the payments and the payback.</p>
+              </div>
+              <div class="calc-rows" data-when="split" hidden>
+                <fieldset class="calc-field calc-field--sub">
+                  <legend>Instalment period</legend>
+                  <div class="seg seg--3 seg--short"><label><input type="radio" name="split" value="12" checked><span>12 months</span></label><label><input type="radio" name="split" value="18"><span>18 months</span></label><label><input type="radio" name="split" value="24"><span>24 months</span></label></div>
+                </fieldset>
+                <div class="calc-row">
+                  <label for="c-splitRate">Interest on the instalments<small>if any, % a year</small></label>
+                  <div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-splitRate" name="splitRate" data-kind="dec" value="" placeholder="0"><span>%</span></div>
+                </div>
+                <p class="calc-hint">50% of the price is paid at the start, the other 50% in equal monthly instalments – with no bank or leasing approval (Financing page).</p>
+              </div>
+              <div class="calc-rows" data-when="lease" hidden>
+                <div class="calc-row"><label for="c-down">Down payment</label><div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-down" name="down" data-kind="dec" value="" placeholder="e.g. 20"><span>%</span></div></div>
+                <div class="calc-row"><label for="c-rate">Interest<small>% a year</small></label><div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-rate" name="rate" data-kind="dec" value="" placeholder="e.g. 7"><span>%</span></div></div>
+                <div class="calc-row"><label for="c-term">Term</label><div class="calc-num"><input type="text" inputmode="decimal" autocomplete="off" id="c-term" name="term" data-kind="dec" value="" placeholder="e.g. 60"><span>months</span></div></div>
+                <p class="calc-hint">The lessor sets the terms – enter yours.</p>
+              </div>
+            </fieldset>
+          </form>
+
+          <section class="calc-screen" id="calc-screen" aria-labelledby="calc-screen-title">
+            <h2 class="calc-screen-title" id="calc-screen-title">Your figures</h2>
+            <p class="calc-big" aria-live="polite"><span data-out="month">–</span> <span class="unit">EUR</span><span class="label">gross profit a month</span></p>
+            <dl class="calc-readouts">
+              <div><dt>a day</dt><dd data-out="day">–</dd></div>
+              <div><dt>a year</dt><dd data-out="year">–</dd></div>
+              <div><dt>energy a month</dt><dd data-out="kwh">–</dd></div>
+            </dl>
+            <dl class="calc-readouts">
+              <div><dt>monthly payment</dt><dd data-out="payment">–</dd><dd class="calc-cover" data-out="cover" data-when="financed" hidden></dd></div>
+              <div class="is-key"><dt>left each month</dt><dd data-out="left">–</dd></div>
+              <div class="is-key"><dt>payback period</dt><dd data-out="payback">–</dd></div>
+            </dl>
+            <figure class="calc-chart">
+              <div class="calc-chart-draw"></div>
+              <figcaption data-out="chartcap">Cumulative cash flow</figcaption>
+            </figure>
+          </section>
+        </div>
+
+        <section class="glass calc-sheet" aria-labelledby="calc-sheet-title">
+          <div class="calc-sheet-main">
+            <h2 class="calc-sheet-title" id="calc-sheet-title">One month in figures</h2>
+            <table class="calc-ledger" aria-labelledby="calc-sheet-title"><tbody data-out="ledger"></tbody></table>
+          </div>
+          <div class="calc-sheet-side">
+            <p class="calc-protect" data-out="protect" hidden></p>
+            <p class="calc-note">A forecast on the assumptions of the product pages (average European prices incl. VAT, Q4 2026). For the net profit, the operating costs and the taxes of the country are deducted from the gross profit. The specific financial terms are set in the purchase offer.</p>
+          </div>
+          <div class="calc-actions">
+            <a class="btn btn--ice" data-send data-base="../contact-us/" href="../contact-us/?topic=finance#contact-form">Send us this calculation</a>
+            <a class="btn btn--glass" href="../#pre-order">Pre-order</a>
+          </div>
+        </section>
+
+        <a class="calc-peek" href="#calc-screen"><span class="calc-peek-text"><b data-peek="month">–</b><span data-peek="sub"></span></span><span class="go-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span><span class="visually-hidden">See the figures</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="footer-brand" href="../" aria-label="ECOES Franchise – Home" translate="no">
+        <img src="../assets/img/logo-night.svg" alt="ECOES JV" width="220" height="106" loading="lazy" decoding="async">
+      </a>
+      <p class="footer-company" translate="no">ECOES (ECO ENGINEERING SYSTEMS) JV</p>
+      <div class="footer-actions">
+        <a class="btn btn--glass btn--small" href="../contact-us/#contact-form">Contact form</a>
+        <a class="btn btn--glass btn--small" href="../contact-us/?topic=presentation#contact-form">Presentation (PDF)</a>
+      </div>
+    </div>
+    <div class="footer-offices">
+      <div class="footer-office">
+        <h2><span translate="no">ECOES Ltd. </span>London</h2>
+        <p>UK trade company</p>
+        <p translate="no">60 Tottenham Court Road,<br>Office 1980<br>Fitzrovia,<br>London<br>W1T 2EW</p>
+        <p>Phone &amp; WhatsApp: <a href="tel:+447460659111" translate="no">+44 7460659111</a></p>
+      </div>
+      <div class="footer-office">
+        <h2><span translate="no">BULFIRE ECOES Ltd. </span>Sofia</h2>
+        <p>EU manufacturing company</p>
+        <p>HEAD OFFICE:<br><span translate="no">205 Al. Stamboliyski Blvd.,<br>Office 320A<br>Sofia 1309, Bulgaria EU</span></p>
+        <p>Phone: <a href="tel:+35924120575" translate="no">+359 24120575</a><br>Mob./WhatsApp: <a href="tel:+359889988042" translate="no">+359 889988042</a></p>
+      </div>
+      <div class="footer-office">
+        <h2>E-mail</h2>
+        <p><a href="mailto:ecoes@ecoes.eu" translate="no">ecoes@ecoes.eu</a><br><a href="mailto:sales@ecoes.eu" translate="no">sales@ecoes.eu</a></p>
+        <p>Fax: <span translate="no">+35924120488</span></p>
+        <p>Our companies:<br><a href="https://ecoes.eu/" translate="no">ecoes.eu</a><br><a href="https://bulfire.ecoes.eu/" translate="no">bulfire.ecoes.eu</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="../">Home</a></li>
+          <li><a href="../about-us/">About us</a></li>
+          <li><a href="../franchise/" translate="no">ECOES Franchise</a></li>
+          <li><a href="../multicharger/" translate="no">ECOES MultiCharger Mobile</a></li>
+          <li><a href="../multicharger-box/" translate="no">ECOES MultiCharger Box</a></li>
+          <li><a href="../compare/"><span translate="no">Mobile </span>or<span translate="no"> Box</span>?</a></li>
+          <li><a href="../calculator/">Profit calculator</a></li>
+          <li><a href="../financing/">Financing</a></li>
+          <li><a href="../investors/">For investors</a></li>
+          <li><a href="../defense/" translate="no">Defense</a></li>
+          <li><a href="../contact-us/">Contact us</a></li>
+          <li><a href="../privacy/">Privacy policy</a></li>
+        </ul>
+      </nav>
+      <p class="footer-copy">© 2026 <span translate="no">ECOES JV</span></p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
